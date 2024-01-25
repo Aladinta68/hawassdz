@@ -28,8 +28,18 @@ export const Appbar = () => {
     { name: "Trips", url: "/trips" },
   ];
   return (
-    <Flex px={5}>
+    <Flex
+      bg={"rgba(255, 255, 255, 0.2)"}
+      position={{ base: "absolute", md: "absolute" }}
+      top="0"
+      left="0"
+      right="0"
+      zIndex="10"
+      justifyContent={"center"}
+      alignItems={"center"}
+    >
       <Flex
+        maxW={"6xl"}
         justifyContent={"center"}
         alignItems={"center"}
         display={{ base: "none", md: "flex" }}
@@ -38,7 +48,7 @@ export const Appbar = () => {
         height={"60px"}
       >
         <Flex justifyContent={"flex-start"} alignItems={"center"} w={"20%"}>
-          <Text fontSize={18} fontWeight={500}>
+          <Text color={"#ffffff"} fontSize={18} fontWeight={500}>
             HawassDZ
           </Text>
         </Flex>
@@ -50,6 +60,9 @@ export const Appbar = () => {
         >
           {links.map((link, index) => (
             <Link
+              color={"#ffffff"}
+              _hover={{ color: "#FA8B02" }}
+              transition={"ease-in-out 0.3s"}
               mx={{ md: 2, lg: 5 }}
               as={RouterLink}
               to={link.url}
@@ -65,10 +78,30 @@ export const Appbar = () => {
           alignItems={"center"}
           direction={"row"}
         >
-          <Link as={RouterLink} to={"/login"}>
+          <Link
+            _hover={{ color: "#FB8B02", opacity: 0.8 }}
+            transition={"ease-in-out 0.3s"}
+            color={"#FA8B02"}
+            as={RouterLink}
+            to={"/login"}
+          >
             Log in
           </Link>
-          <Link ml={10} as={RouterLink} to={"/signup"}>
+          <Link
+            _hover={{
+              backgroundColor: "#FA8B02",
+              opacity: 0.8,
+            }}
+            bg={"#FA8B02"}
+            color={"#ffffff"}
+            px={5}
+            py={1.5}
+            borderRadius={"20"}
+            transition={"ease-in-out 0.3s"}
+            ml={10}
+            as={RouterLink}
+            to={"/signup"}
+          >
             Sign up
           </Link>
         </Flex>
@@ -81,6 +114,7 @@ export const Appbar = () => {
         height={"60px"}
         alignItems={"center"}
         px={5}
+        bg={"rgba(255, 255, 255, 0.6)"}
       >
         <Flex justifyContent={"flex-start"} alignItems={"center"} w={"20%"}>
           <Text fontSize={18} fontWeight={500}>
@@ -92,6 +126,8 @@ export const Appbar = () => {
           <IconButton
             onClick={onOpen}
             variant={"unstyled"}
+            transition={"ease-in-out 0.3s"}
+            _hover={{ color: "#FA8B02" }}
             icon={<HamburgerIcon fontSize={20} />}
           />
         </Flex>
@@ -110,6 +146,8 @@ export const Appbar = () => {
             <IconButton
               onClick={onClose}
               variant={"unstyled"}
+              transition={"ease-in-out 0.3s"}
+              _hover={{ color: "#FA8B02" }}
               icon={<CloseIcon fontSize={15} />}
             />
           </DrawerHeader>
@@ -121,7 +159,15 @@ export const Appbar = () => {
             flexDirection={"column"}
           >
             {links.map((link, index) => (
-              <Link py={2} as={RouterLink} to={link.url} key={index}>
+              <Link
+                color={"#000000"}
+                _hover={{ color: "#FA8B02" }}
+                transition={"ease-in-out 0.3s"}
+                py={2}
+                as={RouterLink}
+                to={link.url}
+                key={index}
+              >
                 {link.name}
               </Link>
             ))}
@@ -131,10 +177,31 @@ export const Appbar = () => {
             flexDirection={"column"}
             borderTopWidth="1px"
           >
-            <Link py={2} as={RouterLink} to={"/login"}>
+            <Link
+              _hover={{ color: "#FB8B02", opacity: 0.8 }}
+              transition={"ease-in-out 0.3s"}
+              color={"#FA8B02"}
+              to={"/login"}
+              py={2}
+              as={RouterLink}
+            >
               Log in
             </Link>
-            <Link py={2} as={RouterLink} to={"/signup"}>
+            <Link
+              my={2}
+              _hover={{
+                backgroundColor: "#FA8B02",
+                opacity: 0.8,
+              }}
+              bg={"#FA8B02"}
+              color={"#ffffff"}
+              borderRadius={"20"}
+              transition={"ease-in-out 0.3s"}
+              py={2}
+              px={5}
+              as={RouterLink}
+              to={"/signup"}
+            >
               Sign up
             </Link>
           </DrawerFooter>
