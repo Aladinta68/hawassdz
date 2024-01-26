@@ -18,7 +18,7 @@ export const Appbar = () => {
       top="0"
       left="0"
       right="0"
-      zIndex="10"
+      zIndex="99"
       justifyContent={"center"}
       alignItems={"center"}
     >

@@ -10,14 +10,14 @@ export const Header = () => {
       bgImg={header1}
       bgSize={"cover"}
       bgPos={"center"}
-      h={{ base: "", md: "100vh" }}
+      h={{ base: "100%", md: "100vh" }}
       w={"100%"}
     >
       <Box
         opacity={"0.4"}
         bg={"#000000"}
         w={"100%"}
-        h={{ base: "84%", md: "100vh" }}
+        h={{ base: "100%", md: "100vh" }}
         position={"absolute"}
       ></Box>
       <Container
