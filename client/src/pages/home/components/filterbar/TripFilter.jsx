@@ -34,6 +34,7 @@ export const TripFilter = () => {
           <Text>Number of person</Text>
         </HStack>
         <Select
+          cursor={"pointer"}
           mt={1}
           fontSize={14}
           border={"none"}
@@ -53,6 +54,7 @@ export const TripFilter = () => {
           <Text>Date</Text>
         </HStack>
         <Input
+          cursor={"pointer"}
           mt={1}
           fontSize={14}
           type="date"
@@ -72,6 +74,7 @@ export const TripFilter = () => {
           <Text>Types</Text>
         </HStack>
         <Select
+          cursor={"pointer"}
           mt={1}
           fontSize={14}
           border={"none"}
@@ -91,6 +94,7 @@ export const TripFilter = () => {
           <Text>Destination</Text>
         </HStack>
         <Select
+          cursor={"pointer"}
           mt={1}
           fontSize={14}
           border={"none"}
@@ -111,6 +115,7 @@ export const TripFilter = () => {
         </HStack>
         <Select
           my={1}
+          cursor={"pointer"}
           fontSize={14}
           border={"none"}
           color={"gray"}

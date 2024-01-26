@@ -30,6 +30,7 @@ export const DestinationFilter = () => {
           <Text>Number of person</Text>
         </HStack>
         <Select
+          cursor={"pointer"}
           mt={1}
           fontSize={14}
           border={"none"}
@@ -49,6 +50,7 @@ export const DestinationFilter = () => {
           <Text>Date</Text>
         </HStack>
         <Input
+          cursor={"pointer"}
           mt={1}
           fontSize={14}
           type="date"
@@ -68,6 +70,7 @@ export const DestinationFilter = () => {
           <Text>Types</Text>
         </HStack>
         <Select
+          cursor={"pointer"}
           mt={1}
           fontSize={14}
           border={"none"}
@@ -87,6 +90,7 @@ export const DestinationFilter = () => {
           <Text>Destination</Text>
         </HStack>
         <Select
+          cursor={"pointer"}
           mt={1}
           fontSize={14}
           border={"none"}
@@ -106,6 +110,7 @@ export const DestinationFilter = () => {
           <Text>Transportation</Text>
         </HStack>
         <Select
+          cursor={"pointer"}
           my={1}
           fontSize={14}
           border={"none"}

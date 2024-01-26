@@ -17,7 +17,7 @@ export const Header = () => {
         opacity={"0.4"}
         bg={"#000000"}
         w={"100%"}
-        h={{ base: "100%", md: "100vh" }}
+        h={{ base: "100ch", md: "100vh" }}
         position={"absolute"}
       ></Box>
       <Container
