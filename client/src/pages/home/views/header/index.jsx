@@ -1,4 +1,4 @@
-import { Container, Flex, Heading, Text } from "@chakra-ui/react";
+import { Box, Container, Flex, Heading, Text } from "@chakra-ui/react";
 import React from "react";
 import header1 from "../../../../assets/home/header1.png";
 import { Filterbar } from "../../components/filterbar";
@@ -13,8 +13,16 @@ export const Header = () => {
       h={{ base: "", md: "100vh" }}
       w={"100%"}
     >
+      <Box
+        opacity={"0.4"}
+        bg={"#000000"}
+        w={"100%"}
+        h={{ base: "84%", md: "100vh" }}
+        position={"absolute"}
+      ></Box>
       <Container
-        mt={"60px"}
+        zIndex={99}
+        mt={{ base: "100px", md: "60px" }}
         display={"flex"}
         flexDirection={"column"}
         justifyContent={"center"}

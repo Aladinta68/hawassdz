@@ -34,10 +34,11 @@ export const TripFilter = () => {
           <Text>Number of person</Text>
         </HStack>
         <Select
+          mt={1}
           fontSize={14}
           border={"none"}
           color={"gray"}
-          h={8}
+          h={{ base: 10, md: 8 }}
           placeholder="Chose number"
         ></Select>
       </Flex>
@@ -51,7 +52,14 @@ export const TripFilter = () => {
           <FaRegCalendarAlt width={15} height={15} color={"#000000"} />
           <Text>Date</Text>
         </HStack>
-        <Input fontSize={14} type="date" border={"none"} color={"gray"} h={8} />
+        <Input
+          mt={1}
+          fontSize={14}
+          type="date"
+          border={"none"}
+          color={"gray"}
+          h={{ base: 10, md: 8 }}
+        />
       </Flex>
       <Flex
         w={{ base: "100%", md: "auto" }}
@@ -64,10 +72,11 @@ export const TripFilter = () => {
           <Text>Types</Text>
         </HStack>
         <Select
+          mt={1}
           fontSize={14}
           border={"none"}
           color={"gray"}
-          h={8}
+          h={{ base: 10, md: 8 }}
           placeholder="Select Types"
         ></Select>
       </Flex>
@@ -82,10 +91,11 @@ export const TripFilter = () => {
           <Text>Destination</Text>
         </HStack>
         <Select
+          mt={1}
           fontSize={14}
           border={"none"}
           color={"gray"}
-          h={8}
+          h={{ base: 10, md: 8 }}
           placeholder="Select destination"
         ></Select>
       </Flex>
@@ -99,7 +109,13 @@ export const TripFilter = () => {
           <PiBus color={"#000000"} />
           <Text>Transportation</Text>
         </HStack>
-        <Select fontSize={14} border={"none"} color={"gray"} h={8}>
+        <Select
+          my={1}
+          fontSize={14}
+          border={"none"}
+          color={"gray"}
+          h={{ base: 10, md: 8 }}
+        >
           <option>Select Transportation</option>
         </Select>
       </Flex>
