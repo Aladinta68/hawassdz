@@ -1,4 +1,5 @@
 import {
+  Box,
   Container,
   Flex,
   HStack,
@@ -23,7 +24,10 @@ export const Footer = () => {
     <Flex color={"#ffffff"} direction={"column"} bg={"#333333"} bottom={0}>
       <Container maxW={"6xl"}>
         <Flex py={5}>
-          <Text>HawassDz</Text>
+          <Flex fontSize={20} fontWeight={500} direction={"row"}>
+            <Text color={"#ffffff"}>Hawass</Text>
+            <Text color={"#FA8B02"}>Dz</Text>
+          </Flex>
         </Flex>
         <Flex
           justifyContent={"space-between"}
@@ -31,7 +35,7 @@ export const Footer = () => {
           py={5}
           direction={{ base: "column", md: "row" }}
         >
-          <Flex direction={"column"}>
+          <Flex my={{ base: 5, md: 0 }} direction={"column"}>
             <Text fontWeight={600} py={2}>
               Services
             </Text>
@@ -68,7 +72,7 @@ export const Footer = () => {
               </ListItem>
             </List>
           </Flex>
-          <Flex direction={"column"}>
+          <Flex my={{ base: 5, md: 0 }} direction={"column"}>
             <Text fontWeight={600} py={2}>
               Pages
             </Text>
@@ -125,7 +129,7 @@ export const Footer = () => {
               </ListItem>
             </List>
           </Flex>
-          <Flex direction={"column"}>
+          <Flex my={{ base: 5, md: 0 }} direction={"column"}>
             <Text fontWeight={600} py={2}>
               Help
             </Text>
@@ -152,7 +156,7 @@ export const Footer = () => {
               </ListItem>
             </List>
           </Flex>
-          <Flex direction={"column"}>
+          <Flex my={{ base: 5, md: 0 }} direction={"column"}>
             <Text fontWeight={600} py={2}>
               Contacts
             </Text>
@@ -177,7 +181,12 @@ export const Footer = () => {
               </ListItem>
             </List>
           </Flex>
-          <Flex px={3} alignItems={"center"} direction={"column"}>
+          <Flex
+            my={{ base: 5, md: 0 }}
+            px={3}
+            alignItems={"center"}
+            direction={"column"}
+          >
             <Text fontWeight={600} py={2}>
               Social Media
             </Text>

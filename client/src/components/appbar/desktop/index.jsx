@@ -15,9 +15,10 @@ export const DesktopAppbar = ({ links }) => {
       height={"60px"}
     >
       <Flex justifyContent={"flex-start"} alignItems={"center"} w={"20%"}>
-        <Text color={"#ffffff"} fontSize={18} fontWeight={500}>
-          HawassDZ
-        </Text>
+        <Flex fontSize={20} fontWeight={500} direction={"row"}>
+          <Text color={"#ffffff"}>Hawass</Text>
+          <Text color={"#FA8B02"}>Dz</Text>
+        </Flex>
       </Flex>
       <Flex
         justifyContent={"center"}
