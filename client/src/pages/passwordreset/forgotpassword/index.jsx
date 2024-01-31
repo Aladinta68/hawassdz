@@ -17,7 +17,9 @@ import { IoIosArrowRoundBack } from "react-icons/io";
 
 export const ForgotPassword = () => (
   <Container
-    h={"100vh"}
+  display={'flex'}
+    h={"100%"}
+    minH={"100vh"}
     maxW={"xl"}
     justifyContent={"center"}
     alignItems={"center"}
@@ -31,7 +33,6 @@ export const ForgotPassword = () => (
     >
       <Box
         borderRadius={20}
-        shadow={{ base: "none", md: "md" }}
         px={{ base: 0, md: 10 }}
         py={{
           base: "0",

@@ -17,8 +17,8 @@ import { PasswordField } from "./components/PasswordField";
 import { GoogleIcon } from "./components/ProviderIcons";
 
 export const Login = () => (
-  <Container maxW={"md"} justify={"center"} align={"center"}>
-    <Stack px={{ base: 10, md: 0 }} py={{ base: 0, md: 10 }} spacing="8">
+  <Container minH={'100vh'}  display={'flex'} alignItems={'center'} justifyContent={'center'} h={'100%'} maxW={"md"} justify={"center"} align={"center"}>
+    <Stack w={'100%'}  px={{ base: 10, md: 0 }} py={{ base: 0, md: 0 }} spacing="8">
       <Box
         py={{
           base: "0",

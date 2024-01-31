@@ -17,7 +17,7 @@ import {
   import { GoogleIcon } from "./components/ProviderIcons";
   
   export const CheckEmail = () => (
-    <Container maxW={"md"} justify={"center"} align={"center"}>
+    <Container minH={'100vh'} h={'100%'} maxW={"md"} display={'flex'} justifyContent={"center"} alignItems={"center"}>
       <Stack px={{ base: 10, md: 0 }} py={{ base: 0, md: 10 }} spacing="8">
         <Box
           py={{

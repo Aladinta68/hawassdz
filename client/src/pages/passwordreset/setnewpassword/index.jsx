@@ -15,7 +15,7 @@ import { IoIosArrowRoundBack } from "react-icons/io";
 
 export const Setnewpassword = () => {
   return (
-    <Container maxW={"xl"} justifyContent={"center"} alignItems={"center"}>
+    <Container minH={'100vh'} h={'100%'} display={'flex'} maxW={"xl"} justifyContent={"center"} alignItems={"center"}>
       <Stack
         justify={"center"}
         align={"center"}
@@ -25,7 +25,6 @@ export const Setnewpassword = () => {
       >
         <Box
           borderRadius={20}
-          shadow={{ base: "none", md: "md" }}
           px={{ base: 0, md: 10 }}
           py={{
             base: "0",
