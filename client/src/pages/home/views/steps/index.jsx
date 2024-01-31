@@ -3,7 +3,7 @@ import React from "react";
 import { BsCalendar2Check } from "react-icons/bs";
 import { GiTreasureMap } from "react-icons/gi";
 import { MdDirectionsWalk } from "react-icons/md";
-import steps from "../../../../assets/steps.png"
+import steps from "../../../../assets/image/steps.png"
 export const Steps = () => {
   return (
     <Flex

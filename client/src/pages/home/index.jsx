@@ -15,24 +15,15 @@ const Home = () => {
       <Header />
       <Container maxW={"6xl"}>
         <Spacer height={50} />
-        <Popular
-          title={DestinationsPopularData.title}
-          description={DestinationsPopularData.description}
-        />
+        <Popular type="destinations" mydata={DestinationsPopularData} />
         <Spacer height={50} />
-        <Popular
-          title={HotelsPopularData.title}
-          description={HotelsPopularData.description}
-        />
+        <Popular type="hotels" mydata={HotelsPopularData} />
         <Spacer height={50} />
-        <Popular
-          title={RestaurantsPopularData.title}
-          description={RestaurantsPopularData.description}
-        />
+        <Popular type="restaurants" mydata={RestaurantsPopularData} />
         <Spacer height={50} />
         <Steps />
         <Spacer height={0} />
-        <Popular />
+        {/* <Popular /> */}
         <Spacer height={50} />
         <Description />
         <Divider height={50} />

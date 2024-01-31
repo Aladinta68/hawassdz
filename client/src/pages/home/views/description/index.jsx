@@ -1,6 +1,6 @@
 import { Box, Flex, Image, Text, VStack } from "@chakra-ui/react";
 import React from "react";
-import description from "../../../../assets/description.png";
+import description from "../../../../assets/image/description.png";
 export const Description = () => {
   return (
     <Flex

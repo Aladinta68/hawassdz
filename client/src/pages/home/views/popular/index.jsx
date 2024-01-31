@@ -19,17 +19,7 @@ import {
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, Autoplay]);
-
-const cards = [
-  { id: 1 },
-  { id: 2 },
-  { id: 3 },
-  { id: 4 },
-  { id: 5 },
-  { id: 6 },
-];
-
-export const Popular = ({ title, description }) => {
+export const Popular = ({ type,mydata }) => {
   const slidesPerView = useBreakpointValue({ base: 1, md: 3 });
 
   return (
@@ -48,7 +38,7 @@ export const Popular = ({ title, description }) => {
           fontSize={22}
           fontWeight={600}
         >
-          {title}
+          {mydata.title}
         </Text>
         <Text
           w={{ base: "100%", md: "40%" }}
@@ -57,7 +47,7 @@ export const Popular = ({ title, description }) => {
           my={{ base: "8", md: 0 }}
           textAlign={"center"}
         >
-          {description}
+          {mydata.description}
         </Text>
         <Flex
           justifyContent={"space-between"}
@@ -88,19 +78,19 @@ export const Popular = ({ title, description }) => {
       </Flex>
       <Flex w={"100%"} justify={"center"} align={"center"}>
         <Swiper
-          autoplay={{
-            delay: 2500,
-          }}
+          // autoplay={{
+          //   delay: 2500,
+          // }}
           loop={true}
           slidesPerView={slidesPerView}
         >
-          {cards.map((card, index) => (
+          {mydata.carddata.map((item, index) => (
             <SwiperSlide
               key={index}
               style={{ display: "flex", justifyContent: "center" }}
             >
-              <Box w={{ base: "", md: "95%" }}>
-                <CustomCard />
+              <Box  w={{ base: "", md: "95%" }}>
+                <CustomCard type={type}  data={item} />
               </Box>
             </SwiperSlide>
           ))}
