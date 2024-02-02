@@ -13,7 +13,7 @@ export const Appbar = () => {
   ];
   return (
     <Flex
-      bg={"rgba(255, 255, 255, 0.1)"}
+      bg={"#3333337b"}
       position={{ base: "absolute", md: "absolute" }}
       top="0"
       left="0"

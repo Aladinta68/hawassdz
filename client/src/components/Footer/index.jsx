@@ -3,6 +3,7 @@ import {
   Container,
   Flex,
   HStack,
+  Image,
   Link,
   List,
   ListItem,
@@ -18,16 +19,13 @@ import {
   FaPhoneAlt,
 } from "react-icons/fa";
 import { MdMail } from "react-icons/md";
-
+import logo from "../../assets/svg/logo.svg";
 export const Footer = () => {
   return (
     <Flex color={"#ffffff"} direction={"column"} bg={"#333333"} bottom={0}>
       <Container maxW={"6xl"}>
         <Flex py={5}>
-          <Flex fontSize={20} fontWeight={500} direction={"row"}>
-            <Text color={"#ffffff"}>Hawass</Text>
-            <Text color={"#FA8B02"}>Dz</Text>
-          </Flex>
+          <Image w={"100px"} src={logo} />
         </Flex>
         <Flex
           justifyContent={"space-between"}

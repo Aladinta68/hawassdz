@@ -1,4 +1,4 @@
-import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
+import { CloseIcon, HamburgerIcon, Icon } from "@chakra-ui/icons";
 import {
   Drawer,
   DrawerBody,
@@ -8,12 +8,14 @@ import {
   DrawerOverlay,
   Flex,
   IconButton,
+  Image,
   Link,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Link as RouterLink, useLocation } from "react-router-dom";
+import logo from "../../../assets/svg/logo.svg";
 export const MobileAppbar = ({ links }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [placement, setPlacement] = useState("right");
@@ -29,13 +31,10 @@ export const MobileAppbar = ({ links }) => {
         alignItems={"center"}
         px={5}
         zIndex={99}
-        bg={"rgba(255, 255, 255, 0.1)"}
+        bg={"#333333b5"}
       >
         <Flex justifyContent={"flex-start"} alignItems={"center"} w={"20%"}>
-          <Flex fontSize={20} fontWeight={500} direction={"row"}>
-            <Text color={"#ffffff"}>Hawass</Text>
-            <Text color={"#FA8B02"}>Dz</Text>
-          </Flex>
+          <Image w={"100px"} src={logo} />
         </Flex>
         <Flex w={"80%"} justifyContent={"space-between"}>
           <Flex></Flex>
@@ -49,7 +48,7 @@ export const MobileAppbar = ({ links }) => {
           />
         </Flex>
       </Flex>
-      <Drawer placement={placement} onClose={onClose} isOpen={isOpen}>
+      <Drawer  placement={placement} onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
         <DrawerContent>
           <DrawerHeader

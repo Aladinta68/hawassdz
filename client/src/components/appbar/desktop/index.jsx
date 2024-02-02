@@ -1,7 +1,8 @@
-import { Flex, Link, Text } from "@chakra-ui/react";
+import { Flex, Image, Link, Text } from "@chakra-ui/react";
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import logo from "../../../assets/svg/logo.svg";
 export const DesktopAppbar = ({ links }) => {
   const location = useLocation();
   return (
@@ -15,10 +16,7 @@ export const DesktopAppbar = ({ links }) => {
       height={"60px"}
     >
       <Flex justifyContent={"flex-start"} alignItems={"center"} w={"20%"}>
-        <Flex fontSize={20} fontWeight={500} direction={"row"}>
-          <Text color={"#ffffff"}>Hawass</Text>
-          <Text color={"#FA8B02"}>Dz</Text>
-        </Flex>
+        <Image w={'100px'} src={logo} />
       </Flex>
       <Flex
         justifyContent={"center"}

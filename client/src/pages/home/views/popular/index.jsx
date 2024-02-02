@@ -78,9 +78,9 @@ export const Popular = ({ type,mydata }) => {
       </Flex>
       <Flex w={"100%"} justify={"center"} align={"center"}>
         <Swiper
-          // autoplay={{
-          //   delay: 2500,
-          // }}
+          autoplay={{
+            delay: 2500,
+          }}
           loop={true}
           slidesPerView={slidesPerView}
         >
@@ -89,7 +89,7 @@ export const Popular = ({ type,mydata }) => {
               key={index}
               style={{ display: "flex", justifyContent: "center" }}
             >
-              <Box  w={{ base: "", md: "95%" }}>
+              <Box   w={{ base: "70%", md: "95%" }}>
                 <CustomCard type={type}  data={item} />
               </Box>
             </SwiperSlide>

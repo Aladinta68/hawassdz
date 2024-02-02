@@ -12,12 +12,13 @@ export const Header = () => {
       bgPos={"center"}
       h={{ base: "100%", md: "100vh" }}
       w={"100%"}
+      position={'relative'}
     >
       <Box
         opacity={"0.4"}
         bg={"#000000"}
         w={"100%"}
-        h={{ base: "100ch", md: "100vh" }}
+        h={"100%"}
         position={"absolute"}
       ></Box>
       <Container
