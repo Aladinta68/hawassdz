@@ -9,13 +9,27 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { PasswordField } from "./components/Passwordfield";
 import { BiKey } from "react-icons/bi";
 import { IoIosArrowRoundBack } from "react-icons/io";
+import { useState } from "react";
+import { PasswordField } from "./../../../components/form/PasswordField";
+import { SuccessPassword } from "../success";
+import { Link as RouterLink } from "react-router-dom";
 
 export const Setnewpassword = () => {
-  return (
-    <Container minH={'100vh'} h={'100%'} display={'flex'} maxW={"xl"} justifyContent={"center"} alignItems={"center"}>
+  const [Reseted, setReseted] = useState(false);
+  const HandleResetpassword = () => {
+    setReseted(true);
+  };
+  return !Reseted ? (
+    <Container
+      minH={"100vh"}
+      h={"100%"}
+      display={"flex"}
+      maxW={"xl"}
+      justifyContent={"center"}
+      alignItems={"center"}
+    >
       <Stack
         justify={"center"}
         align={"center"}
@@ -45,10 +59,16 @@ export const Setnewpassword = () => {
               </Text>
             </VStack>
             <Stack spacing="5">
-              <PasswordField label="New Password" />
+              <PasswordField
+                label="New Password"
+                placeholder="Add new Password"
+              />
             </Stack>
             <Stack spacing="5">
-              <PasswordField label="Confirm Password" />
+              <PasswordField
+                label="Confirm Password"
+                placeholder="Confirm new Password"
+              />
             </Stack>
             <Stack spacing="6">
               <Button
@@ -57,6 +77,7 @@ export const Setnewpassword = () => {
                 _hover={{ opacity: "0.9" }}
                 borderRadius={25}
                 bg="#FA8B02"
+                onClick={HandleResetpassword}
               >
                 Reset Password
               </Button>
@@ -70,6 +91,8 @@ export const Setnewpassword = () => {
               _hover={{ color: "#ff7300" }}
               fontWeight={400}
               color={"#333333c5"}
+              as={RouterLink}
+              to={"/login"}
             >
               <IoIosArrowRoundBack fontSize={20} />
               <Text mx={2}>Back to Login</Text>
@@ -78,5 +101,7 @@ export const Setnewpassword = () => {
         </Box>
       </Stack>
     </Container>
+  ) : (
+    <SuccessPassword />
   );
 };

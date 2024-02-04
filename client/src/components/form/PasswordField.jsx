@@ -11,7 +11,7 @@ import {
 import { forwardRef, useRef } from "react";
 import { HiEye, HiEyeOff } from "react-icons/hi";
 
-export const PasswordField = forwardRef((props, ref) => {
+export const PasswordField = forwardRef(({label, placeholder}, props, ref) => {
   const { isOpen, onToggle } = useDisclosure();
   const inputRef = useRef(null);
   const mergeRef = useMergeRefs(inputRef, ref);
@@ -26,7 +26,7 @@ export const PasswordField = forwardRef((props, ref) => {
   return (
     <FormControl>
       <FormLabel color={"#333333c5"} htmlFor="password">
-        Password
+        {label ? label : "Password"}
       </FormLabel>
       <InputGroup>
         <InputRightElement>
@@ -38,6 +38,10 @@ export const PasswordField = forwardRef((props, ref) => {
           />
         </InputRightElement>
         <Input
+          _placeholder={{
+            fontWeight: 300,
+          }}
+          placeholder={placeholder ? placeholder : "Enter your password"}
           _focusVisible={{ border: "2px solid #FA8B02" }}
           id="password"
           ref={mergeRef}

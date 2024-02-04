@@ -4,7 +4,6 @@ import {
   Checkbox,
   Container,
   Divider,
-  Flex,
   FormControl,
   FormLabel,
   HStack,
@@ -13,12 +12,28 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { PasswordField } from "./components/PasswordField";
-import { GoogleIcon } from "./components/ProviderIcons";
+import { PasswordField } from "../../components/form/PasswordField";
+import { GoogleIcon } from "../../assets/icons-jsx/ProviderIcons";
+import { Logo } from "../../assets/icons-jsx/Logo";
+import { Link as RouterLink } from "react-router-dom";
 
 export const Login = () => (
-  <Container minH={'100vh'}  display={'flex'} alignItems={'center'} justifyContent={'center'} h={'100%'} maxW={"md"} justify={"center"} align={"center"}>
-    <Stack w={'100%'}  px={{ base: 10, md: 0 }} py={{ base: 0, md: 0 }} spacing="8">
+  <Container
+    minH={"100vh"}
+    display={"flex"}
+    alignItems={"center"}
+    justifyContent={"center"}
+    h={"100%"}
+    maxW={"md"}
+    justify={"center"}
+    align={"center"}
+  >
+    <Stack
+      w={"100%"}
+      px={{ base: 10, md: 0 }}
+      py={{ base: 0, md: 0 }}
+      spacing="8"
+    >
       <Box
         py={{
           base: "0",
@@ -26,12 +41,21 @@ export const Login = () => (
         }}
       >
         <Stack spacing="6">
+          <Stack w={"100%"} align={"center"} justify={"center"}>
+            <Link to={"/"} as={RouterLink}>
+              <Logo color1={"#000000"} width={"100px"} color2={"#DF6951"} />
+            </Link>
+          </Stack>
           <Stack spacing="5">
             <FormControl>
               <FormLabel color={"#333333c5"} htmlFor="email">
                 Email
               </FormLabel>
               <Input
+                _placeholder={{
+                  fontWeight: 300,
+                }}
+                placeholder="Enter your email address"
                 _focusVisible={{ border: "2px solid #FA8B02" }}
                 id="email"
                 type="email"
@@ -41,9 +65,9 @@ export const Login = () => (
           </Stack>
           <HStack justify="space-between">
             <Checkbox>Remember me</Checkbox>
-            <Button variant="text" size="sm">
+            <Link fontWeight={500} _hover={{ textDecoration: "none" }} to={"/forgotpassword"} as={RouterLink}>
               Forgot password?
-            </Button>
+            </Link>
           </HStack>
           <Stack spacing="6">
             <Button
@@ -78,6 +102,8 @@ export const Login = () => (
           <Text>
             Don’t have an account ?{" "}
             <Link
+              to={"/signup"}
+              as={RouterLink}
               _hover={{ color: "#ff7300" }}
               fontWeight={500}
               color={"#FA8B02"}

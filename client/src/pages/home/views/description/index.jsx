@@ -35,7 +35,7 @@ export const Description = () => {
           need! We offer packages in the way that you get the most at the lowest
           price. Book with us and we will always be available for you!
         </Text>
-        <Flex justifyContent={"center"} alignItems={"center"} direction={"row"}>
+        <Flex  justifyContent={"center"} alignItems={"flex-start"} direction={"row"}>
           <VStack alignItems={"flex-start"}>
             <Text fontWeight={600} fontSize={20} color={"#FA8B02"}>
               20+

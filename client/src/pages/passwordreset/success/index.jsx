@@ -1,99 +1,85 @@
 import {
   Box,
   Button,
-  Checkbox,
   Container,
-  Divider,
   Flex,
-  FormControl,
-  FormLabel,
-  HStack,
-  Input,
+  Heading,
   Link,
   Stack,
   Text,
+  VStack,
 } from "@chakra-ui/react";
-import { PasswordField } from "./components/PasswordField";
-import { GoogleIcon } from "./components/ProviderIcons";
+import { IoIosArrowRoundBack } from "react-icons/io";
+import { Link as RouterLink } from "react-router-dom";
+import { FaCheck } from "react-icons/fa6";
 
-export const SuccessPassword = () => (
-  <Container
-    minH={"100vh"}
-    h={"100%"}
-    display={"flex"}
-    maxW={"md"}
-    justifyContent={"center"}
-    alignItems={"center"}
-  >
-    <Stack px={{ base: 10, md: 0 }} py={{ base: 0, md: 10 }} spacing="8">
-      <Box
-        py={{
-          base: "0",
-          sm: "8",
-        }}
+export const SuccessPassword = () => {
+  return (
+    <Container
+      minH={"100vh"}
+      h={"100%"}
+      display={"flex"}
+      maxW={"xl"}
+      justifyContent={"center"}
+      alignItems={"center"}
+    >
+      <Stack
+        justify={"center"}
+        align={"center"}
+        h={"100%"}
+        px={{ base: 10, md: 0 }}
+        py={{ base: 0, md: 5 }}
       >
-        <Stack spacing="6">
-          <Stack spacing="5">
-            <FormControl>
-              <FormLabel color={"#333333c5"} htmlFor="email">
-                Email
-              </FormLabel>
-              <Input
-                _focusVisible={{ border: "2px solid #FA8B02" }}
-                id="email"
-                type="email"
-              />
-            </FormControl>
-            <PasswordField />
-          </Stack>
-          <HStack justify="space-between">
-            <Checkbox>Remember me</Checkbox>
-            <Button variant="text" size="sm">
-              Forgot password?
-            </Button>
-          </HStack>
+        <Box
+          borderRadius={20}
+          px={{ base: 0, md: 10 }}
+          py={{
+            base: "0",
+            sm: "8",
+          }}
+        >
           <Stack spacing="6">
-            <Button
-              color={"#ffffff"}
-              _hover={{ opacity: "0.9" }}
-              borderRadius={25}
-              bg="#FA8B02"
-            >
-              Sign in
-            </Button>
-            <HStack>
-              <Divider />
-              <Text textStyle="sm" whiteSpace="nowrap" color="fg.muted">
-                or continue with
+            <VStack spacing={5}>
+              <Flex borderRadius={"full"} p={3} bg={"#fa8a0268"}>
+                <FaCheck fontSize={22} color="#FA8B02" />
+              </Flex>
+              <Heading fontWeight={600} fontSize={30}>
+                Password Reset{" "}
+              </Heading>
+              <Text color={"#717070"} textAlign={"center"}>
+                Your password has been successfully reset. Click below to login
+                in magically.
               </Text>
-              <Divider />
-            </HStack>
-            <Button
-              border={"1.3px solid #3333333d"}
-              fontWeight={500}
-              color={"#333333a3"}
-              variant={"unstyled"}
-              _hover={{ backgroundColor: "#3333330f" }}
-              borderRadius={25}
-              leftIcon={<GoogleIcon />}
-            >
-              Sign In with Google
-            </Button>
+            </VStack>
+            <Stack spacing="6">
+              <Button
+                variant={"unstyled"}
+                color={"#ffffff"}
+                _hover={{ opacity: "0.9" }}
+                borderRadius={25}
+                bg="#FA8B02"
+              >
+                Continue{" "}
+              </Button>
+            </Stack>
           </Stack>
-        </Stack>
-        <Stack textAlign={"center"} py={5}>
-          <Text>
-            Don’t have an account ?{" "}
+          <Stack textAlign={"center"} py={5}>
             <Link
+              display={"flex"}
+              justifyContent={"center"}
+              alignItems={"center"}
               _hover={{ color: "#ff7300" }}
-              fontWeight={500}
-              color={"#FA8B02"}
+              fontWeight={400}
+              color={"#333333c5"}
+              as={RouterLink}
+              to={"/login"}
             >
-              Sign Up
+              <IoIosArrowRoundBack fontSize={20} />
+              <Text mx={2}>Back to Login</Text>
             </Link>
-          </Text>
-        </Stack>
-      </Box>
-    </Stack>
-  </Container>
-);
+          </Stack>
+        </Box>
+      </Stack>
+    </Container>
+  );
+};

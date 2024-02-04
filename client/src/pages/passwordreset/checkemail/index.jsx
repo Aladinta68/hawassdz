@@ -1,93 +1,100 @@
 import {
-    Box,
-    Button,
-    Checkbox,
-    Container,
-    Divider,
-    Flex,
-    FormControl,
-    FormLabel,
-    HStack,
-    Input,
-    Link,
-    Stack,
-    Text,
-  } from "@chakra-ui/react";
-  import { PasswordField } from "./components/PasswordField";
-  import { GoogleIcon } from "./components/ProviderIcons";
-  
-  export const CheckEmail = () => (
-    <Container minH={'100vh'} h={'100%'} maxW={"md"} display={'flex'} justifyContent={"center"} alignItems={"center"}>
-      <Stack px={{ base: 10, md: 0 }} py={{ base: 0, md: 10 }} spacing="8">
-        <Box
-          py={{
-            base: "0",
-            sm: "8",
-          }}
-        >
+  Box,
+  Button,
+  Checkbox,
+  Container,
+  Divider,
+  Flex,
+  FormControl,
+  FormLabel,
+  HStack,
+  Heading,
+  Input,
+  Link,
+  Stack,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router-dom";
+import { IoMailOutline } from "react-icons/io5";
+import { IoIosArrowRoundBack } from "react-icons/io";
+
+export const CheckEmail = () => (
+  <Container
+    display={"flex"}
+    h={"100%"}
+    minH={"100vh"}
+    maxW={"md"}
+    justifyContent={"center"}
+    alignItems={"center"}
+  >
+    <Stack
+      w={"100%"}
+      justify={"center"}
+      align={"center"}
+      h={"100%"}
+      px={{ base: 10, md: 0 }}
+      py={{ base: 0, md: 10 }}
+    >
+      <Box
+        w={"100%"}
+        borderRadius={20}
+        py={{
+          base: "0",
+          sm: "8",
+        }}
+      >
+        <Stack w={"100%"} spacing="6">
+          <VStack spacing={5}>
+            <Flex borderRadius={"full"} p={3} bg={"#fa8a0268"}>
+              <IoMailOutline fontSize={22} color="#FA8B02" />
+            </Flex>
+            <Heading fontWeight={600} fontSize={30}>
+              Check your email{" "}
+            </Heading>
+            <Text color={"#717070"} textAlign={"center"}>
+              We sent a password reset link to <br />
+              <Text color={"#000000"} fontWeight={500}>
+                loremipsum@gmail.com
+              </Text>
+            </Text>
+          </VStack>
           <Stack spacing="6">
-            <Stack spacing="5">
-              <FormControl>
-                <FormLabel color={"#333333c5"} htmlFor="email">
-                  Email
-                </FormLabel>
-                <Input
-                  _focusVisible={{ border: "2px solid #FA8B02" }}
-                  id="email"
-                  type="email"
-                />
-              </FormControl>
-              <PasswordField />
-            </Stack>
-            <HStack justify="space-between">
-              <Checkbox>Remember me</Checkbox>
-              <Button variant="text" size="sm">
-                Forgot password?
-              </Button>
-            </HStack>
-            <Stack spacing="6">
-              <Button
-                color={"#ffffff"}
-                _hover={{ opacity: "0.9" }}
-                borderRadius={25}
-                bg="#FA8B02"
-              >
-                Sign in
-              </Button>
-              <HStack>
-                <Divider />
-                <Text textStyle="sm" whiteSpace="nowrap" color="fg.muted">
-                  or continue with
-                </Text>
-                <Divider />
-              </HStack>
-              <Button
-                border={"1.3px solid #3333333d"}
-                fontWeight={500}
-                color={"#333333a3"}
-                variant={"unstyled"}
-                _hover={{ backgroundColor: "#3333330f" }}
-                borderRadius={25}
-                leftIcon={<GoogleIcon />}
-              >
-                Sign In with Google
-              </Button>
-            </Stack>
+            <Button
+              variant={"unstyled"}
+              color={"#ffffff"}
+              _hover={{ opacity: "0.9" }}
+              borderRadius={25}
+              bg="#FA8B02"
+            >
+              Open email app{" "}
+            </Button>
           </Stack>
-          <Stack textAlign={"center"} py={5}>
-            <Text>
-              Don’t have an account ?{" "}
-              <Link
-                _hover={{ color: "#ff7300" }}
-                fontWeight={500}
-                color={"#FA8B02"}
-              >
-                Sign Up
-              </Link>
+          <Stack align={"center"}>
+            <Text textAlign={"center"}>
+              Didn't receive the email?{" "}
+              <Button cursor={'pointer'} variant={'unstyled'} fontWeight={500} color={"#FA8B02"} as={"span"}>
+                Click to resend
+              </Button>
             </Text>
           </Stack>
-        </Box>
-      </Stack>
-    </Container>
-  );
-  
+        </Stack>
+        <Stack align={"center"} justify={"center"} textAlign={"center"} py={5}>
+          <Link
+            display={"flex"}
+            justifyContent={"center"}
+            alignItems={"center"}
+            _hover={{ color: "#ff7300" }}
+            fontWeight={400}
+            color={"#333333c5"}
+            to={"/login"}
+            as={RouterLink}
+          >
+            <IoIosArrowRoundBack fontSize={20} />
+            <Text mx={2}>Back to Login</Text>
+          </Link>
+        </Stack>
+      </Box>
+    </Stack>
+  </Container>
+);
