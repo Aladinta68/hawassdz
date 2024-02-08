@@ -8,10 +8,10 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React from "react";
-import { FaFontAwesomeFlag } from "react-icons/fa";
 import { HiMiniUserGroup } from "react-icons/hi2";
 import { DestinationFilter } from "./DestinationFilter";
 import { TripFilter } from "./TripFilter";
+import { PiFlagFill } from "react-icons/pi";
 
 export const Filterbar = () => {
   return (
@@ -43,7 +43,7 @@ export const Filterbar = () => {
             fontSize={16}
             _selected={{ color: "#FA8B02", bg: "#ffffff" }}
           >
-            <FaFontAwesomeFlag _selected={{ color: "#FA8B02" }} />
+            <PiFlagFill _selected={{ color: "#FA8B02" }} />
             <Text mx={1}> Destinations</Text>
           </Tab>
         </TabList>

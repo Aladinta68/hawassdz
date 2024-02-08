@@ -1,15 +1,18 @@
-import { Button, Flex, Heading, Input, VStack } from "@chakra-ui/react";
-import React, { useState } from "react";
 import {
-  Slider,
-  SliderTrack,
-  SliderFilledTrack,
-  SliderThumb,
+  Button,
+  Flex,
+  Heading,
+  Input,
+  RangeSliderFilledTrack,
+  RangeSliderThumb,
+  RangeSliderTrack,
+  VStack,
+  RangeSlider,
   Text,
 } from "@chakra-ui/react";
-
+import React, { useState } from "react";
 export const FilterBar = () => {
-  const [priceRange, setPriceRange] = useState([0, 100]);
+  const [priceRange, setPriceRange] = useState([0, 80]);
 
   const handleChange = (newValue) => {
     setPriceRange(newValue);
@@ -71,22 +74,30 @@ export const FilterBar = () => {
           >
             Filter by price
           </Text>
-          <Slider
+          <RangeSlider
             defaultValue={priceRange}
             min={0}
             max={100}
             onChange={handleChange}
           >
-            <SliderTrack bg={"#ffffff"} h={"30px"}>
-              <SliderFilledTrack bg={"#f67156"} />
-            </SliderTrack>
-            <SliderThumb
+            <RangeSliderTrack bg={"#ffffff"} h={"30px"}>
+              <RangeSliderFilledTrack bg={"#f67156"} />
+            </RangeSliderTrack>
+            <RangeSliderThumb
+              index={0}
               m={0}
               borderRadius={0}
               bg={"#df5b40"}
               boxSize={6}
-            ></SliderThumb>
-          </Slider>
+            />
+            <RangeSliderThumb
+              index={1}
+              m={0}
+              borderRadius={0}
+              bg={"#df5b40"}
+              boxSize={6}
+            />
+          </RangeSlider>
         </VStack>
         <Button
           boxShadow={"md"}

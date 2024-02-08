@@ -9,10 +9,10 @@ import {
 import React from "react";
 import { SearchIcon } from "@chakra-ui/icons";
 import { HiMiniUserGroup } from "react-icons/hi2";
-import { FaRegCalendarAlt } from "react-icons/fa";
+import { BsFillCalendarDateFill } from "react-icons/bs";
 import { GiTreasureMap } from "react-icons/gi";
-import { PiBus } from "react-icons/pi";
-import { FaFontAwesomeFlag } from "react-icons/fa";
+import { FaBusSimple } from "react-icons/fa6";
+import { PiFlagFill } from "react-icons/pi";
 
 export const TripFilter = () => {
   return (
@@ -50,7 +50,7 @@ export const TripFilter = () => {
         fontSize={15}
       >
         <HStack>
-          <FaRegCalendarAlt width={15} height={15} color={"#000000"} />
+          <BsFillCalendarDateFill width={15} height={15} color={"#000000"} />
           <Text>Date</Text>
         </HStack>
         <Input
@@ -90,7 +90,7 @@ export const TripFilter = () => {
         fontSize={15}
       >
         <HStack>
-          <FaFontAwesomeFlag color={"#000000"} />
+          <PiFlagFill color={"#000000"} />
           <Text>Destination</Text>
         </HStack>
         <Select
@@ -110,7 +110,7 @@ export const TripFilter = () => {
         fontSize={15}
       >
         <HStack>
-          <PiBus color={"#000000"} />
+          <FaBusSimple color={"#000000"} />
           <Text>Transportation</Text>
         </HStack>
         <Select

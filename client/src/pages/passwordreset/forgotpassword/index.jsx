@@ -69,6 +69,7 @@ export const ForgotPassword = () => {
                   _focusVisible={{ border: "2px solid #FA8B02" }}
                   id="email"
                   type="email"
+                  placeholder="Your Email address"
                 />
               </FormControl>
             </Stack>

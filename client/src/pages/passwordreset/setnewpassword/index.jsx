@@ -61,13 +61,13 @@ export const Setnewpassword = () => {
             <Stack spacing="5">
               <PasswordField
                 label="New Password"
-                placeholder="Add new Password"
+                placeholder="New Password"
               />
             </Stack>
             <Stack spacing="5">
               <PasswordField
                 label="Confirm Password"
-                placeholder="Confirm new Password"
+                placeholder="Confirm New Password"
               />
             </Stack>
             <Stack spacing="6">

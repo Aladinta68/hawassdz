@@ -55,7 +55,7 @@ export const Login = () => (
                 _placeholder={{
                   fontWeight: 300,
                 }}
-                placeholder="Enter your email address"
+                placeholder="Email address "
                 _focusVisible={{ border: "2px solid #FA8B02" }}
                 id="email"
                 type="email"

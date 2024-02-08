@@ -50,13 +50,13 @@ export const Signup = () => (
           <Stack spacing="4">
             <FormControl>
               <FormLabel color={"#333333c5"} htmlFor="Name">
-                Name and Surname
+                Name 
               </FormLabel>
               <Input
                 _placeholder={{
                   fontWeight: 300,
                 }}
-                placeholder="Enter your name and surname"
+                placeholder="Name "
                 _focusVisible={{ border: "2px solid #FA8B02" }}
                 id="Name"
                 type="text"
@@ -70,7 +70,7 @@ export const Signup = () => (
                 _placeholder={{
                   fontWeight: 300,
                 }}
-                placeholder="Enter your email address"
+                placeholder="Email address "
                 _focusVisible={{ border: "2px solid #FA8B02" }}
                 id="email"
                 type="email"
