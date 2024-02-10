@@ -17,7 +17,6 @@ export const TripInformation = () => {
         aspernatur consequuntur eum quaerat distinctio ut inventore aliquid et
         quasi alias ut rerum suscipit et nihil deleniti. Ex optio sequi et quos
         praesentium in nostrum labore nam rerum iusto aut magni nesciunt? Quo
-        quidem neque iste expedita est dolor similique ut quasi maxime ut
         deserunt autem At praesentium voluptatem aut libero nisi. Et eligendi
         sint ab cumque veritatis aut provident aliquam. Aut aspernatur
         consequuntur eum quaerat distinctio ut inventore aliquid et quasi alias
