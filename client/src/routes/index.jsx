@@ -7,7 +7,8 @@ import { Login } from "./../pages/login/index";
 import { Signup } from "./../pages/signup/index";
 import { ForgotPassword } from "./../pages/passwordreset/forgotpassword/index";
 import { Setnewpassword } from "./../pages/passwordreset/setnewpassword/index";
-import { Trips } from './../pages/trips/index';
+import { TripDetails } from "../pages/trips/views/TripDetails";
+import { Trips } from './../pages/trips/views/SearchTrip/index';
 export const Router = () => {
   return (
     <>
@@ -16,6 +17,7 @@ export const Router = () => {
           <Route path="/" element={<Home />} />
           <Route path="/restaurants" element={<Restaurants />} />
           <Route path="/trips" element={<Trips />} />
+          <Route path="/tripdetails" element={<TripDetails />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />

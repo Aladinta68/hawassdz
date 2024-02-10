@@ -1,7 +1,6 @@
 import { Box, Container, Flex, Heading, Text } from "@chakra-ui/react";
 import React from "react";
-import header from "../../../../assets/image/trips/header.png";
-export const Header = () => {
+export const Header = ({image,text1,text2}) => {
   return (
     <Flex
       top="0"
@@ -9,7 +8,7 @@ export const Header = () => {
       zIndex="1"
       justifyContent={"center"}
       alignItems={"center"}
-      bgImg={header}
+      bgImg={image}
       bgSize={"cover"}
       bgPos={"center"}
       h={{ base: "80vh", md: "80vh" }}
@@ -34,10 +33,10 @@ export const Header = () => {
       >
         <Flex direction={"column"} textAlign={"center"}>
           <Text fontSize={16} color={"#ffffff"}>
-            SEARCH TRIP{" "}
+            {text1}
           </Text>
           <Heading mb={6} fontWeight={600} fontSize={60} color={"#ffffff"}>
-            Travel With Us{" "}
+            {text2}
           </Heading>
         </Flex>
       </Container>

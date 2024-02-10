@@ -7,6 +7,7 @@ import {
   Heading,
   Icon,
   Image,
+  Link,
   Spacer,
   Text,
   VStack,
@@ -19,6 +20,7 @@ import { FaBusSimple } from "react-icons/fa6";
 import { Localisation } from "./../../../../assets/icons-jsx/Localisation";
 import { GiSandsOfTime } from "react-icons/gi";
 import { PiGenderIntersexBold } from "react-icons/pi";
+import { Link as RouterLink } from "react-router-dom";
 
 export const TripCard = ({ data }) => {
   return (
@@ -70,7 +72,9 @@ export const TripCard = ({ data }) => {
               </HStack>
               <HStack>
                 <PiGenderIntersexBold color={"#FA8B02"} fontSize={18} />
-                <Text>{data.gender === "All" ? "Male/Female" : data.gender} </Text>
+                <Text>
+                  {data.gender === "All" ? "Male/Female" : data.gender}{" "}
+                </Text>
               </HStack>
               <HStack>
                 <FaBusSimple color={"#FA8B02"} fontSize={16} />
@@ -88,16 +92,20 @@ export const TripCard = ({ data }) => {
               <Text>from</Text>
               <Text>{data.price}DA</Text>
             </HStack>
-            <Button
-              px={3}
-              borderRadius={25}
+            <Link
+              _hover={{ opacity: 0.8 }}
+              transition={"ease-in-out 0.3s"}
               color={"#ffffff"}
-              fontWeight={400}
-              variant="unstyled"
               bg={"#8482FF"}
+              to={"/tripdetails"}
+              borderRadius={25}
+              as={RouterLink}
+              px={4}
+              py={2}
+              fontWeight={400}
             >
               View
-            </Button>
+            </Link>
           </Flex>
         </HStack>
       </CardBody>
