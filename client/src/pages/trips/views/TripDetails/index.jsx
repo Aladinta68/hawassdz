@@ -6,7 +6,7 @@ import { NavigationBar } from "./../../components/NavigationBar/index";
 import { BookNow } from "../../components/BookNow";
 
 import Plane from "../../../../assets/image/trips/Plane.png";
-import HeaderTripDetails from "../../../../assets/image/trips/HeaderTripDetails.png";
+import HeaderTripdetails from "../../../../assets/image/trips/HeaderTripdetails.png";
 import HeaderTripGallery from "../../../../assets/image/trips/HeaderTripGallery.png";
 import HeaderTripLocation from "../../../../assets/image/trips/HeaderTripLocation.png";
 import HeaderTripPlan from "../../../../assets/image/trips/HeaderTripPlan.png";
