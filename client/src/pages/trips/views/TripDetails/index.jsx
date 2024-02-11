@@ -23,7 +23,7 @@ export const TripDetails = () => {
   };
   let headerImage;
   if (Triplink === "tripinformation") {
-    headerImage = HeaderTripDetails;
+    headerImage = HeaderTripdetails;
   } else if (Triplink === "tripplan") {
     headerImage = HeaderTripPlan;
   } else if (Triplink === "tripgallery") {
