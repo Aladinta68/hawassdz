@@ -19,7 +19,7 @@ export const NavigationBar = ({ Triplinkstate, HandleTripLink }) => {
   ];
   return (
     <Flex
-      w={{ md: "4xl", base: "90%" }}
+      w={{ md: "4xl", base: "100%" }}
       h={"80px"}
       position="absolute"
       top="72vh"
@@ -42,7 +42,7 @@ export const NavigationBar = ({ Triplinkstate, HandleTripLink }) => {
           onClick={() => HandleTripLink(Triplink.path)}
         >
           <Icon as={Triplink.icon} />
-          <Text px={2}> {Triplink.name}</Text>
+          <Text px={{ md: 2, base: 0.5 }}> {Triplink.name}</Text>
         </Button>
       ))}
     </Flex>

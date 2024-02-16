@@ -11,7 +11,7 @@ export const TriBar = () => {
 
   return (
     <Flex
-      w={{md:"4xl",base:"90%"}}
+      w={{md:"4xl",base:"100%"}}
       h={"80px"}
       position="absolute"
       top="72vh"

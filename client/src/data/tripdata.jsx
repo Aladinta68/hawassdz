@@ -38,7 +38,8 @@ export const TripcardData = [
       {
         image: image3,
         title: "Voyage Sahara Biskra",
-        description: "",
+        description:
+          "Nam exercitationem commodi et ducimus quia in dolore animi sit mollitia amet id quod eligendi.",
         price: "2500",
         rating: "4",
         destination: "Biskra",

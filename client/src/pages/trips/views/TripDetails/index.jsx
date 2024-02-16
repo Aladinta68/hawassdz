@@ -34,7 +34,7 @@ export const TripDetails = () => {
 
   let contentComponent;
   if (Triplink === "tripinformation") {
-    contentComponent = <TripInformation />;
+    contentComponent = <TripInformation HandleTripLink={HandleTripLink} />;
   } else if (Triplink === "tripplan") {
     contentComponent = <TripPlan />;
   } else if (Triplink === "tripgallery") {
@@ -52,14 +52,11 @@ export const TripDetails = () => {
             align={"center"}
             pr={5}
             pl={{ base: 5, md: 0 }}
-            w={{ base: "100%", md: "70%" }}
+            w={{ base: "100%", md: "100%" }}
             direction={"column"}
           >
-            <Flex w={"100%"} direction={"column"}>
-              {contentComponent}
-            </Flex>
-          </Flex>
-          <Flex
+            {contentComponent}
+            {/* <Flex
             visibility={{ md: "visible", base: "hidden" }}
             justify={"flex-start"}
             align={"center"}
@@ -68,6 +65,7 @@ export const TripDetails = () => {
           >
             <BookNow />
             <Image mt={10} src={Plane} />
+          </Flex> */}
           </Flex>
         </Flex>
       </Container>
