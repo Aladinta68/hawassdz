@@ -26,7 +26,7 @@ export const TripCard = ({ data }) => {
   return (
     <Card
       borderRadius={20}
-      direction={{ base: "column", sm: "row" }}
+      direction={{ base: "column", md: "row" }}
       overflow="hidden"
       border={"none"}
       p={2}
@@ -34,7 +34,7 @@ export const TripCard = ({ data }) => {
     >
       <Image
         borderRadius={20}
-        maxW={{ base: "100%", sm: "200px" }}
+        maxW={{ base: "100%", md: "200px" }}
         src={data.image}
         alt="Trip"
       />

@@ -22,7 +22,7 @@ export const NavigationBar = ({ Triplinkstate, HandleTripLink }) => {
       w={{ md: "4xl", base: "100%" }}
       h={"80px"}
       position="absolute"
-      top="72vh"
+      top={{md:"75vh",base:'35vh'}}
       zIndex="2"
       bg={"#F8F8F8"}
     >

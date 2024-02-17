@@ -1,6 +1,6 @@
 import { Box, Container, Flex, Heading, Text } from "@chakra-ui/react";
 import React from "react";
-export const Header = ({image,text1,text2}) => {
+export const Header = ({ image, text1, text2 }) => {
   return (
     <Flex
       top="0"
@@ -11,7 +11,7 @@ export const Header = ({image,text1,text2}) => {
       bgImg={image}
       bgSize={"cover"}
       bgPos={"center"}
-      h={{ base: "80vh", md: "80vh" }}
+      h={{ base: "40vh", md: "80vh" }}
       w={"100%"}
       position={"relative"}
     >

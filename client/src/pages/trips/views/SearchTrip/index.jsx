@@ -19,7 +19,7 @@ export const Trips = () => {
       <Header image={header} text1={"SEARCH TRIP"} text2={"Travel With Us"} />
       <TriBar />
       <Container py={20} px={0} maxW={"6xl"}>
-        <Flex  direction={"row"}>
+        <Flex direction={"row"}>
           <Flex
             align={"center"}
             pr={5}
@@ -27,9 +27,9 @@ export const Trips = () => {
             w={{ base: "100%", md: "70%" }}
             direction={"column"}
           >
-            <Flex direction={"column"}>
+            <Flex  direction={"column"}>
               {TripData.data.map((Trip, index) => (
-                <Box my={5} key={index}>
+                <Box  my={5} key={index}>
                   <TripCard data={Trip} />
                 </Box>
               ))}

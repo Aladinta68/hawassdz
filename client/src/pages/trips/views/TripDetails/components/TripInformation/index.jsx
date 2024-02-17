@@ -7,7 +7,7 @@ import { Images } from "./components/Images";
 import { ExtraDetails } from "./components/ExtraDetails";
 import Plane from "../../../../../../assets/image/trips/Plane.png";
 import { BookNow } from "./../../../../components/BookNow/index";
-import { Rating } from "./components/Rating";
+import { Reviews } from "./components/Reviews";
 
 export const TripInformation = ({ HandleTripLink }) => {
   return (
@@ -19,7 +19,7 @@ export const TripInformation = ({ HandleTripLink }) => {
           <About />
           <Details />
           <ExtraDetails />
-          <Rating />
+          <Reviews />
         </Flex>
         <Flex
           pt={50}
