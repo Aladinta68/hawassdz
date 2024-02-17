@@ -10,10 +10,15 @@ import restaurantpopular1 from "../assets/image/restaurant/popular1.png";
 import restaurantpopular2 from "../assets/image/restaurant/popular2.png";
 import restaurantpopular3 from "../assets/image/restaurant/popular3.png";
 
+import image1 from "../assets/image/trips/data/image1.png";
+import image2 from "../assets/image/trips/data/image2.png";
+import image3 from "../assets/image/trips/data/image3.png";
+import image4 from "../assets/image/trips/data/image4.png";
+
 export const DestinationsPopularData = {
-  title: "Destinations Most Popular",
+  title: "Recommended Destinations",
   description:
-    "Some of the most popular destinations for you visit with a view the beautiful one.",
+    "Some of the most Recommended destinations for you visit with a view the beautiful one.",
   carddata: [
     {
       rate: "4.3",
@@ -54,9 +59,9 @@ export const DestinationsPopularData = {
   ],
 };
 export const HotelsPopularData = {
-  title: "Hotels Most Popular",
+  title: "Recommended Hotels",
   description:
-    "Some of the most popular hotels for you visit with a view the beautiful one.",
+    "Some of the most Recommended hotels for you visit with a view the beautiful one.",
   carddata: [
     {
       rate: "4.3",
@@ -97,9 +102,9 @@ export const HotelsPopularData = {
   ],
 };
 export const RestaurantsPopularData = {
-  title: "Restaurants Most Popular",
+  title: "Recommended Restaurants",
   description:
-    "Some of the most popular restaurants for you visit with a view the beautiful one.",
+    "Some of the most Recommended restaurants for you visit with a view the beautiful one.",
   carddata: [
     {
       rate: "4.3",
@@ -133,5 +138,44 @@ export const RestaurantsPopularData = {
       description:
         "The red and orange sand of the desert are very beautiful, let's take a trip here",
     },
+  ],
+};
+export const TripssPopularData = {
+  title: "Recommended Trips",
+  description:
+    "Some of the most Recommended Trips for you visit with a view the beautiful one.",
+  carddata: [
+    {
+      rate: "4.3",
+      location: "Bouira",
+      image: image1,
+      title: "Randonnée lala khedija",
+      description:
+      "Nam exercitationem commodi et ducimus quia in dolore animi sit mollitia.",
+      },
+    {
+      rate: "4.6",
+      location: "Adrar",
+      image: image2,
+      title: "Vaccance Timimoun",
+      description:
+          "Nam exercitationem commodi et ducimus quia in dolore animi sit mollitia.",
+        },
+    {
+      rate: "4",
+      location: "Biskra",
+      image: image3,
+      title: "Voyage Sahara Biskra",
+      description:
+        "a cool trip because the various scenery around will be very eye-catching",
+    },
+    {
+      rate: "4.3",
+      location: "Bejaia",
+      image: image4,
+      title: "Timeghras Randonnée",
+      description:
+      "a cool trip because the various scenery around will be very eye-catching",
+   },
   ],
 };

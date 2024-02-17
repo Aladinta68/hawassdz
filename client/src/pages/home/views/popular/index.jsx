@@ -31,9 +31,9 @@ export const Popular = ({ type,mydata }) => {
         alignItems={"center"}
         direction={{ base: "column", md: "row" }}
       >
-        <Text
+        <Text 
           textAlign={{ base: "center", md: "start" }}
-          w={{ base: "100%", md: "15%" }}
+          w={{ base: "100%", md: "20%" }}
           color={"#0C111F"}
           fontSize={22}
           fontWeight={600}

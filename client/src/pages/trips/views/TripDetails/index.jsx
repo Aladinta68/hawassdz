@@ -3,9 +3,7 @@ import React, { useState } from "react";
 
 import { Header } from "./../../components/header/index";
 import { NavigationBar } from "./../../components/NavigationBar/index";
-import { BookNow } from "../../components/BookNow";
 
-import Plane from "../../../../assets/image/trips/Plane.png";
 import HeaderTripdetails from "../../../../assets/image/trips/HeaderTripdetails.png";
 import HeaderTripGallery from "../../../../assets/image/trips/HeaderTripGallery.png";
 import HeaderTripLocation from "../../../../assets/image/trips/HeaderTripLocation.png";
@@ -56,16 +54,6 @@ export const TripDetails = () => {
             direction={"column"}
           >
             {contentComponent}
-            {/* <Flex
-            visibility={{ md: "visible", base: "hidden" }}
-            justify={"flex-start"}
-            align={"center"}
-            w={{ base: "0", md: "30%" }}
-            direction={"column"}
-          >
-            <BookNow />
-            <Image mt={10} src={Plane} />
-          </Flex> */}
           </Flex>
         </Flex>
       </Container>

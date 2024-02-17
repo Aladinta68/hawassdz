@@ -8,6 +8,7 @@ import {
   DestinationsPopularData,
   HotelsPopularData,
   RestaurantsPopularData,
+  TripssPopularData
 } from "../../data/populardata";
 const Home = () => {
   return (
@@ -23,7 +24,7 @@ const Home = () => {
         <Spacer height={50} />
         <Steps />
         <Spacer height={0} />
-        {/* <Popular /> */}
+        <Popular type="Trips" mydata={TripssPopularData} />
         <Spacer height={50} />
         <Description />
         <Divider height={50} />

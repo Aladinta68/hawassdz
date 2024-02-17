@@ -60,6 +60,7 @@ export const CustomCard = ({ type, data }) => {
         </Flex>
 
         <Image
+        w={'100%'}
           borderTopRadius={25}
           src={data.image}
           alt="Green double couch with wooden legs"
