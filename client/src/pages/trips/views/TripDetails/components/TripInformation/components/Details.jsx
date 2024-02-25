@@ -46,7 +46,7 @@ export const Details = () => {
       <HStack h={"100%"} align={"center"}>
         <MdPeople color="#FA8B02" size={20} />
         <Text fontWeight={600}>Age</Text>
-        <Text>>25</Text>
+        <Text>+25</Text>
       </HStack>
       <HStack h={"100%"} align={"center"}>
         <MdPerson4 color="#FA8B02" size={20} />

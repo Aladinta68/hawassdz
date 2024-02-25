@@ -19,9 +19,8 @@ export const TripInformation = ({ HandleTripLink }) => {
       <Flex w={"100%"} direction={"row"}>
         <Flex direction={"column"} w={{ md: "60%", base: "100%" }}>
           <About />
-          <BookNow />
-          <Details />
-          <ExtraDetails />
+          {breakpoint === "base" ? <BookNow /> : <></>}
+          <Details /> <ExtraDetails />
           <Reviews />
         </Flex>
         {breakpoint === "md" ? (
