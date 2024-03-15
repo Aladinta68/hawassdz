@@ -1,11 +1,7 @@
 import { ApolloError } from "apollo-server";
-import { prismaClient } from "../../prisma/client.js";
-
-const prisma = prismaClient();
-
 export const UserResolver = {
   Query: {
-    getUserById: async (_, { id }) => {
+    getUserById: async (_, { id }, { prisma }) => {
       try {
         const user = await prisma.user.findUnique({ where: { id } });
         if (!user) {
@@ -20,9 +16,21 @@ export const UserResolver = {
         );
       }
     },
+    getAllUsers: async (_, {}, { prisma }) => {
+      try {
+        const users = await prisma.user.findMany();
+        return users;
+      } catch (error) {
+        throw new ApolloError(
+          "Failed to fetch users",
+          "FETCH_USERS_ERROR",
+          error
+        );
+      }
+    },
   },
   Mutation: {
-    createUser: async (_, { userInput }) => {
+    createUser: async (_, { userInput }, { prisma }) => {
       try {
         const user = await prisma.user.create({ data: userInput });
         return user;
