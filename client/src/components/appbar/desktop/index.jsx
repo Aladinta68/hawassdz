@@ -11,7 +11,7 @@ export const DesktopAppbar = ({ links,isLogin }) => {
       maxW={"8xl"}
       justifyContent={"space-between"}
       alignItems={"center"}
-      display={{ sm: "none", md: "flex" }}
+      display={{base:"none", sm: "none", md: "flex" }}
       w={"100%"}
       direction={"row"}
       height={"80px"}

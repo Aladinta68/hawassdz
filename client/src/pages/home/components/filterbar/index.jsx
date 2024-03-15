@@ -21,6 +21,7 @@ export const Filterbar = () => {
       bg={"rgba(255, 255, 255, 0.2)"}
       p={3}
       w={{ base: "90%", md: "100%" }}
+      maxW={{base:"400px",sm:"400px",md:"full"}}
     >
       <Tabs borderRadius={15} w={"100%"} variant="enclosed">
         <TabList border={"none"}>

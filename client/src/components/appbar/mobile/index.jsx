@@ -27,7 +27,7 @@ export const MobileAppbar = ({ links, isLogin }) => {
     <>
       <Flex
         justifyContent={"space-between"}
-        display={{ sm: "flex", md: "none" }}
+        display={{ base: "flex", sm: "flex", md: "none" }}
         w={"100%"}
         direction={"row"}
         height={"60px"}
@@ -102,7 +102,7 @@ export const MobileAppbar = ({ links, isLogin }) => {
           >
             {isLogin ? (
               <Link as={RouterLink}>
-                <HStack >
+                <HStack>
                   <Avatar
                     bg="red.500"
                     icon={<AiOutlineUser fontSize="1.5rem" />}
