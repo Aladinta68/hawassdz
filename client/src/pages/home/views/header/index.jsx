@@ -1,26 +1,54 @@
-import { Box, Container, Flex, Heading, Text } from "@chakra-ui/react";
+import { Box, Container, Flex, Heading, Image, Text } from "@chakra-ui/react";
 import React from "react";
-import header1 from "../../../../assets/home/header1.png";
+import header1 from "../../../../assets/home/header2.png";
+import header3 from "../../../../assets/home/header3.png";
 import { Filterbar } from "../../components/filterbar";
+import SwiperCore from "swiper";
+import {
+  Navigation,
+  Pagination,
+  Scrollbar,
+  A11y,
+  Autoplay,
+} from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper-bundle.css";
+
+SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, Autoplay]);
+
+const HeaderImages = [header1, header3];
 export const Header = () => {
   return (
     <Flex
       justifyContent={"center"}
       alignItems={"center"}
-      bgImg={header1}
-      bgSize={"cover"}
-      bgPos={"center"}
       h={{ base: "100%", md: "100vh" }}
       w={"100%"}
-      position={'relative'}
+      position={"relative"}
     >
-      <Box
-        opacity={"0.4"}
-        bg={"#000000"}
-        w={"100%"}
-        h={"100%"}
-        position={"absolute"}
-      ></Box>
+      <Swiper
+        loop={true}
+        slidesPerView={1}
+        pagination={{
+          dynamicBullets: true,
+          clickable: true,
+        }}
+        autoplay={{ delay: 5000 }}
+        style={{ width: "100%", height: "100%", position: "absolute" }}
+      >
+        {HeaderImages.map((image, index) => (
+          <SwiperSlide key={index}>
+            <Image position={"absolute"} w={"100%"} h={"100%"} src={image} />
+            <Box
+              opacity={"0.4"}
+              bg={"#3d3b3b"}
+              w={"100%"}
+              h={"100%"}
+              position={"absolute"}
+            ></Box>
+          </SwiperSlide>
+        ))}
+      </Swiper>
       <Container
         zIndex={99}
         mt={{ base: "100px", md: "60px" }}
@@ -28,7 +56,7 @@ export const Header = () => {
         flexDirection={"column"}
         justifyContent={"center"}
         alignItems={"center"}
-        maxW={"5xl"}
+        maxW={"6xl"}
       >
         <Flex direction={"column"} textAlign={"center"}>
           <Heading mb={6} fontWeight={600} fontSize={50} color={"#ffffff"}>

@@ -1,5 +1,5 @@
 import { Flex } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 import { DesktopAppbar } from "./desktop";
 import { MobileAppbar } from "./mobile";
 
@@ -11,9 +11,10 @@ export const Appbar = () => {
     { name: "Restaurants", url: "/restaurants" },
     { name: "Trips", url: "/trips" },
   ];
+  const [isLogin, setisLogin] = useState(false);
+
   return (
     <Flex
-      bg={"#3333337b"}
       position={{ base: "absolute", md: "absolute" }}
       top="0"
       left="0"
@@ -22,8 +23,8 @@ export const Appbar = () => {
       justifyContent={"center"}
       alignItems={"center"}
     >
-      <DesktopAppbar links={links} />
-      <MobileAppbar links={links} />
+      <DesktopAppbar isLogin={isLogin} links={links} />
+      <MobileAppbar isLogin={isLogin} links={links} />
     </Flex>
   );
 };

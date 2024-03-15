@@ -44,7 +44,7 @@ export const Signup = () => (
         <Stack spacing="4">
           <Stack w={"100%"} align={"center"} justify={"center"}>
             <Link to={"/"} as={RouterLink}>
-              <Logo color1={"#000000"} width={"100px"} color2={"#DF6951"} />
+              <Logo color1={"#000000"} width={"150px"} color2={"#FA8B02"} />
             </Link>
           </Stack>
           <Stack spacing="4">

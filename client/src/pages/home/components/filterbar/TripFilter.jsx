@@ -18,7 +18,7 @@ export const TripFilter = () => {
   return (
     <Flex
       w={"100%"}
-      justifyContent={"center"}
+      justifyContent={"space-between"}
       alignItems={"center"}
       direction={{ base: "column", md: "row" }}
     >
@@ -125,6 +125,8 @@ export const TripFilter = () => {
         </Select>
       </Flex>
       <IconButton
+        _hover={{ opacity: 0.8 }}
+        transition={"ease-in-out 0.3"}
         bg={"#FA8B02"}
         variant={"unstyled"}
         color={"#ffffff"}

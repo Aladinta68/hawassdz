@@ -16,8 +16,8 @@ import { PiFlagFill } from "react-icons/pi";
 export const Filterbar = () => {
   return (
     <Flex
+      top={{ md: "75vh", base: "35vh" }}
       my={10}
-      borderRadius={15}
       bg={"rgba(255, 255, 255, 0.2)"}
       p={3}
       w={{ base: "90%", md: "100%" }}
@@ -25,8 +25,8 @@ export const Filterbar = () => {
       <Tabs borderRadius={15} w={"100%"} variant="enclosed">
         <TabList border={"none"}>
           <Tab
+            borderRadius={0}
             bg={"rgba(255, 255, 255, 0.4)"}
-            mb={0}
             color={"#ffffff"}
             fontWeight={500}
             fontSize={16}
@@ -36,6 +36,7 @@ export const Filterbar = () => {
             <Text mx={1}>Trips</Text>
           </Tab>
           <Tab
+            borderRadius={0}
             bg={"rgba(255, 255, 255, 0.4)"}
             mb={0}
             color={"#ffffff"}
@@ -47,11 +48,7 @@ export const Filterbar = () => {
             <Text mx={1}> Destinations</Text>
           </Tab>
         </TabList>
-        <TabPanels
-          borderRightRadius={15}
-          borderBottomRadius={15}
-          bg={"#ffffff"}
-        >
+        <TabPanels bg={"#ffffff"}>
           <TabPanel>
             <TripFilter />
           </TabPanel>

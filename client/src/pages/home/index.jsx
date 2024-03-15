@@ -8,13 +8,13 @@ import {
   DestinationsPopularData,
   HotelsPopularData,
   RestaurantsPopularData,
-  TripssPopularData
+  TripssPopularData,
 } from "../../data/populardata";
 const Home = () => {
   return (
     <Flex direction={"column"}>
       <Header />
-      <Container maxW={"6xl"}>
+      <Container maxW={"8xl"}>
         <Spacer height={50} />
         <Popular type="destinations" mydata={DestinationsPopularData} />
         <Spacer height={50} />

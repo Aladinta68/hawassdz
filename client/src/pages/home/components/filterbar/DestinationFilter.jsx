@@ -14,7 +14,7 @@ export const DestinationFilter = () => {
   return (
     <Flex
       w={"100%"}
-      justifyContent={"center"}
+      justifyContent={"space-between"}
       alignItems={"center"}
       direction={{ base: "column", md: "row" }}
     >

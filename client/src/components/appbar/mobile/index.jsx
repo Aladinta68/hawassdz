@@ -1,5 +1,6 @@
 import { CloseIcon, HamburgerIcon, Icon } from "@chakra-ui/icons";
 import {
+  Avatar,
   Drawer,
   DrawerBody,
   DrawerContent,
@@ -7,6 +8,7 @@ import {
   DrawerHeader,
   DrawerOverlay,
   Flex,
+  HStack,
   IconButton,
   Image,
   Link,
@@ -16,7 +18,8 @@ import {
 import React, { useState } from "react";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import logo from "../../../assets/svg/logo.svg";
-export const MobileAppbar = ({ links }) => {
+import { AiOutlineUser } from "react-icons/ai";
+export const MobileAppbar = ({ links, isLogin }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [placement, setPlacement] = useState("right");
   const location = useLocation();
@@ -24,17 +27,21 @@ export const MobileAppbar = ({ links }) => {
     <>
       <Flex
         justifyContent={"space-between"}
-        display={{ base: "flex", md: "none" }}
+        display={{ sm: "flex", md: "none" }}
         w={"100%"}
         direction={"row"}
         height={"60px"}
         alignItems={"center"}
         px={5}
         zIndex={99}
-        bg={"#333333b5"}
       >
-        <Flex justifyContent={"flex-start"} alignItems={"center"} w={"20%"}>
-          <Image w={"100px"} src={logo} />
+        <Flex
+          justifyContent={"flex-start"}
+          alignItems={"center"}
+          h={"100%"}
+          w={"30%"}
+        >
+          <Image src={logo} />
         </Flex>
         <Flex w={"80%"} justifyContent={"space-between"}>
           <Flex></Flex>
@@ -48,7 +55,7 @@ export const MobileAppbar = ({ links }) => {
           />
         </Flex>
       </Flex>
-      <Drawer  placement={placement} onClose={onClose} isOpen={isOpen}>
+      <Drawer placement={placement} onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
         <DrawerContent>
           <DrawerHeader
@@ -93,33 +100,47 @@ export const MobileAppbar = ({ links }) => {
             flexDirection={"column"}
             borderTopWidth="1px"
           >
-            <Link
-              _hover={{ color: "#FB8B02", opacity: 0.8 }}
-              transition={"ease-in-out 0.3s"}
-              color={"#FA8B02"}
-              to={"/login"}
-              py={2}
-              as={RouterLink}
-            >
-              Log in
-            </Link>
-            <Link
-              my={2}
-              _hover={{
-                backgroundColor: "#FA8B02",
-                opacity: 0.8,
-              }}
-              bg={"#FA8B02"}
-              color={"#ffffff"}
-              borderRadius={"20"}
-              transition={"ease-in-out 0.3s"}
-              py={2}
-              px={5}
-              as={RouterLink}
-              to={"/signup"}
-            >
-              Sign up
-            </Link>
+            {isLogin ? (
+              <Link as={RouterLink}>
+                <HStack >
+                  <Avatar
+                    bg="red.500"
+                    icon={<AiOutlineUser fontSize="1.5rem" />}
+                  />
+                  <Text>My account</Text>
+                </HStack>
+              </Link>
+            ) : (
+              <>
+                <Link
+                  _hover={{ color: "#FB8B02", opacity: 0.8 }}
+                  transition={"ease-in-out 0.3s"}
+                  color={"#FA8B02"}
+                  to={"/login"}
+                  py={2}
+                  as={RouterLink}
+                >
+                  Log in
+                </Link>
+                <Link
+                  my={2}
+                  _hover={{
+                    backgroundColor: "#FA8B02",
+                    opacity: 0.8,
+                  }}
+                  bg={"#FA8B02"}
+                  color={"#ffffff"}
+                  borderRadius={"2"}
+                  transition={"ease-in-out 0.3s"}
+                  py={2}
+                  px={5}
+                  as={RouterLink}
+                  to={"/signup"}
+                >
+                  Sign up
+                </Link>
+              </>
+            )}
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

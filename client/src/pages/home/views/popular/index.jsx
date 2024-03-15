@@ -1,12 +1,13 @@
 import {
   Box,
   Flex,
+  HStack,
   IconButton,
   Text,
   useBreakpointValue,
 } from "@chakra-ui/react";
 import React from "react";
-import { CustomCard } from "../../components/card";
+import { CustomCard } from "../../../../components/card/index";
 import { IoArrowBack } from "react-icons/io5";
 import SwiperCore from "swiper";
 import {
@@ -19,11 +20,15 @@ import {
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, Autoplay]);
-export const Popular = ({ type,mydata }) => {
-  const slidesPerView = useBreakpointValue({ base: 1, md: 3 });
+export const Popular = ({ type, mydata }) => {
+  const slidesPerView = useBreakpointValue({ base: 1,md: 2,lg:3,xl:4 });
 
   return (
-    <Flex direction={"column"} justifyContent={"center"} alignItems={"center"}>
+    <Flex
+      direction={"column"}
+      justifyContent={"center"}
+      alignItems={"center"}
+    >
       <Flex
         py={5}
         w={"100%"}
@@ -31,9 +36,10 @@ export const Popular = ({ type,mydata }) => {
         alignItems={"center"}
         direction={{ base: "column", md: "row" }}
       >
-        <Text 
+        <Text
+        
           textAlign={{ base: "center", md: "start" }}
-          w={{ base: "100%", md: "20%" }}
+          w={{ base: "100%", md: "30%" }}
           color={"#0C111F"}
           fontSize={22}
           fontWeight={600}
@@ -49,10 +55,10 @@ export const Popular = ({ type,mydata }) => {
         >
           {mydata.description}
         </Text>
-        <Flex
-          justifyContent={"space-between"}
-          w={{ base: "30%", md: "8%" }}
-          mb={5}
+        <HStack
+          spacing={5}
+          justifyContent={"end"}
+          w={{ base: "30%", md: "30%" }}
         >
           <IconButton
             display={"flex"}
@@ -74,9 +80,14 @@ export const Popular = ({ type,mydata }) => {
             variant={"unstyled"}
             icon={<IoArrowBack />}
           />
-        </Flex>
+        </HStack>
       </Flex>
-      <Flex w={"100%"} justify={"center"} align={"center"}>
+      <Flex
+        w={"100%"}
+        alignItems={"center"}
+        justify={"center"}
+        align={"center"}
+      >
         <Swiper
           autoplay={{
             delay: 2500,
@@ -89,8 +100,8 @@ export const Popular = ({ type,mydata }) => {
               key={index}
               style={{ display: "flex", justifyContent: "center" }}
             >
-              <Box   w={{ base: "70%", md: "95%" }}>
-                <CustomCard type={type}  data={item} />
+              <Box py={2} w={{ base: "100%", md: "95%" }}>
+                <CustomCard type={type} data={item} />
               </Box>
             </SwiperSlide>
           ))}

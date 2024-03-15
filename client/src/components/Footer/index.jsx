@@ -10,7 +10,7 @@ import {
   Spacer,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import {
   FaTwitter,
@@ -21,11 +21,13 @@ import {
 import { MdMail } from "react-icons/md";
 import logo from "../../assets/svg/logo.svg";
 export const Footer = () => {
+  const [ishoveredPhone, setishoveredPhone] = useState(false);
+  const [ishoveredmail, setishoveredmail] = useState(false);
   return (
     <Flex color={"#ffffff"} direction={"column"} bg={"#333333"} bottom={0}>
-      <Container maxW={"6xl"}>
+      <Container maxW={"8xl"}>
         <Flex py={5}>
-          <Image w={"100px"} src={logo} />
+          <Image w={"150px"} src={logo} />
         </Flex>
         <Flex
           justifyContent={"space-between"}
@@ -160,21 +162,79 @@ export const Footer = () => {
             </Text>
             <List>
               <ListItem
+                onMouseOver={() => setishoveredPhone(true)}
+                onMouseOut={() => setishoveredPhone(false)}
                 display={"flex "}
                 flexDirection={"row"}
                 alignItems={"center"}
                 py={1}
               >
-                <FaPhoneAlt fontSize={18} color="#FA8B02" />
+                <Box
+                  transition={"transform 0.2s"}
+                  animation={ishoveredPhone && "vibrate 0.5s ease "}
+                  css={`
+                    @keyframes vibrate {
+                      0% {
+                        transform: translate(0);
+                      }
+                      20% {
+                        transform: translate(-1px, 1px);
+                      }
+                      40% {
+                        transform: translate(1px, -1px);
+                      }
+                      60% {
+                        transform: translate(-1px, 1px);
+                      }
+                      80% {
+                        transform: translate(1px, 1px);
+                      }
+                      100% {
+                        transform: translate(0);
+                      }
+                    }
+                  `}
+                >
+                  <FaPhoneAlt fontSize={18} color="#FA8B02" />
+                </Box>
                 <Text mx={2}>(213)557444857</Text>
               </ListItem>
               <ListItem
+                onMouseOver={() => setishoveredmail(true)}
+                onMouseOut={() => setishoveredmail(false)}
                 display={"flex "}
                 flexDirection={"row"}
                 alignItems={"center"}
                 py={1}
               >
-                <MdMail fontSize={20} color="#FA8B02" />
+                <Box
+                  transition={"transform 0.2s"}
+                  animation={ishoveredmail && "vibrate 0.5s ease "}
+                  css={`
+                    @keyframes vibrate {
+                      0% {
+                        transform: translate(0);
+                      }
+                      20% {
+                        transform: translate(-0.5px, 0.5px);
+                      }
+                      40% {
+                        transform: translate(0.5px, -0.5px);
+                      }
+                      60% {
+                        transform: translate(-0.5px, 0.5px);
+                      }
+                      80% {
+                        transform: translate(0.5px, 0.5px);
+                      }
+                      100% {
+                        transform: translate(0);
+                      }
+                    }
+                  `}
+                >
+                  <MdMail fontSize={20} color="#FA8B02" />
+                </Box>
                 <Text mx={2}>HawassDZ@gmail.com</Text>
               </ListItem>
             </List>
@@ -190,13 +250,36 @@ export const Footer = () => {
             </Text>
             <HStack py={1}>
               <Link p={2} rounded={"full"} bg={"#FA8B02"}>
-                <FaTwitter />
+                <Box
+                  transition={"transform 0.2s"}
+                  _hover={{
+                    transform: "scale(1.2)",
+                  }}
+                >
+                  <FaTwitter />
+                </Box>
               </Link>
               <Link mx={5} p={2} rounded={"full"} bg={"#FA8B02"}>
-                <FaInstagram />
+                <Box
+                  transition={"transform 0.2s"}
+                  _hover={{
+                    transform: "scale(1.2)",
+                  }}
+                >
+                  {" "}
+                  <FaInstagram />
+                </Box>
               </Link>
               <Link p={2} rounded={"full"} bg={"#FA8B02"}>
-                <FaFacebookF />
+                <Box
+                  transition={"transform 0.2s"}
+                  _hover={{
+                    transform: "scale(1.2)",
+                  }}
+                >
+                  {" "}
+                  <FaFacebookF />
+                </Box>
               </Link>
             </HStack>
           </Flex>
