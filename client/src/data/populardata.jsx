@@ -56,6 +56,15 @@ export const DestinationsPopularData = {
       description:
         "The red and orange sand of the desert are very beautiful, let's take a trip here",
     },
+    {
+      rate: "4.8",
+      location: "blida",
+      numberTrip: "24",
+      image: destinationpopular3,
+      title: "Cheriaa",
+      description:
+        "a cool trip because the various scenery around will be very eye-catching",
+    },
   ],
 };
 export const HotelsPopularData = {
@@ -99,6 +108,15 @@ export const HotelsPopularData = {
       description:
         "The red and orange sand of the desert are very beautiful, let's take a trip here",
     },
+    {
+      rate: "5",
+      location: "Beb ezzouar",
+      price: "450",
+      image: hotelpopular3,
+      title: "Marriot",
+      description:
+        "a cool trip because the various scenery around will be very eye-catching",
+    },
   ],
 };
 export const RestaurantsPopularData = {
@@ -137,6 +155,14 @@ export const RestaurantsPopularData = {
       title: "Capadoccia",
       description:
         "The red and orange sand of the desert are very beautiful, let's take a trip here",
+    },
+    {
+      rate: "4.6",
+      location: "Turkey",
+      image: restaurantpopular2,
+      title: "Sossuvelei",
+      description:
+        "famous for its hot air balloons and we can see its natural beauty from above",
     },
   ],
 };
@@ -177,5 +203,13 @@ export const TripssPopularData = {
       description:
       "a cool trip because the various scenery around will be very eye-catching",
    },
+   {
+    rate: "4.6",
+    location: "Adrar",
+    image: image2,
+    title: "Vaccance Timimoun",
+    description:
+        "Nam exercitationem commodi et ducimus quia in dolore animi sit mollitia.",
+      },
   ],
 };

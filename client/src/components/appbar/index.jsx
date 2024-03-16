@@ -23,7 +23,7 @@ export const Appbar = () => {
       justifyContent={"center"}
       alignItems={"center"}
     >
-      <DesktopAppbar isLogin={isLogin} links={links} />
+      <DesktopAppbar isLogin={false} links={links} />
       <MobileAppbar isLogin={isLogin} links={links} />
     </Flex>
   );

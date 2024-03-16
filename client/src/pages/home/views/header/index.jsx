@@ -59,10 +59,15 @@ export const Header = () => {
         maxW={"6xl"}
       >
         <Flex direction={"column"} textAlign={"center"}>
-          <Heading mb={6} fontWeight={600} fontSize={{base:"30",sm:"40",md:"50"}} color={"#ffffff"}>
+          <Heading
+            mb={6}
+            fontWeight={600}
+            fontSize={{ base: "30", sm: "40", md: "50" }}
+            color={"#ffffff"}
+          >
             Enjoy in the best way!
           </Heading>
-          <Text fontSize={{base:"15",sm:"18",md:"20"}} color={"#ffffff"}>
+          <Text fontSize={{ base: "15", sm: "18", md: "20" }} color={"#ffffff"}>
             Enjoy our services for your trip anytime
           </Text>
         </Flex>

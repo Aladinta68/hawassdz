@@ -5,6 +5,7 @@ import {
   Input,
   Select,
   Text,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import React from "react";
 import { SearchIcon } from "@chakra-ui/icons";
@@ -15,6 +16,8 @@ import { FaBusSimple } from "react-icons/fa6";
 import { PiFlagFill } from "react-icons/pi";
 
 export const TripFilter = () => {
+  const breakpoint = useBreakpointValue({ base: "base", md: "md" });
+
   return (
     <Flex
       w={"100%"}
@@ -25,13 +28,13 @@ export const TripFilter = () => {
       <Flex
         w={{ base: "100%", md: "auto" }}
         mx={3}
-        my={1}
-        direction={"column"}
+        my={{ base: 0, sm: 0, md: 1 }}
+        direction={{ base: "row", md: "column" }}
         fontSize={15}
       >
-        <HStack>
+        <HStack pr={{ base: 2, md: 0 }}>
           <HiMiniUserGroup color={"#000000"} />
-          <Text>Number of person</Text>
+          {breakpoint === "base" ? "" : <Text>Number of person</Text>}
         </HStack>
         <Select
           cursor={"pointer"}
@@ -46,12 +49,12 @@ export const TripFilter = () => {
       <Flex
         w={{ base: "100%", md: "auto" }}
         m={1}
-        direction={"column"}
+        direction={{ base: "row", md: "column" }}
         fontSize={15}
       >
-        <HStack>
+        <HStack pr={{ base: 2, md: 0 }}>
           <BsFillCalendarDateFill width={15} height={15} color={"#000000"} />
-          <Text>Date</Text>
+          {breakpoint === "base" ? "" : <Text>Date</Text>}
         </HStack>
         <Input
           cursor={"pointer"}
@@ -59,19 +62,19 @@ export const TripFilter = () => {
           fontSize={14}
           type="date"
           border={"none"}
-          color={"gray"}
+          color={"gray !important"}
           h={{ base: 10, md: 8 }}
         />
       </Flex>
       <Flex
         w={{ base: "100%", md: "auto" }}
         m={1}
-        direction={"column"}
+        direction={{ base: "row", md: "column" }}
         fontSize={15}
       >
-        <HStack>
+        <HStack pr={{ base: 2, md: 0 }}>
           <GiTreasureMap color={"#000000"} />
-          <Text>Types</Text>
+          {breakpoint === "base" ? "" : <Text>Types</Text>}
         </HStack>
         <Select
           cursor={"pointer"}
@@ -80,18 +83,18 @@ export const TripFilter = () => {
           border={"none"}
           color={"gray"}
           h={{ base: 10, md: 8 }}
-          placeholder="Select Types"
+          placeholder="Chose Types"
         ></Select>
       </Flex>
       <Flex
         w={{ base: "100%", md: "auto" }}
         m={1}
-        direction={"column"}
+        direction={{ base: "row", md: "column" }}
         fontSize={15}
       >
-        <HStack>
+        <HStack pr={{ base: 2, md: 0 }}>
           <PiFlagFill color={"#000000"} />
-          <Text>Destination</Text>
+          {breakpoint === "base" ? "" : <Text>Destination</Text>}
         </HStack>
         <Select
           cursor={"pointer"}
@@ -100,18 +103,18 @@ export const TripFilter = () => {
           border={"none"}
           color={"gray"}
           h={{ base: 10, md: 8 }}
-          placeholder="Select destination"
+          placeholder="Chose destination"
         ></Select>
       </Flex>
       <Flex
         w={{ base: "100%", md: "auto" }}
         m={1}
-        direction={"column"}
+        direction={{ base: "row", md: "column" }}
         fontSize={15}
       >
-        <HStack>
+        <HStack pr={{ base: 2, md: 0 }}>
           <FaBusSimple color={"#000000"} />
-          <Text>Transportation</Text>
+          {breakpoint === "base" ? "" : <Text>Transportation</Text>}
         </HStack>
         <Select
           my={1}
@@ -121,7 +124,7 @@ export const TripFilter = () => {
           color={"gray"}
           h={{ base: 10, md: 8 }}
         >
-          <option>Select Transportation</option>
+          <option>Chose Transportation</option>
         </Select>
       </Flex>
       <IconButton

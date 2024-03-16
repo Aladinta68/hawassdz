@@ -2,10 +2,9 @@ import {
   Box,
   Card,
   CardBody,
-  CardFooter,
-  Divider,
   Flex,
   Heading,
+  IconButton,
   Image,
   Stack,
   Text,
@@ -14,21 +13,18 @@ import {
 import React, { useState } from "react";
 import { Localisation } from "../../assets/icons-jsx/Localisation";
 import { FaStar } from "react-icons/fa";
-import { DestinationCardFooter } from "./Destination/CardFooter";
 import { DestinationCardBody } from "./Destination/CardBody";
-import { HotelCardFooter } from "./Hotel/CardFooter";
 import { HotelCardBody } from "./Hotel/CardBody";
-import { RestaurantCardFooter } from "./Restaurant/CardFooter";
 import { RestaurantCardBody } from "./Restaurant/CardBody";
-import { TripCardFooter } from "./Trip/CardFooter";
 import { TripCardBody } from "./Trip/CardBody";
+import { MdRemoveRedEye } from "react-icons/md";
 
 export const CustomCard = ({ type, data }) => {
   const RenderBody = () => {
     switch (type) {
       case "destinations":
         return <DestinationCardBody />;
-      case "Hotels":
+      case "hotels":
         return <HotelCardBody />;
       case "restaurants":
         return <RestaurantCardBody />;
@@ -38,32 +34,42 @@ export const CustomCard = ({ type, data }) => {
         return <></>;
     }
   };
-  const RenderFooter = () => {
-    switch (type) {
-      case "destinations":
-        return <DestinationCardFooter />;
-      case "Hotels":
-        return <HotelCardFooter />;
-      case "restaurants":
-        return <RestaurantCardFooter />;
-      case "trips":
-        return <TripCardFooter />;
-      default:
-        return <></>;
-    }
-  };
   const [isHovered, setisHovered] = useState(false);
+
   return (
     <Card
       onMouseOver={() => setisHovered(true)}
       onMouseOut={() => setisHovered(false)}
-      boxShadow={"sm"}
       bg={"#ffffff"}
-      borderRadius={"0"}
+      borderRadius={25}
+      boxShadow={"rgba(149, 157, 165, 0.2) 0px 8px 24px;"}
+      position={"relative"}
+      cursor={"pointer"}
     >
-      <CardBody borderRadius={0} m={0} p={3} w={"100%"}>
-        <VStack pos={"relative"}>
+      {isHovered && (
+        <Stack
+          borderRadius={25}
+          pos={"absolute"}
+          w={"100%"}
+          h={"100%"}
+          align={"center"}
+          justify={"center"}
+          zIndex={10}
+          bg={"#00000086"}
+        >
+          <IconButton
+            boxShadow={"rgba(0, 0, 0, 0.56) 0px 22px 70px 10px;"}
+            cursor={"pointer"}
+            borderRadius={"full"}
+            as={MdRemoveRedEye}
+          />
+        </Stack>
+      )}
+
+      <CardBody borderTopRadius={25} m={0} p={3} w={"100%"}>
+        <VStack borderRadius={25} pos={"relative"}>
           <Flex
+            borderRadius={25}
             justifyContent={"space-between"}
             p={3}
             m={0}
@@ -72,9 +78,9 @@ export const CustomCard = ({ type, data }) => {
             direction={"row"}
           >
             <Flex
+              borderRadius={25}
               zIndex={1}
               backdropBlur={10}
-              borderRadius={"25"}
               bg={"#5f6166c9"}
               py={1}
               px={2}
@@ -92,7 +98,7 @@ export const CustomCard = ({ type, data }) => {
             <Flex
               zIndex={1}
               backdropBlur={10}
-              borderRadius={"25"}
+              borderRadius={25}
               bg={"#5f6166c9"}
               py={1}
               px={2}
@@ -106,24 +112,28 @@ export const CustomCard = ({ type, data }) => {
               </Text>
             </Flex>
           </Flex>
-          <Box bg={"#00000050"} pos={"absolute"} w={"100%"} h={"100%"}></Box>
+          <Box
+            borderRadius={25}
+            bg={"#00000050"}
+            pos={"absolute"}
+            w={"100%"}
+            h={"100%"}
+          ></Box>
           <Image
+            h={"180px"}
+            borderRadius={25}
             w={"100%"}
             src={data.image}
             alt="Green double couch with wooden legs"
           />
         </VStack>
-        <Stack pb={3} mt="6" spacing="3">
-          <Heading fontSize={18} fontWeight={500} size="md">
+        <Stack mt="6" spacing="3">
+          <Heading px={2} fontSize={18} fontWeight={600} size="md">
             {data.title}
           </Heading>
-          {RenderBody}
+          {RenderBody()}
         </Stack>
       </CardBody>
-      <Divider color={"#dedddd"} />
-      <CardFooter  >
-        {RenderFooter}
-      </CardFooter>
     </Card>
   );
 };

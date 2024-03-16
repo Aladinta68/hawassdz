@@ -17,11 +17,11 @@ export const Filterbar = () => {
   return (
     <Flex
       top={{ md: "75vh", base: "35vh" }}
-      my={10}
+      my={{ base: 5, sm: 5, md: 10 }}
       bg={"rgba(255, 255, 255, 0.2)"}
       p={3}
       w={{ base: "90%", md: "100%" }}
-      maxW={{base:"400px",sm:"400px",md:"full"}}
+      maxW={{ base: "400px", sm: "400px", md: "full" }}
     >
       <Tabs borderRadius={15} w={"100%"} variant="enclosed">
         <TabList border={"none"}>
