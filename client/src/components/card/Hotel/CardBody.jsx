@@ -5,16 +5,15 @@ import { FaWifi } from "react-icons/fa6";
 import { MdCoffee } from "react-icons/md";
 import { LuBedDouble } from "react-icons/lu";
 import { FaSwimmer } from "react-icons/fa";
-
 export const HotelCardBody = () => {
-  const Items = [
+  const features = [
     { icon: LuBedDouble, },
     { icon: MdCoffee, },
     { icon: FaWifi, },
     { icon: FaSwimmer, },
   ];
   return (
-    <VStack align={"flex-start"} px={2} w={"100%"}>
+    <VStack align={"flex-start"} w={"100%"}>
       <Text fontWeight={"600"} fontSize={13} w={"100%"}>
         Chambre Double Deluxe
       </Text>
@@ -33,7 +32,7 @@ export const HotelCardBody = () => {
         </ListItem>
       </List>
       <HStack py={2} justifyContent={"space-between"} w={"100%"}>
-        {Items.map((item, index) => (
+        {features.map((feature, index) => (
           <HStack
             px={4}
             py={1}
@@ -42,7 +41,7 @@ export const HotelCardBody = () => {
             borderRadius={5}
             key={index}
           >
-            <Icon color={item.color} fontSize={20} as={item.icon} />
+            <Icon color={feature.color} fontSize={20} as={feature.icon} />
           </HStack>
         ))}
       </HStack>

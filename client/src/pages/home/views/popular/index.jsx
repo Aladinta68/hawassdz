@@ -115,7 +115,7 @@ export const Popular = ({ type, mydata }) => {
               key={index}
               style={{ display: "flex", justifyContent: "center" }}
             >
-              <Box px={2} py={20} w={{ base: "100%", md: "95%" }}>
+              <Box px={2} py={20} w={{ base: "80%", md: "95%" }}>
                 <CustomCard type={type} data={item} />
               </Box>
             </SwiperSlide>

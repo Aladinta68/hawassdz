@@ -24,7 +24,7 @@ const Home = () => {
         <Spacer height={50} />
         <Steps />
         <Spacer height={0} />
-        <Popular type="Trips" mydata={TripssPopularData} />
+        <Popular type="trips" mydata={TripssPopularData} />
         <Spacer height={50} />
         <Description />
         <Divider height={50} />

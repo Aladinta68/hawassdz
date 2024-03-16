@@ -3,9 +3,11 @@ import {
   Card,
   CardBody,
   Flex,
+  HStack,
   Heading,
   IconButton,
   Image,
+  Spacer,
   Stack,
   Text,
   VStack,
@@ -18,6 +20,8 @@ import { HotelCardBody } from "./Hotel/CardBody";
 import { RestaurantCardBody } from "./Restaurant/CardBody";
 import { TripCardBody } from "./Trip/CardBody";
 import { MdRemoveRedEye } from "react-icons/md";
+import { Rating } from "../rating";
+import { PiSealCheckFill } from "react-icons/pi";
 
 export const CustomCard = ({ type, data }) => {
   const RenderBody = () => {
@@ -35,7 +39,16 @@ export const CustomCard = ({ type, data }) => {
     }
   };
   const [isHovered, setisHovered] = useState(false);
-
+  const renderStars = () => {
+    switch (type) {
+      case "hotels":
+        return <Rating initialRating={4} isReadOnly={true} />;
+      case "restaurants":
+        return <Rating initialRating={3} isReadOnly={true} />;
+      default:
+        return <></>;
+    }
+  };
   return (
     <Card
       onMouseOver={() => setisHovered(true)}
@@ -133,12 +146,20 @@ export const CustomCard = ({ type, data }) => {
             alt="Green double couch with wooden legs"
           />
         </VStack>
-        <Stack mt="6" spacing="3">
-          <Heading px={2} fontSize={18} fontWeight={600} size="md">
-            {data.title}
-          </Heading>
+        <Flex direction={"column"} align={"flex-start"} px={2} mt="6">
+          <HStack>
+            <Text fontSize={"12"}>Recommended</Text>{" "}
+            <PiSealCheckFill color="#f24864" />
+          </HStack>
+          <HStack pb={2} w={"100%"}>
+            <Heading fontSize={18} fontWeight={600} size="md">
+              {data.title}
+            </Heading>
+            <Spacer />
+            {renderStars()}
+          </HStack>
           {RenderBody()}
-        </Stack>
+        </Flex>
       </CardBody>
     </Card>
   );
