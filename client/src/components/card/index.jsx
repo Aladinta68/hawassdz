@@ -48,16 +48,15 @@ export const CustomCard = ({ type, data }) => {
     >
       {isHovered && (
         <Stack
-          borderRadius={25}
           pos={"absolute"}
           w={"100%"}
           h={"100%"}
           align={"center"}
           justify={"center"}
           zIndex={10}
-          bg={"#00000086"}
         >
           <IconButton
+            p={2}
             boxShadow={"rgba(0, 0, 0, 0.56) 0px 22px 70px 10px;"}
             cursor={"pointer"}
             borderRadius={"full"}
@@ -66,7 +65,14 @@ export const CustomCard = ({ type, data }) => {
         </Stack>
       )}
 
-      <CardBody borderTopRadius={25} m={0} p={3} w={"100%"}>
+      <CardBody
+        transition="opacity 0.5s ease-in-out"
+        opacity={isHovered ? 0.3 : 1}
+        borderTopRadius={25}
+        m={0}
+        p={3}
+        w={"100%"}
+      >
         <VStack borderRadius={25} pos={"relative"}>
           <Flex
             borderRadius={25}
