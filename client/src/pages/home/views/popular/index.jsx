@@ -68,7 +68,7 @@ export const Popular = ({ type, mydata }) => {
         </Text>
         <HStack
           spacing={5}
-          justifyContent={"end"}
+          justifyContent={{base:"center",md:"end"}}
           w={{ base: "30%", md: "30%" }}
         >
           <IconButton
@@ -114,7 +114,7 @@ export const Popular = ({ type, mydata }) => {
               key={index}
               style={{ display: "flex", justifyContent: "center" }}
             >
-              <Box px={2} py={20} w={{ base: "80%", md: "95%" }}>
+              <Box px={2} py={20} w={{ base: "95%", md: "95%" }}>
                 <CustomCard type={type} data={item} />
               </Box>
             </SwiperSlide>

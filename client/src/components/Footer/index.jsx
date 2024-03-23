@@ -37,7 +37,7 @@ export const Footer = () => {
           py={5}
           direction={{ base: "column", md: "row" }}
         >
-          <Flex my={{ base: 5, md: 0 }} direction={"column"}>
+          <Flex  my={{ base: 0, md: 0 }} direction={"column"}>
             <Text fontWeight={600} py={2}>
               Services
             </Text>
@@ -74,7 +74,7 @@ export const Footer = () => {
               </ListItem>
             </List>
           </Flex>
-          <Flex my={{ base: 5, md: 0 }} direction={"column"}>
+          <Flex  my={{ base: 5, md: 0 }} direction={"column"}>
             <Text fontWeight={600} py={2}>
               Pages
             </Text>
