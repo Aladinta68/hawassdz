@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { DesktopAppbar } from "./desktop";
 import { MobileAppbar } from "./mobile";
 
-export const Appbar = () => {
+export const Appbar = ({ type }) => {
   const links = [
     { name: "Home", url: "/" },
     { name: "Destinations", url: "/destinations" },
@@ -13,8 +13,20 @@ export const Appbar = () => {
   ];
   const [isLogin, setisLogin] = useState(false);
 
+  const Setbackground = () => {
+    if (
+      type === "/trips" ||
+      type === "/destinations" ||
+      type === "/hotels" ||
+      type === "/restaurants"
+    ) {
+      return "#333333";
+    }
+    return "transparent";
+  };
   return (
     <Flex
+      bg={Setbackground}
       position={{ base: "absolute", md: "absolute" }}
       top="0"
       left="0"

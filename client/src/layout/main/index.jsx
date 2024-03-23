@@ -1,10 +1,10 @@
 import { Flex } from "@chakra-ui/react";
 import React from "react";
-import { Appbar } from "./../components/appbar/index";
-import { Footer } from "./../components/Footer/index";
+import { Appbar } from "../../components/appbar/index";
+import { Footer } from "../../components/Footer/index";
 import { useLocation } from "react-router-dom";
 
-export const Layout = ({ children }) => {
+export const MainLayout = ({ children }) => {
   const location = useLocation();
 
   return (
@@ -15,7 +15,7 @@ export const Layout = ({ children }) => {
       location.pathname === "/signup" ? (
         ""
       ) : (
-        <Appbar />
+        <Appbar type={location.pathname} />
       )}
       {children}
       {location.pathname === "/forgotpassword" ||

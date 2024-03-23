@@ -31,13 +31,14 @@ export const Popular = ({ type, mydata }) => {
       swiperRef.current.slidePrev();
     }
   };
-  
+
   const moveRight = () => {
     console.log("Moving right");
     if (swiperRef.current) {
       swiperRef.current.slideNext();
     }
   };
+  console.log("mydata", mydata.carddata[0].data);
   return (
     <Flex direction={"column"} justifyContent={"center"} alignItems={"center"}>
       <Flex
@@ -79,7 +80,6 @@ export const Popular = ({ type, mydata }) => {
             variant={"unstyled"}
             icon={<IoArrowBack />}
             onClick={moveLeft}
-
           />
           <IconButton
             style={{ transform: "rotate(180deg)" }}
@@ -92,7 +92,6 @@ export const Popular = ({ type, mydata }) => {
             variant={"unstyled"}
             icon={<IoArrowBack />}
             onClick={moveRight}
-
           />
         </HStack>
       </Flex>
@@ -110,7 +109,7 @@ export const Popular = ({ type, mydata }) => {
           loop={true}
           slidesPerView={slidesPerView}
         >
-          {mydata.carddata.map((item, index) => (
+          {mydata.carddata[0].data.map((item, index) => (
             <SwiperSlide
               key={index}
               style={{ display: "flex", justifyContent: "center" }}
