@@ -68,7 +68,7 @@ export const HotelCardBody = ({ renderButton, isHorizontal }) => {
           </HStack>
         ))}
       </HStack>
-      <HStack justify={"flex-start"} align={"center"} w={"100%"}>
+      <Stack direction={!isHorizontal?"column":"row"} justify={"flex-start"} align={"center"} w={"100%"}>
         <HStack>
           <Text
             textDecor={"line-through"}
@@ -87,7 +87,7 @@ export const HotelCardBody = ({ renderButton, isHorizontal }) => {
         </HStack>
         <Spacer />
         {renderButton() && (
-          <Stack pt={{ base: 2, md: 0 }} align={"end"}>
+          <Stack w={!isHorizontal&&'100%'} pt={{ base: 2, md: 0 }} align={"end"}>
             <Button
               variant={"unstyled"}
               _hover={{ opacity: 0.8 }}
@@ -102,7 +102,7 @@ export const HotelCardBody = ({ renderButton, isHorizontal }) => {
             </Button>
           </Stack>
         )}
-      </HStack>
+      </Stack>
     </VStack>
   );
 };

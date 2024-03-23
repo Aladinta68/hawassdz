@@ -69,13 +69,13 @@ export const RestaurantCardBody = ({ renderButton, isHorizontal }) => {
           </HStack>
         ))}
       </HStack>
-      <HStack w={"100%"}>
-        <Text fontSize={14} fontWeight={600}>
-          PRICE RANGE <Text fontWeight={500} as={"span"}> 1500DA - 20000DA</Text>
+      <Stack align={'center'} direction={!isHorizontal?"column":"row"} w={"100%"}>
+        <Text fontSize={14} fontWeight={500}>
+          PRICE RANGE <Text fontWeight={600} as={"span"}> 1500DA - 20000DA</Text>
         </Text>
         <Spacer />
         {renderButton() && (
-          <Stack pt={{ base: 2, md: 0 }} align={"end"}>
+          <Stack w={!isHorizontal&&'100%'} pt={{ base: 2, md: 0 }} align={"end"}>
             <Button
               variant={"unstyled"}
               _hover={{ opacity: 0.8 }}
@@ -90,7 +90,7 @@ export const RestaurantCardBody = ({ renderButton, isHorizontal }) => {
             </Button>
           </Stack>
         )}
-      </HStack>
+      </Stack>
     </VStack>
   );
 };

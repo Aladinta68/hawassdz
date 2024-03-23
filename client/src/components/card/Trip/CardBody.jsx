@@ -1,4 +1,14 @@
-import { HStack, Icon, List, ListItem, Spacer, Text, VStack } from "@chakra-ui/react";
+import {
+  Button,
+  HStack,
+  Icon,
+  List,
+  ListItem,
+  Spacer,
+  Stack,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import React from "react";
 import { IoMaleFemaleOutline } from "react-icons/io5";
 import { MdTimer } from "react-icons/md";
@@ -8,8 +18,9 @@ import { FaBus } from "react-icons/fa";
 import { MdEventAvailable } from "react-icons/md";
 import { HiMiniUserGroup } from "react-icons/hi2";
 import { MdFamilyRestroom } from "react-icons/md";
+import { ViewIcon } from "@chakra-ui/icons";
 
-export const TripCardBody = () => {
+export const TripCardBody = ({renderButton,isHorizontal }) => {
   const features = [
     { icon: BsPersonRaisedHand },
     { icon: IoMaleFemaleOutline },
@@ -17,7 +28,7 @@ export const TripCardBody = () => {
     { icon: FaBus },
   ];
   return (
-    <VStack align={"flex-start"}  w={"100%"}>
+    <VStack align={"flex-start"} w={"100%"}>
       <Text fontWeight={"600"} fontSize={13} w={"100%"}>
         Randonné
       </Text>
@@ -41,7 +52,7 @@ export const TripCardBody = () => {
           </HStack>
         </ListItem>
       </List>
-      <HStack py={2} justifyContent={"space-between"} w={"100%"}>
+      <HStack py={2} justifyContent={!isHorizontal&&"space-between"} w={"100%"}>
         {features.map((feature, index) => (
           <HStack
             px={4}
@@ -55,16 +66,35 @@ export const TripCardBody = () => {
           </HStack>
         ))}
       </HStack>
-      <HStack>
-        <Text fontSize={14} fontWeight={600}>
-          From 2500 DA
-        </Text>
-        <Spacer/>
-        <HStack color={"green"}>
-          <MdEventAvailable />
-          <Text fontSize={13}>available - 4 places </Text>
+      <Stack direction={!isHorizontal?"column":"row"} justify={"flex-start"} align={"center"} w={"100%"}>
+        <HStack>
+          <Text fontSize={14} fontWeight={600}>
+            From 2500 DA
+          </Text>
+          <Spacer />
+          <HStack color={"green"}>
+            <MdEventAvailable />
+            <Text fontSize={13}>available - 4 places </Text>
+          </HStack>
         </HStack>
-      </HStack>
+        <Spacer />
+        {renderButton() && (
+          <Stack pt={{ base: 2, md: 0 }} align={"end"} w={!isHorizontal&&"100%"}>
+            <Button
+              variant={"unstyled"}
+              _hover={{ opacity: 0.8 }}
+              color={"#ffffff"}
+              bg={"#608aff"}
+              w={{ base: "100%", md: "120px" }}
+            >
+              <HStack w={"100%"} h={"100%"} align={"center"} justify={"center"}>
+                <Text fontWeight={{ base: "600", md: "500" }}>View</Text>
+                <ViewIcon />
+              </HStack>
+            </Button>
+          </Stack>
+        )}
+      </Stack>
     </VStack>
   );
 };

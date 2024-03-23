@@ -20,6 +20,8 @@ import {
 } from "react-icons/fa";
 import { MdMail } from "react-icons/md";
 import logo from "../../assets/svg/logo.svg";
+import { IoMdMailOpen } from "react-icons/io";
+
 export const Footer = () => {
   const [ishoveredPhone, setishoveredPhone] = useState(false);
   const [ishoveredmail, setishoveredmail] = useState(false);
@@ -207,33 +209,12 @@ export const Footer = () => {
                 alignItems={"center"}
                 py={1}
               >
-                <Box
-                  transition={"transform 0.2s"}
-                  animation={ishoveredmail && "vibrate 0.5s ease "}
-                  css={`
-                    @keyframes vibrate {
-                      0% {
-                        transform: translate(0);
-                      }
-                      20% {
-                        transform: translate(-0.5px, 0.5px);
-                      }
-                      40% {
-                        transform: translate(0.5px, -0.5px);
-                      }
-                      60% {
-                        transform: translate(-0.5px, 0.5px);
-                      }
-                      80% {
-                        transform: translate(0.5px, 0.5px);
-                      }
-                      100% {
-                        transform: translate(0);
-                      }
-                    }
-                  `}
-                >
-                  <MdMail fontSize={20} color="#FA8B02" />
+                <Box>
+                  {ishoveredmail ? (
+                    <IoMdMailOpen fontSize={20} color="#FA8B02" />
+                  ) : (
+                    <MdMail fontSize={20} color="#FA8B02" />
+                  )}
                 </Box>
                 <Text mx={2}>HawassDZ@gmail.com</Text>
               </ListItem>
