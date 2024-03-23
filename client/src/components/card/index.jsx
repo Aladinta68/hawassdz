@@ -193,7 +193,7 @@ export const CustomCard = ({ type, data, isHorizontal }) => {
               borderRadius={25}
               w={"100%"}
               src={data.image}
-              alt="card image"
+              alt="Green double couch with wooden legs"
             />
           </VStack>
           <Flex
