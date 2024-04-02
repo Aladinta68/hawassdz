@@ -1,18 +1,24 @@
-import { ApolloError } from "apollo-server";
+import {
+  ErrorTypes,
+  throwCustomError,
+} from "../../utils/error/ErrorHandler.js";
+import { getByid } from "./services.js";
+
 export const UserResolver = {
   Query: {
     getUserById: async (_, { id }, { prisma }) => {
       try {
-        const user = await prisma.user.findUnique({ where: { id } });
+        const user = await getByid({ id });
         if (!user) {
-          throw new ApolloError("User not found", "USER_NOT_FOUND");
+          throw { message: "User not found", type: ErrorTypes.NOT_FOUND };
         }
-        return user;
       } catch (error) {
-        throw new ApolloError(
-          "Failed to fetch user",
-          "FETCH_USER_ERROR",
-          error
+        if (error.type) {
+          throwCustomError(error.message, error.type);
+        }
+        throwCustomError(
+          "INTERNAL_SERVER_ERROR",
+          ErrorTypes.INTERNAL_SERVER_ERROR
         );
       }
     },
@@ -21,10 +27,12 @@ export const UserResolver = {
         const users = await prisma.user.findMany();
         return users;
       } catch (error) {
-        throw new ApolloError(
-          "Failed to fetch users",
-          "FETCH_USERS_ERROR",
-          error
+        if (error.type) {
+          throwCustomError(error.message, error.type);
+        }
+        throwCustomError(
+          "INTERNAL_SERVER_ERROR",
+          ErrorTypes.INTERNAL_SERVER_ERROR
         );
       }
     },
@@ -35,11 +43,12 @@ export const UserResolver = {
         const user = await prisma.user.create({ data: userInput });
         return user;
       } catch (error) {
-        console.log(error);
-        throw new ApolloError(
-          "Failed to create user",
-          "CREATE_USER_ERROR",
-          error
+        if (error.type) {
+          throwCustomError(error.message, error.type);
+        }
+        throwCustomError(
+          "INTERNAL_SERVER_ERROR",
+          ErrorTypes.INTERNAL_SERVER_ERROR
         );
       }
     },

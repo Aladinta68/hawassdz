@@ -1,16 +1,25 @@
+import { GraphQLError } from "graphql";
+import { ApolloServerErrorCode } from "@apollo/server/errors";
+
 export const ErrorTypes = {
   BAD_USER_INPUT: {
     errorCode: ApolloServerErrorCode.BAD_USER_INPUT,
     errorStatus: 400,
   },
-  BAD_REQUEST: {
-    errorCode: ApolloServerErrorCode.BAD_REQUEST,
+
+  UNAUTHORIZED: {
+    errorCode: "UNAUTHORIZED",
     errorStatus: 401,
   },
 
-  UNAUTHENTICATED: {
-    errorCode: "UNAUTHENTICATED",
-    errorStatus: 401,
+  NOT_FOUND: {
+    errorCode: "NOT_FOUND",
+    errorStatus: 404,
+  },
+
+  ALREADY_EXISTS: {
+    errorCode: "ALREADY_EXISTS",
+    errorStatus: 409,
   },
 
   FORBIDDEN: {
@@ -18,41 +27,34 @@ export const ErrorTypes = {
     errorStatus: 403,
   },
 
-  NOT_FOUND: {
-    errorCode: "NOT_FOUND",
-    errorStatus: 404,
-  },
-  ALREADY_EXISTS: {
-    errorCode: "ALREADY_EXISTS",
-    errorStatus: 409,
-  },
   INTERNAL_SERVER_ERROR: {
     errorCode: ApolloServerErrorCode.INTERNAL_SERVER_ERROR,
     errorStatus: 500,
   },
 };
 
-export const throwCustomError = (errorMessage, errorType) => {
+export const throwCustomError = (errorMessage, errorType, validationErrors) => {
   throw new GraphQLError(errorMessage, {
     extensions: {
       code: errorType.errorCode,
       httpStatus: errorType.errorStatus,
+      validationErrors,
     },
   });
 };
 
 export const formatError = (err) => {
-  if (
-    err.extensions.code === "BAD_USER_INPUT" &&
-    (err.extensions.httpStatus === null ||
-      err.extensions.httpStatus === undefined)
-  ) {
+  if (err.extensions.code === "BAD_USER_INPUT") {
     return {
-      message: "Please provide all required fields",
+      message:
+        err.extensions.exception.message ||
+        "Please provide all required fields",
       code: "BAD_USER_INPUT",
       httpStatus: 400,
+      validationErrors: err.extensions.validationErrors,
     };
   }
+
   if (
     err.extensions.httpStatus === null ||
     err.extensions.httpStatus === undefined
@@ -63,9 +65,10 @@ export const formatError = (err) => {
       httpStatus: 500,
     };
   }
+
   return {
-    message: err.message,
-    code: err.extensions.code,
-    httpStatus: err.extensions.httpStatus,
+    message: err.extensions.exception.message || err.message,
+    code: err.extensions.code || ApolloServerErrorCode.INTERNAL_SERVER_ERROR,
+    httpStatus: err.extensions.httpStatus || 500,
   };
 };
