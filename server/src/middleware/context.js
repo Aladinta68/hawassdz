@@ -1,5 +1,4 @@
-// src/middleware/context.js
-// import { verifyAccessToken } from "../components/auth/utils";
+import { verifyAccessToken } from "../components/auth/utils.js";
 import { prismaClient } from "../prisma/client.js";
 
 const prisma = prismaClient();

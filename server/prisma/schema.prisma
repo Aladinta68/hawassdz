@@ -14,23 +14,25 @@ datasource db {
 }
 
 model User {
-  id          String        @id @unique @default(uuid())
-  firstname   String
-  lastname    String
-  email       String        @unique
-  phonenumber String
+  id          String           @id @unique @default(uuid())
+  firstName   String
+  lastName    String
+  email       String           @unique
+  phone       String?
   password    String
-  dateOfBirth String
-  gender      String
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  refresh     RefreshToken?
+  dateOfBirth String?
+  gender      String?
+  reset       RestPasswordOTP?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
 }
-model RefreshToken {
+
+model RestPasswordOTP {
   id        String   @id @unique @default(uuid())
-  token     String   @unique
+  codePIN   Int      @unique
+  canChange Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  userId    String   @unique
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  email     String   @unique
+  user      User     @relation(fields: [email], references: [email], onDelete: Cascade)
 }

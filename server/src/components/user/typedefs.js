@@ -2,28 +2,26 @@ import { gql } from "apollo-server";
 
 export const UserTypeDefs = gql`
   type User {
-    id: ID!
-    email: String!
-    firstname: String!
-    lastname: String!
-    phonenumber: String
-    password: String!
+    id: ID
+    email: String
+    firstName: String
+    lastName: String
+    phone: String
     dateOfBirth: String
     gender: String
-    role: String
-    createdAt: String!
+  }
+  type Query {
+    getUserById(id: ID!): User
+    getAllUsers: [User!]!
   }
 
-  input CreateUserInput {
-    email: String!
-    firstname: String!
-    lastname: String!
-    phonenumber: String
-    password: String!
-    dateOfBirth: String
-    gender: String
-    role: String
+  type Mutation {
+    deleteUserById(id: ID!): DeleteUserResponse
   }
+  type DeleteUserResponse {
+    message: String!
+  }
+  
 `;
 
 export default UserTypeDefs;
