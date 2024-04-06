@@ -9,8 +9,8 @@ export const context = async ({ req, res }) => {
       return { prisma, message: "Unauthorized" };
     }
     const authorizationToken = req.headers.authorization;
-    const { id } = await verifyAccessToken(authorizationToken);
-    return { prisma, id };
+    const { id,type } = await verifyAccessToken(authorizationToken);
+    return { prisma, user:{id,type} };
   } catch (error) {
     console.log(error);
   }

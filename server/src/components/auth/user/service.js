@@ -1,11 +1,11 @@
 import crypto from "crypto";
-import { hashPassword, comparePassword } from "./utils.js";
+import { hashPassword, comparePassword } from "../utils.js";
 import {
   throwCustomError,
   ErrorTypes,
-} from "../../utils/error/ErrorHandler.js";
-import { HtmlTemplate } from "../../utils/mail/mail.template.js";
-import { sendMailTest } from "../../utils/mail/nodemailer.config.js";
+} from "../../../utils/error/ErrorHandler.js";
+import { HtmlTemplate } from "../../../utils/mail/mail.template.js";
+import { sendMailTest } from "../../../utils/mail/nodemailer.config.js";
 
 export const findByEmail = async ({ input, prisma }) => {
   try {
@@ -177,6 +177,17 @@ export const updateForgetPassword = async ({ input, prisma }) => {
       return true;
     });
     return result;
+  } catch (error) {
+    throw error;
+  }
+};
+export const updateUserImage = async ({ userId, imagePath, prisma }) => {
+  try {
+    const updatedUser = await prisma.user.update({
+      where: { id: userId },
+      data: { image: imagePath },
+    });
+    return updatedUser;
   } catch (error) {
     throw error;
   }

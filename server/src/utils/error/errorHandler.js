@@ -35,8 +35,8 @@ export const ErrorTypes = {
 export const throwCustomError = (errorMessage, errorType, validationErrors) => {
   throw new GraphQLError(errorMessage, {
     extensions: {
-      code: errorType.errorCode,
-      httpStatus: errorType.errorStatus,
+      code: errorType?.errorCode,
+      httpStatus: errorType?.errorStatus,
       validationErrors,
     },
   });

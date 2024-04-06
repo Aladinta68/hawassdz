@@ -1,6 +1,9 @@
 import { gql } from "apollo-server";
+import { default as Upload } from "graphql-upload/Upload.mjs";
 
-export const authTypeDefs = gql`
+export const UserTypeDefs = gql`
+  scalar Upload
+
   type User {
     id: ID
     firstName: String
@@ -9,6 +12,11 @@ export const authTypeDefs = gql`
     phone: String
     dateOfBirth: String
     gender: String
+    complete: Boolean
+    image: Image
+  }
+  type File {
+    url: String!
   }
   type Mutation {
     login(input: LoginInput!): AuthOutput!
@@ -16,6 +24,7 @@ export const authTypeDefs = gql`
     forgetPassword(input: ForgetPasswordInput!): Boolean!
     verifyCodePin(input: verifyCodePinInput!): Boolean!
     updateForgetPassword(input: updateForgetPasswordInput!): Boolean!
+    uploadUserImage(userId: ID!, file: Upload!): File!
   }
 
   input RegisterInput {
@@ -53,4 +62,4 @@ export const authTypeDefs = gql`
     accessToken: String!
   }
 `;
-export default authTypeDefs;
+export default UserTypeDefs;
