@@ -1,71 +1,54 @@
-import { gql } from 'apollo-server';
+import { gql } from "apollo-server";
 
-export const WilayatypeDefs = gql`
-  type Wilaya {
-    id: ID!
-    name: String!
-    description: String
-    location: MapLocation
-    images: [Image]
-    typeGeographies: [TypeGeographie]
-    mapLocationId: String
-  }
-
-  type MapLocation {
-    id: ID!
-    longitude: Float!
-    latitude: Float!
-  }
-
-  type TypeGeographie {
-    id: ID!
-    title: String!
-  }
+export const wilayaTypeDefs = gql`
+  scalar Upload
 
   type Image {
-    id: ID!
-    path: String!
+    url: String
   }
-
+  type MapLocation {
+    longitude: Float
+    latitude: Float
+  }
+  type Wilaya {
+    id: ID
+    name: String
+    description: String
+    images: [Image]
+    mapLocation: MapLocation
+  }
   type Query {
     getWilayaById(id: ID!): Wilaya
-    getAllWilaya: [Wilaya!]!
+    getAllWilaya: [Wilaya]
   }
-
   type Mutation {
-    addWilaya(input: AddWilayaInput!): Wilaya!
-    updateWilaya(id: ID!, input: UpdateWilayaInput!): Wilaya!
-    deleteWilaya(id: ID!): DeleteWilayaResponse!
+    createWilaya(input: CreateWilayaInput!): Wilaya!
+    updateWilaya(input: UpdateWilayaInput!): Wilaya!
+    deleteWilaya(id: ID!): DeleteWilayaResponse
   }
-
   type DeleteWilayaResponse {
     message: String!
   }
-
-  input AddWilayaInput {
+  input CreateWilayaInput {
     name: String!
-    description: String
-    location: LocationInput!
-    typeGeographies: [TypeGeographieInput!]  
-    mapLocationId: String  
+    description: String!
+    images: [Upload]
+    mapLocation: MapLocationInput
   }
-
+  
   input UpdateWilayaInput {
+    id: ID!
     name: String
     description: String
-    location: LocationInput
-    typeGeographies: [TypeGeographieInput]
-    mapLocationId: String
+    images: [Upload]
+    mapLocation: MapLocationInput 
   }
-
-  input LocationInput {
+  
+  input MapLocationInput {
     longitude: Float!
     latitude: Float!
   }
-
-  input TypeGeographieInput {
-    id: ID
-    title: String!
-  }
+  
 `;
-export default WilayatypeDefs;
+
+export default wilayaTypeDefs;

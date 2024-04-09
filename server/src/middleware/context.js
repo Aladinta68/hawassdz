@@ -1,4 +1,4 @@
-import { verifyAccessToken } from "../components/auth/utils.js";
+import { verifyAccessToken } from "../components/auth/utils/utils.js";
 import { prismaClient } from "../prisma/client.js";
 
 const prisma = prismaClient();

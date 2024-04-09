@@ -4,7 +4,7 @@ import JWT from "jsonwebtoken";
 import {
   ErrorTypes,
   throwCustomError,
-} from "../../utils/error/ErrorHandler.js";
+} from "../../../utils/error/ErrorHandler.js";
 
 export const hashPassword = async (password) => {
   try {
@@ -44,8 +44,8 @@ export const verifyAccessToken = async (token, type) => {
     let nodeEnv;
     nodeEnv = process.env.ACCESS_TOKEN_SECRET;
     const payload = JWT.verify(token, nodeEnv);
-    const { id,type } = payload;
-    return { id,type };
+    const { id, type } = payload;
+    return { id, type };
   } catch (error) {
     throwCustomError("UNAUTHORIZED", ErrorTypes.UNAUTHORIZED);
   }

@@ -24,7 +24,7 @@ model User {
   gender      Gender?
   complete    Boolean          @default(false)
   reset       RestPasswordOTP?
-  image       Image?           
+  image       Image?
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
 }
@@ -49,21 +49,25 @@ model RestPasswordOTP {
 }
 
 model Wilaya {
-  id          String   @id @unique @default(uuid())
-  name        String   @unique
-  description String?
-  images      Image[] 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id            String       @id @unique @default(uuid())
+  name          String       @unique
+  description   String
+  images        Image[]
+  mapLocation   MapLocation? @relation(fields: [mapLocationId], references: [id])
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  mapLocationId String?
 }
 
 model Destination {
-  id          String   @id @unique @default(uuid())
-  name        String   @unique
-  description String?
-  images      Image[] 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id            String       @id @unique @default(uuid())
+  name          String       @unique
+  description   String
+  images        Image[]
+  mapLocation   MapLocation? @relation(fields: [mapLocationId], references: [id])
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  mapLocationId String?
 }
 
 model Image {
@@ -79,30 +83,15 @@ model Image {
   destinationId String?
 }
 
-model TypeGeographie {
-  id    String @id @unique @default(uuid())
-  title String @unique
-}
-
-model SeasonGeographie {
-  id    String @id @unique @default(uuid())
-  title Season
-}
-
 enum Gender {
   Male
   Female
 }
 
-enum Season {
-  Spring
-  Summer
-  Fall
-  Winter
-}
-
 model MapLocation {
-  id        String @id @unique @default(uuid())
-  longitude Float
-  latitude  Float
+  id          String        @id @unique @default(uuid())
+  longitude   Float
+  latitude    Float
+  Wilaya      Wilaya[]
+  Destination Destination[]
 }

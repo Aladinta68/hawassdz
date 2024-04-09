@@ -1,2 +1,2 @@
-export { WilayaResolver } from './resolver.js'
-export { WilayatypeDefs } from './typeDefs.js'
+export { wilayaResolvers } from './resolver.js'
+export { wilayaTypeDefs } from './typeDefs.js'

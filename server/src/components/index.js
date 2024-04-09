@@ -1,6 +1,6 @@
-import { authtypeDefs } from "./auth/index.js";
-import {authresolvers} from "./auth/index.js"
-import {WilayaResolver} from "./wilaya/index.js"
-import {WilayatypeDefs} from "./wilaya/index.js"
-export const typeDefs = [authtypeDefs,WilayatypeDefs];
-export const resolvers = [authresolvers,WilayaResolver];
+import { authTypeDefs } from "./auth/index.js";
+import {authResolvers} from "./auth/index.js"
+import {wilayaResolvers} from "./wilaya/index.js"
+import {wilayaTypeDefs} from "./wilaya/index.js"
+export const typeDefs = [authTypeDefs,wilayaTypeDefs];
+export const resolvers = [authResolvers,wilayaResolvers];

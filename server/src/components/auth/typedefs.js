@@ -1,7 +1,7 @@
 import { gql } from "apollo-server";
 import { default as Upload } from "graphql-upload/Upload.mjs";
 
-export const UserTypeDefs = gql`
+export const authTypeDefs = gql`
   scalar Upload
 
   type User {
@@ -15,25 +15,50 @@ export const UserTypeDefs = gql`
     complete: Boolean
     image: Image
   }
-  type File {
-    url: String!
+  type Admin {
+    id: ID
+    email: String
+    userName: String
+  }
+  type Query {
+    getUserById(id: ID!): User
+    getAllUsers: [User!]!
   }
   type Mutation {
+    registerAdmin(input: RegisterAdminInput!): AuthOutput!
+    deleteUserById(id: ID!): DeleteUserResponse
     login(input: LoginInput!): AuthOutput!
-    register(input: RegisterInput!): AuthOutput!
+    registerUser(input: RegisterUserInput!): AuthOutput!
     forgetPassword(input: ForgetPasswordInput!): Boolean!
     verifyCodePin(input: verifyCodePinInput!): Boolean!
     updateForgetPassword(input: updateForgetPasswordInput!): Boolean!
     uploadUserImage(userId: ID!, file: Upload!): File!
   }
+  type File {
+    url: String!
+  }
+  type DeleteUserResponse {
+    message: String!
+  }
 
-  input RegisterInput {
+  type AuthOutput {
+    accessToken: String!
+  }
+  type TokensOutput {
+    accessToken: String!
+  }
+
+  input RegisterUserInput {
     firstName: String!
     lastName: String!
     email: String!
     password: String!
   }
-
+  input RegisterAdminInput {
+    userName: String!
+    email: String!
+    password: String!
+  }
   input LoginInput {
     email: String!
     password: String!
@@ -53,13 +78,6 @@ export const UserTypeDefs = gql`
   input ForgetPasswordInput {
     email: String!
   }
-
-  type AuthOutput {
-    accessToken: String!
-  }
-
-  type TokensOutput {
-    accessToken: String!
-  }
 `;
-export default UserTypeDefs;
+
+export default authTypeDefs;
