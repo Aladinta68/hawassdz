@@ -5,6 +5,7 @@ import {
   IconButton,
   Text,
   useBreakpointValue,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import React, { useRef } from "react";
 import { CustomCard } from "../../../../components/card/index";
@@ -26,19 +27,16 @@ export const Popular = ({ type, mydata }) => {
   const swiperRef = React.useRef(null);
 
   const moveLeft = () => {
-    console.log("Moving left");
     if (swiperRef.current) {
       swiperRef.current.slidePrev();
     }
   };
 
   const moveRight = () => {
-    console.log("Moving right");
     if (swiperRef.current) {
       swiperRef.current.slideNext();
     }
   };
-  console.log("mydata", mydata.carddata[0].data);
   return (
     <Flex direction={"column"} justifyContent={"center"} alignItems={"center"}>
       <Flex
@@ -51,7 +49,7 @@ export const Popular = ({ type, mydata }) => {
         <Text
           textAlign={{ base: "center", md: "start" }}
           w={{ base: "100%", md: "30%" }}
-          color={"#0C111F"}
+          color={useColorModeValue("#0C111F","#ffffff")}
           fontSize={22}
           fontWeight={600}
         >
@@ -60,7 +58,7 @@ export const Popular = ({ type, mydata }) => {
         <Text
           w={{ base: "100%", md: "40%" }}
           fontWeight={500}
-          color={"#0c111faa"}
+          color={useColorModeValue("#0c111faa","#ffffff")}
           my={{ base: "8", md: 0 }}
           textAlign={"center"}
         >
@@ -68,19 +66,9 @@ export const Popular = ({ type, mydata }) => {
         </Text>
         <HStack
           spacing={5}
-          justifyContent={{base:"center",md:"end"}}
+          justifyContent={{ base: "center", md: "end" }}
           w={{ base: "30%", md: "30%" }}
         >
-          <IconButton
-            display={"flex"}
-            fontSize={22}
-            color={"##0C111F"}
-            borderRadius={"full"}
-            border={"4px solid #F5F5F5"}
-            variant={"unstyled"}
-            icon={<IoArrowBack />}
-            onClick={moveLeft}
-          />
           <IconButton
             style={{ transform: "rotate(180deg)" }}
             display={"flex"}
@@ -92,6 +80,16 @@ export const Popular = ({ type, mydata }) => {
             variant={"unstyled"}
             icon={<IoArrowBack />}
             onClick={moveRight}
+          />
+          <IconButton
+            display={"flex"}
+            fontSize={22}
+            color={"##0C111F"}
+            borderRadius={"full"}
+            border={"4px solid #F5F5F5"}
+            variant={"unstyled"}
+            icon={<IoArrowBack />}
+            onClick={moveLeft}
           />
         </HStack>
       </Flex>

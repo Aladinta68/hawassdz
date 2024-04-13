@@ -1,63 +1,83 @@
 import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import {
   Avatar,
+  Button,
   Drawer,
   DrawerBody,
   DrawerContent,
   DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
-  Flex,
   HStack,
   IconButton,
   Image,
   Link,
+  Spacer,
   Text,
+  useColorMode,
+  useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import logo from "../../../assets/svg/logo.svg";
+import logo2 from "../../../assets/svg/logo2.svg";
+
 import { AiOutlineUser } from "react-icons/ai";
+import { IoMoon, IoSunnySharp } from "react-icons/io5";
 export const MobileAppbar = ({ links, isLogin }) => {
+  const { colorMode, toggleColorMode } = useColorMode();
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [placement, setPlacement] = useState("right");
   const location = useLocation();
   return (
     <>
-      <Flex
-        justifyContent={"space-between"}
+      <HStack
+        justifyContent={"center"}
         display={{ base: "flex", sm: "flex", md: "none" }}
         w={"100%"}
-        direction={"row"}
         height={"60px"}
         alignItems={"center"}
         px={5}
         zIndex={99}
+        boxShadow={"sm"}
+        position={"fixed"}
+        top={0}
+        left={0}
+        borderBottom={useColorModeValue("none", "1px solid #333333")}
+        bg={useColorModeValue("#ffffff", "#000000")}
       >
-        <Flex
-          justifyContent={"flex-start"}
+        <IconButton
+          color={useColorModeValue("#434343", "#ffffff")}
+          onClick={onOpen}
+          variant={"unstyled"}
+          transition={"ease-in-out 0.3s"}
+          _hover={{ color: "#FA8B02" }}
+          icon={<HamburgerIcon fontSize={20} />}
+        />
+        <Spacer />
+        <Image w={"130px"} src={useColorModeValue(logo2, logo)} />
+        <Spacer />
+        <IconButton
+          onClick={toggleColorMode}
+          display={"flex"}
+          justifyContent={"center"}
           alignItems={"center"}
-          h={"100%"}
-          w={"30%"}
-        >
-          <Image src={logo} />
-        </Flex>
-        <Flex w={"80%"} justifyContent={"space-between"}>
-          <Flex></Flex>
-          <IconButton
-            color={"#ffffff"}
-            onClick={onOpen}
-            variant={"unstyled"}
-            transition={"ease-in-out 0.3s"}
-            _hover={{ color: "#FA8B02" }}
-            icon={<HamburgerIcon fontSize={20} />}
-          />
-        </Flex>
-      </Flex>
+          fontSize={18}
+          icon={colorMode === "light" ? <IoMoon /> : <IoSunnySharp />}
+          variant={"ghost"}
+        />
+        <Button fontWeight={500} variant={"unstyled"}>
+          English
+        </Button>
+      </HStack>
       <Drawer placement={placement} onClose={onClose} isOpen={isOpen}>
-        <DrawerOverlay />
-        <DrawerContent>
+        <DrawerOverlay
+          bg="blackAlpha.300"
+          backdropFilter="blur(10px) hue-rotate(90deg)"
+        />
+        <DrawerContent bg={useColorModeValue("#ffffff", "#000000")}>
           <DrawerHeader
             h={"60px"}
             alignItems={"center"}
@@ -65,7 +85,6 @@ export const MobileAppbar = ({ links, isLogin }) => {
             justifyContent={"space-between"}
             borderBottomWidth="1px"
           >
-            HawassDZ
             <IconButton
               onClick={onClose}
               variant={"unstyled"}
@@ -73,6 +92,12 @@ export const MobileAppbar = ({ links, isLogin }) => {
               _hover={{ color: "#FA8B02" }}
               icon={<CloseIcon fontSize={15} />}
             />
+            <Text color={useColorModeValue("#000000", "#ffffff")}>
+              Hawass
+              <Text as={"span"} color={"#FA8B02"}>
+                DZ
+              </Text>
+            </Text>
           </DrawerHeader>
           <DrawerBody
             py={10}
@@ -83,7 +108,12 @@ export const MobileAppbar = ({ links, isLogin }) => {
           >
             {links.map((link, index) => (
               <Link
-                color={location.pathname === link.url ? "#FA8B02" : "#000000"}
+                fontWeight={500}
+                color={
+                  location.pathname === link.url
+                    ? "#FA8B02"
+                    : useColorModeValue("#000000", "#fffff")
+                }
                 _hover={{ color: "#FA8B02" }}
                 transition={"ease-in-out 0.3s"}
                 py={2}
@@ -113,6 +143,7 @@ export const MobileAppbar = ({ links, isLogin }) => {
             ) : (
               <>
                 <Link
+                  fontWeight={500}
                   _hover={{ color: "#FB8B02", opacity: 0.8 }}
                   transition={"ease-in-out 0.3s"}
                   color={"#FA8B02"}
@@ -120,9 +151,10 @@ export const MobileAppbar = ({ links, isLogin }) => {
                   py={2}
                   as={RouterLink}
                 >
-                  Log in
+                  تسجيل الدخول
                 </Link>
                 <Link
+                  fontWeight={500}
                   my={2}
                   _hover={{
                     backgroundColor: "#FA8B02",
@@ -137,7 +169,7 @@ export const MobileAppbar = ({ links, isLogin }) => {
                   as={RouterLink}
                   to={"/signup"}
                 >
-                  Sign up
+                  تسجيل
                 </Link>
               </>
             )}

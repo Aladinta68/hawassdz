@@ -15,6 +15,7 @@ import {
   Text,
   VStack,
   useBreakpointValue,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
 import { IoGridOutline } from "react-icons/io5";
@@ -30,7 +31,7 @@ export const Header = ({ setisRow, isRow }) => {
           <InputLeftElement pointerEvents="none">
             <SearchIcon color="gray.300" />
           </InputLeftElement>
-          <Input type="text" placeholder="Search" />
+          <Input  _placeholder={{color:useColorModeValue("#000000","#ffffff")}} type="text" placeholder="بحث..." />
         </InputGroup>
       </Stack>
       <HStack spacing={5} w={"100%"} h={"50px"}>
@@ -40,22 +41,22 @@ export const Header = ({ setisRow, isRow }) => {
               borderRadius={5}
               border={"1px solid #d8e5f4"}
               p={2}
-              leftIcon={<LuFilter />}
+              rightIcon={<LuFilter />}
               display={"flex"}
               alignItems={"center"}
               fontWeight={500}
               variant={"unstyled"}
             >
-              Filter
+              المرشحات
             </Button>
           </MenuButton>
           <MenuList></MenuList>
         </Menu>
         <Spacer />
         <HStack>
-          <Text>Sort by:</Text>
-          <Select w={"auto"} defaultValue={"popular"}>
-            <option value={"popular"}>Popular</option>
+          <Text>ترتيب حسب:</Text>
+          <Select w={"auto"} dir="ltr" defaultValue={"popular"}>
+            <option value={"popular"}>شائع</option>
           </Select>
         </HStack>
         {breakpoint != "base" && (

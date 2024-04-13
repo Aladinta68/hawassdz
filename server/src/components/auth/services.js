@@ -116,6 +116,7 @@ export const createUser = async ({ input, prisma }) => {
   }
 };
 export const getAllUsers = async ({ prisma }) => {
+  
   try {
     const users = await prisma.user.findMany();
     return users;
@@ -126,9 +127,11 @@ export const getAllUsers = async ({ prisma }) => {
     );
   }
 };
-export const getUserById = async ({ id, prisma }) => {
+export const getUserInfo = async ({ id, prisma }) => {
   try {
+    console.log("first")
     const user = await prisma.user.findUnique({ where: { id } });
+    console.log(user)
     return user;
   } catch (error) {
     throwCustomError(

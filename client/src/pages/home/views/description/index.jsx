@@ -1,10 +1,10 @@
-import { Box, Flex, Image, Text, VStack } from "@chakra-ui/react";
+import { Box, Flex, Image, Text, VStack, useColorMode, useColorModeValue } from "@chakra-ui/react";
 import React from "react";
 import description from "../../../../assets/image/description.png";
 export const Description = () => {
   return (
     <Flex
-      direction={{ base: "column", md: "row" }}
+      direction={{ base: "column", md: "row-reverse" }}
       justifyContent={"center"}
       alignItems={"center"}
     >
@@ -21,54 +21,50 @@ export const Description = () => {
         w={{ base: "100%", md: "50%" }}
         direction={"column"}
       >
-        <Text  fontWeight={500} color={"#0000007e"} py={2}>
-          WELCOME TO OUR SITE!
-        </Text>
+        <Text  fontWeight={500} color={useColorModeValue("#0000007e","#ffffff")} py={2}>
+        مرحبا بكم في موقعنا!        </Text>
         <Text fontSize={22} fontWeight={600} pb={5}>
-          We are the best company for your visit
-        </Text>
-        <Text pb={5} color={"#333333"}>
-          After decades of experience, and a whole life in Lucca, we offer you
-          the most complete tourism service in the city. In addition to having
-          bikes and rickshaws to have as much fun as you want, you have the
-          choice of tour guides with whom to tour and drivers for your every
-          need! We offer packages in the way that you get the most at the lowest
-          price. Book with us and we will always be available for you!
-        </Text>
+        نحن أفضل شركة لزيارتك        </Text>
+        <Text pb={5} color={useColorModeValue("#333333","#ffffff")}>
+        بعد عقود من الخبرة، وحياة كاملة في لوكا، نقدم لك
+           الخدمة السياحية الأكثر اكتمالا في المدينة. بالإضافة إلى وجود
+           الدراجات وعربات الريكشا لتستمتع بقدر ما تريد، فلديك
+           اختيار المرشدين السياحيين الذين يمكنك القيام بجولة معهم والسائقين لكل احتياجاتك
+           يحتاج! نحن نقدم الحزم بالطريقة التي تحصل بها على أقصى استفادة بأقل تكلفة
+           سعر. احجز معنا وسنكون متاحين لك دائمًا! </Text>
         <Flex  justifyContent={"center"} alignItems={"flex-start"} direction={"row"}>
           <VStack alignItems={"flex-start"}>
             <Text fontWeight={600} fontSize={20} color={"#FA8B02"}>
               20+
             </Text>
-            <Text color={"#0000007e"}>
-              Years <br /> Experience
-            </Text>
+            <Text olor={useColorModeValue("#0000007e","#ffffff")}>
+            سنوات <br /> الخبرة            </Text>
           </VStack>
           <VStack mx={5} alignItems={"flex-start"}>
             <Text fontWeight={600} fontSize={20} color={"#FA8B02"}>
               100+
             </Text>
-            <Text color={"#0000007e"}>
-              Happy <br />
-              Customer
+            <Text color={useColorModeValue("#0000007e","#ffffff")}>
+            عميل <br />
+              سعيد
             </Text>
           </VStack>
           <VStack mx={5} alignItems={"flex-start"}>
             <Text fontWeight={600} fontSize={20} color={"#FA8B02"}>
               15+
             </Text>
-            <Text color={"#0000007e"}>
-              Choice
-              <br /> of Services
+            <Text olor={useColorModeValue("#0000007e","#ffffff")}>
+            خيار
+               <br /> من الخدمات
             </Text>
           </VStack>
           <VStack alignItems={"flex-start"}>
             <Text fontWeight={600} fontSize={20} color={"#FA8B02"}>
               10+
             </Text>
-            <Text color={"#0000007e"}>
-              Professional
-              <br /> Guides
+            <Text olor={useColorModeValue("#0000007e","#ffffff")}>
+            احترافي
+               <br /> أدلة
             </Text>
           </VStack>
         </Flex>

@@ -9,6 +9,7 @@ import {
   ListItem,
   Spacer,
   Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
@@ -26,14 +27,14 @@ export const Footer = () => {
   const [ishoveredPhone, setishoveredPhone] = useState(false);
   const [ishoveredmail, setishoveredmail] = useState(false);
   return (
-    <Flex color={"#ffffff"} direction={"column"} bg={"#333333"} bottom={0}>
+    <Flex color={"#ffffff"} direction={"column"} bg={useColorModeValue("#333333","#000000")} bottom={0}>
       <Container maxW={"8xl"}>
         <Flex py={5}>
           <Image w={"150px"} src={logo} />
         </Flex>
         <Flex
           justifyContent={"space-between"}
-          borderY={"1px solid gray"}
+          borderY={useColorModeValue("1px solid gray","1px solid #202020")}
           py={5}
           direction={{ base: "column", md: "row" }}
         >

@@ -10,6 +10,7 @@ import {
   Stack,
   Text,
   VStack,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
 import { GrRestaurant } from "react-icons/gr";
@@ -21,10 +22,7 @@ import { ViewIcon } from '@chakra-ui/icons';
 export const RestaurantCardBody = ({ renderButton, isHorizontal }) => {
   const features = [{ icon: MdDeliveryDining }];
   return (
-    <VStack align={"flex-start"} w={"100%"}>
-      <Text fontWeight={"600"} fontSize={13} w={"100%"}>
-        Chambre Double Deluxe
-      </Text>
+    <VStack pt={2} align={"flex-start"} w={"100%"}>
       <List fontSize={13}>
         <Grid
           templateColumns={isHorizontal ? "repeat(2,1fr)" : "repeat(1,1fr)"}
@@ -33,7 +31,7 @@ export const RestaurantCardBody = ({ renderButton, isHorizontal }) => {
             <ListItem>
               <HStack>
                 <Icon as={GrRestaurant} />
-                <Text>French, European</Text>
+                <Text>الفرنسية والأوروبية</Text>
               </HStack>
             </ListItem>
           </GridItem>
@@ -49,7 +47,7 @@ export const RestaurantCardBody = ({ renderButton, isHorizontal }) => {
             <ListItem>
               <HStack>
                 <Icon as={FaCheck} />
-                <Text>Parking</Text>
+                <Text>موقف سيارات</Text>
               </HStack>
             </ListItem>
           </GridItem>
@@ -61,7 +59,7 @@ export const RestaurantCardBody = ({ renderButton, isHorizontal }) => {
             px={4}
             py={1}
             spacing={3}
-            bg={"#f4f2f2"}
+            bg={useColorModeValue("#f4f2f2", "#141414")}
             borderRadius={5}
             key={index}
           >
@@ -71,7 +69,7 @@ export const RestaurantCardBody = ({ renderButton, isHorizontal }) => {
       </HStack>
       <Stack align={'center'} direction={!isHorizontal?"column":"row"} w={"100%"}>
         <Text fontSize={14} fontWeight={500}>
-          PRICE RANGE <Text fontWeight={600} as={"span"}> 1500DA - 20000DA</Text>
+        نطاق السعر <Text px={2} fontWeight={600} as={"span"}> 1500DA - 20000DA</Text>
         </Text>
         <Spacer />
         {renderButton() && (
@@ -84,7 +82,7 @@ export const RestaurantCardBody = ({ renderButton, isHorizontal }) => {
               w={{ base: "100%", md: "120px" }}
             >
               <HStack w={"100%"} h={"100%"} align={"center"} justify={"center"}>
-                <Text fontWeight={{ base: "600", md: "500" }}>View</Text>
+                <Text fontWeight={{ base: "600", md: "500" }}>عرض </Text>
                 <ViewIcon />
               </HStack>
             </Button>

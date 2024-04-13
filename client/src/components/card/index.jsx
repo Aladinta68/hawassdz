@@ -12,6 +12,7 @@ import {
   Text,
   VStack,
   useBreakpointValue,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Localisation } from "../../assets/icons-jsx/Localisation";
@@ -86,7 +87,7 @@ export const CustomCard = ({ type, data, isHorizontal }) => {
       maxW={!isHorizontal && "350px"}
       onMouseOver={() => setisHovered(true)}
       onMouseOut={() => setisHovered(false)}
-      bg={"#ffffff"}
+      bg={useColorModeValue("#ffffff","#1d1c1c")}
       borderRadius={25}
       boxShadow={"rgba(149, 157, 165, 0.2) 0px 8px 24px;"}
       position={"relative"}

@@ -1,5 +1,5 @@
 import { ViewIcon } from "@chakra-ui/icons";
-import { Button, HStack, Icon, Spacer, Stack, Text, VStack, useBreakpoint } from "@chakra-ui/react";
+import { Button, HStack, Icon, Spacer, Stack, Text, VStack, useBreakpoint, useColorModeValue } from "@chakra-ui/react";
 import React from "react";
 import { FaPersonHiking } from "react-icons/fa6";
 import { MdHotel } from "react-icons/md";
@@ -13,9 +13,7 @@ export const DestinationCardBody = ({renderButton,isHorizontal }) => {
   ];
   return (
     <VStack  align={isHorizontal&&'flex-start'} h={isHorizontal && "100%"} w={"100%"}>
-      <Text w={"100%"}>
-        azer sfqf zaefsferfdjkcd fzezd azefzrazer azer sfqf zaefsferfdjkcd fzezd
-        azefzrazer 
+      <Text w={"100%"}>السياحة تتضمن استكشاف الثقافات والمواقع الطبيعية والتاريخية في أنحاء العالم.
       </Text>
       {isHorizontal && <Spacer />}
       <HStack justifyContent={!isHorizontal && "space-between"} w={"100%"}>
@@ -24,7 +22,7 @@ export const DestinationCardBody = ({renderButton,isHorizontal }) => {
             px={4}
             py={1}
             spacing={3}
-            bg={"#f4f2f2"}
+            bg={useColorModeValue("#f4f2f2","#141414")}
             borderRadius={5}
             key={index}
           >
@@ -48,7 +46,7 @@ export const DestinationCardBody = ({renderButton,isHorizontal }) => {
                     align={"center"}
                     justify={"center"}
                   >
-                    <Text fontWeight={{ base: "600", md: "500" }}>View</Text>
+                    <Text fontWeight={{ base: "600", md: "500" }}>عرض </Text>
                     <ViewIcon />
                   </HStack>
                 </Button>

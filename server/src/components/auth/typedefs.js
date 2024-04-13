@@ -22,17 +22,19 @@ export const authTypeDefs = gql`
   }
   type Query {
     getUserById(id: ID!): User
+    getProfileInformation: User
     getAllUsers: [User!]!
   }
   type Mutation {
     registerAdmin(input: RegisterAdminInput!): AuthOutput!
     deleteUserById(id: ID!): DeleteUserResponse
-    login(input: LoginInput!): AuthOutput!
+    login(input: LoginInput!): AuthOutputWithType!
     registerUser(input: RegisterUserInput!): AuthOutput!
     forgetPassword(input: ForgetPasswordInput!): Boolean!
     verifyCodePin(input: verifyCodePinInput!): Boolean!
     updateForgetPassword(input: updateForgetPasswordInput!): Boolean!
     uploadUserImage(userId: ID!, file: Upload!): File!
+    
   }
   type File {
     url: String!
@@ -40,9 +42,13 @@ export const authTypeDefs = gql`
   type DeleteUserResponse {
     message: String!
   }
-
   type AuthOutput {
     accessToken: String!
+    type:String!
+  }
+  type AuthOutputWithType {
+    accessToken: String!
+    type:String!
   }
   type TokensOutput {
     accessToken: String!

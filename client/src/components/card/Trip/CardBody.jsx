@@ -8,6 +8,7 @@ import {
   Stack,
   Text,
   VStack,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
 import { IoMaleFemaleOutline } from "react-icons/io5";
@@ -30,19 +31,19 @@ export const TripCardBody = ({renderButton,isHorizontal }) => {
   return (
     <VStack align={"flex-start"} w={"100%"}>
       <Text fontWeight={"600"} fontSize={13} w={"100%"}>
-        Randonné
+      جولة على الأقدام
       </Text>
       <List fontSize={14}>
         <ListItem>
           <HStack>
             <Icon as={IoCalendarNumber} />
-            <Text>Monday, 13 Sep 2024</Text>
+            <Text>الاثنين 13 سبتمبر 2024</Text>
           </HStack>
         </ListItem>
         <ListItem>
           <HStack>
             <Icon as={MdTimer} />
-            <Text>2 days</Text>{" "}
+            <Text>2 أيام</Text>{" "}
           </HStack>
         </ListItem>
         <ListItem>
@@ -58,7 +59,7 @@ export const TripCardBody = ({renderButton,isHorizontal }) => {
             px={4}
             py={1}
             spacing={3}
-            bg={"#f4f2f2"}
+            bg={useColorModeValue("#f4f2f2","#141414")}
             borderRadius={5}
             key={index}
           >
@@ -69,12 +70,11 @@ export const TripCardBody = ({renderButton,isHorizontal }) => {
       <Stack direction={!isHorizontal?"column":"row"} justify={"flex-start"} align={"center"} w={"100%"}>
         <HStack>
           <Text fontSize={14} fontWeight={600}>
-            From 2500 DA
-          </Text>
+          من 2500دج          </Text>
           <Spacer />
           <HStack color={"green"}>
             <MdEventAvailable />
-            <Text fontSize={13}>available - 4 places </Text>
+            <Text fontSize={13}>متاح - 4 أماكن</Text>
           </HStack>
         </HStack>
         <Spacer />
@@ -88,7 +88,7 @@ export const TripCardBody = ({renderButton,isHorizontal }) => {
               w={{ base: "100%", md: "120px" }}
             >
               <HStack w={"100%"} h={"100%"} align={"center"} justify={"center"}>
-                <Text fontWeight={{ base: "600", md: "500" }}>View</Text>
+                <Text fontWeight={{ base: "600", md: "500" }}>عرض </Text>
                 <ViewIcon />
               </HStack>
             </Button>

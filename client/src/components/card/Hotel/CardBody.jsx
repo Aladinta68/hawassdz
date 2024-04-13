@@ -10,6 +10,7 @@ import {
   Stack,
   Text,
   VStack,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
 import { FaCheck } from "react-icons/fa6";
@@ -28,15 +29,17 @@ export const HotelCardBody = ({ renderButton, isHorizontal }) => {
   return (
     <VStack align={"flex-start"} w={"100%"}>
       <Text fontWeight={"600"} fontSize={13} w={"100%"}>
-        Chambre Double Deluxe
+        غرفة مزدوجة ديلوكس{" "}
       </Text>
       <List color={"#04741b"} fontSize={12}>
-        <Grid  templateColumns={isHorizontal?"repeat(2,1fr)":"repeat(1,1fr)"}>
+        <Grid
+          templateColumns={isHorizontal ? "repeat(2,1fr)" : "repeat(1,1fr)"}
+        >
           <GridItem>
             <ListItem>
               <HStack>
                 <Icon as={FaCheck} />
-                <Text>Annulation gratuite</Text>
+                <Text>الإلغاء مجانا</Text>
               </HStack>
             </ListItem>
           </GridItem>
@@ -44,7 +47,7 @@ export const HotelCardBody = ({ renderButton, isHorizontal }) => {
             <ListItem>
               <HStack>
                 <Icon as={FaCheck} />
-                <Text>Aucun prépaiement requis</Text>{" "}
+                <Text>لا يتطلب الدفع المسبق</Text>{" "}
               </HStack>
             </ListItem>
           </GridItem>
@@ -60,7 +63,7 @@ export const HotelCardBody = ({ renderButton, isHorizontal }) => {
             px={4}
             py={1}
             spacing={3}
-            bg={"#f4f2f2"}
+            bg={useColorModeValue("#f4f2f2", "#141414")}
             borderRadius={5}
             key={index}
           >
@@ -68,8 +71,19 @@ export const HotelCardBody = ({ renderButton, isHorizontal }) => {
           </HStack>
         ))}
       </HStack>
-      <Stack direction={!isHorizontal?"column":"row"} justify={"flex-start"} align={"center"} w={"100%"}>
+      <Stack
+        direction={!isHorizontal ? "column" : "row"}
+        justify={"flex-start"}
+        align={"center"}
+        w={"100%"}
+      >
         <HStack>
+          <Text fontSize={13}>
+            1 ليلة
+            <Text px={1} as={"span"}>
+              ,1 بالغ{" "}
+            </Text>
+          </Text>
           <Text
             textDecor={"line-through"}
             color={"red"}
@@ -81,13 +95,14 @@ export const HotelCardBody = ({ renderButton, isHorizontal }) => {
           <Text fontSize={20} fontWeight={600}>
             2500 DA
           </Text>
-          <Text fontSize={13}>
-            1 night <Text as={"span"}>,1 Adult</Text>
-          </Text>
         </HStack>
         <Spacer />
         {renderButton() && (
-          <Stack w={!isHorizontal&&'100%'} pt={{ base: 2, md: 0 }} align={"end"}>
+          <Stack
+            w={!isHorizontal && "100%"}
+            pt={{ base: 2, md: 0 }}
+            align={"end"}
+          >
             <Button
               variant={"unstyled"}
               _hover={{ opacity: 0.8 }}
@@ -96,7 +111,7 @@ export const HotelCardBody = ({ renderButton, isHorizontal }) => {
               w={{ base: "100%", md: "120px" }}
             >
               <HStack w={"100%"} h={"100%"} align={"center"} justify={"center"}>
-                <Text fontWeight={{ base: "600", md: "500" }}>View</Text>
+                <Text fontWeight={{ base: "600", md: "500" }}>عرض </Text>
                 <ViewIcon />
               </HStack>
             </Button>

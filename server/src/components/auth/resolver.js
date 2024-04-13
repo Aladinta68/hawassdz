@@ -20,6 +20,7 @@ import {
   deleteUserById,
   findByEmail,
   getAllUsers,
+  getUserInfo,
   resetPassword,
   updateForgetPassword,
   uploadFile,
@@ -31,10 +32,31 @@ export const authResolvers = {
   Query: {
     getUserById: async (_, { id }, { prisma, user: authUser }) => {
       try {
-        if (!authUser || authUser.type !== "ADMIN") {
+        if (!authUser || authUser.type !== "ADMIN" || authUser.id === id) {
           throw { message: "Unauthorized", type: ErrorTypes.UNAUTHORIZED };
         }
-        const user = await getUserById({ id, prisma });
+        const user = await getUserInfo({ id, prisma });
+        if (!user) {
+          throw { message: "User not found", type: ErrorTypes.NOT_FOUND };
+        }
+        return user;
+      } catch (error) {
+        if (error.type) {
+          throwCustomError(error.message, error.type);
+        }
+        throwCustomError(
+          "INTERNAL_SERVER_ERROR",
+          ErrorTypes.INTERNAL_SERVER_ERROR
+        );
+      }
+    },
+    getProfileInformation: async (_, __, { prisma, user: authUser }) => {
+      const authID = authUser.id;
+      try {
+        if (!authID) {
+          throw { message: "Unauthorized", type: ErrorTypes.UNAUTHORIZED };
+        }
+        const user = await getUserInfo({ id:authID, prisma });
         if (!user) {
           throw { message: "User not found", type: ErrorTypes.NOT_FOUND };
         }
@@ -67,16 +89,18 @@ export const authResolvers = {
       }
     },
   },
+
   Mutation: {
     login: async (_, { input }, { prisma }) => {
       try {
         await loginSchema.validate(input, { abortEarly: false });
-        let {existUser,type} = await findByEmail({ input, prisma });
+        let { existUser, type } = await findByEmail({ input, prisma });
         const accessToken = await signAccessToken({ id: existUser.id, type });
-        const authOutput = {
+        const AuthOutputWithType = {
           accessToken,
+          type,
         };
-        return authOutput;
+        return AuthOutputWithType;
       } catch (error) {
         if (error instanceof yup.ValidationError) {
           const errors = {};
