@@ -1,5 +1,6 @@
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
+import cors from 'cors';
 import { ApolloServerPluginLandingPageLocalDefault } from "apollo-server-core";
 import { formatError } from "./utils/error/ErrorHandler.js";
 import { typeDefs, resolvers } from "./components/index.js";
