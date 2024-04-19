@@ -12,6 +12,6 @@ export const context = async ({ req, res }) => {
     const { id,type } = await verifyAccessToken(authorizationToken);
     return { prisma, user:{id,type} };
   } catch (error) {
-    console.log(error);
+    console.log("---context--error-----",error);
   }
 };

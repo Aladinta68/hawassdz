@@ -1,4 +1,3 @@
-import * as yup from "yup";
 import {
   ErrorTypes,
   throwCustomError,
@@ -14,17 +13,17 @@ import {
 } from "./validations.js";
 import { default as GraphQLUpload } from "graphql-upload/GraphQLUpload.mjs";
 import {
-  addUserImage,
+  findByEmail,
   createAdmin,
   createUser,
   deleteUserById,
-  findByEmail,
   getAllUsers,
   getUserInfo,
   resetPassword,
   updateForgetPassword,
   uploadFile,
   verifyCodePin,
+  addUserImage,
 } from "./services.js";
 
 export const authResolvers = {
@@ -33,63 +32,58 @@ export const authResolvers = {
     getUserById: async (_, { id }, { prisma, user: authUser }) => {
       try {
         if (!authUser || authUser.type !== "ADMIN" || authUser.id === id) {
-          throw { message: "Unauthorized", type: ErrorTypes.UNAUTHORIZED };
+          throwCustomError("Unauthorized", ErrorTypes.UNAUTHENTICATED);
         }
         const user = await getUserInfo({ id, prisma });
         if (!user) {
-          throw { message: "User not found", type: ErrorTypes.NOT_FOUND };
+          throwCustomError("User not found", ErrorTypes.NOT_FOUND);
         }
         return user;
       } catch (error) {
-        if (error.type) {
-          throwCustomError(error.message, error.type);
-        }
         throwCustomError(
-          "INTERNAL_SERVER_ERROR",
-          ErrorTypes.INTERNAL_SERVER_ERROR
+          error.message,
+          error.extensions || ErrorTypes.INTERNAL_SERVER_ERROR
         );
       }
     },
+
     getProfileInformation: async (_, __, { prisma, user: authUser }) => {
-      const authID = authUser.id;
       try {
+        const authID = authUser.id;
         if (!authID) {
-          throw { message: "Unauthorized", type: ErrorTypes.UNAUTHORIZED };
+          throwCustomError("Unauthorized", ErrorTypes.UNAUTHENTICATED);
         }
-        const user = await getUserInfo({ id:authID, prisma });
+
+        const user = await getUserInfo({ id: authID, prisma });
         if (!user) {
-          throw { message: "User not found", type: ErrorTypes.NOT_FOUND };
+          throwCustomError("User not found", ErrorTypes.NOT_FOUND);
         }
+
         return user;
       } catch (error) {
-        if (error.type) {
-          throwCustomError(error.message, error.type);
-        }
         throwCustomError(
-          "INTERNAL_SERVER_ERROR",
-          ErrorTypes.INTERNAL_SERVER_ERROR
+          error.message,
+          error.extensions || ErrorTypes.INTERNAL_SERVER_ERROR
         );
       }
     },
+
     getAllUsers: async (_, {}, { prisma, user: authUser }) => {
       try {
         if (!authUser || authUser.type !== "ADMIN") {
-          throw { message: "Unauthorized", type: ErrorTypes.UNAUTHORIZED };
+          throwCustomError("Unauthorized", ErrorTypes.UNAUTHENTICATED);
         }
+
         const users = await getAllUsers({ prisma });
         return users;
       } catch (error) {
-        if (error.type) {
-          throwCustomError(error.message, error.type);
-        }
         throwCustomError(
-          "INTERNAL_SERVER_ERROR",
-          ErrorTypes.INTERNAL_SERVER_ERROR
+          error.message,
+          error.extensions || ErrorTypes.INTERNAL_SERVER_ERROR
         );
       }
     },
   },
-
   Mutation: {
     login: async (_, { input }, { prisma }) => {
       try {
@@ -102,18 +96,10 @@ export const authResolvers = {
         };
         return AuthOutputWithType;
       } catch (error) {
-        if (error instanceof yup.ValidationError) {
-          const errors = {};
-          error.inner.reverse().forEach((error) => {
-            const field = error.path;
-            const message = error.message;
-            if (!errors[field]) {
-              errors[field] = message;
-            }
-          });
-          throwCustomError("Bad User Input", ErrorTypes.BAD_USER_INPUT, errors);
-        }
-        throwCustomError(error.message, error.type);
+        throwCustomError(
+          error.message,
+          error.extensions || ErrorTypes.BAD_USER_INPUT
+        );
       }
     },
     registerAdmin: async (_, { input }, { prisma }) => {
@@ -122,133 +108,83 @@ export const authResolvers = {
         const admin = await createAdmin({ input, prisma });
         const type = "ADMIN";
         const accessToken = await signAccessToken({ id: admin.id, type });
-        const authOutput = {
-          accessToken,
-        };
-        return authOutput;
+        return { accessToken };
       } catch (error) {
-        if (error instanceof yup.ValidationError) {
-          const errors = {};
-          error.inner.reverse().forEach((error) => {
-            const field = error.path;
-            const message = error.message;
-            if (!errors[field]) {
-              errors[field] = message;
-            }
-          });
-          throwCustomError("Bad User Input", ErrorTypes.BAD_USER_INPUT, errors);
-        }
         throwCustomError(
           error.message,
-          error.type || ErrorTypes.INTERNAL_SERVER_ERROR
+          error.extensions || ErrorTypes.BAD_USER_INPUT
         );
       }
     },
+
     registerUser: async (_, { input }, { prisma }) => {
       try {
         await registerUserSchema.validate(input, { abortEarly: false });
         const user = await createUser({ input, prisma });
         const type = "USER";
         const accessToken = await signAccessToken({ id: user.id, type });
-        const authOutput = {
-          accessToken,
-        };
-        return authOutput;
+        return { accessToken };
       } catch (error) {
-        if (error instanceof yup.ValidationError) {
-          const errors = {};
-          error.inner.reverse().forEach((error) => {
-            const field = error.path;
-            const message = error.message;
-            if (!errors[field]) {
-              errors[field] = message;
-            }
-          });
-          throwCustomError("Bad User Input", ErrorTypes.BAD_USER_INPUT, errors);
-        }
         throwCustomError(
           error.message,
-          error.type || ErrorTypes.INTERNAL_SERVER_ERROR
+          error.extensions || ErrorTypes.BAD_USER_INPUT
         );
       }
     },
+
     deleteUserById: async (_, { id }, { prisma, user: authUser }) => {
       try {
         if (!authUser || authUser.type !== "ADMIN") {
-          throw { message: "Unauthorized", type: ErrorTypes.UNAUTHORIZED };
+          throwCustomError("Unauthorized", ErrorTypes.UNAUTHENTICATED);
         }
         const deletedUser = await deleteUserById({ id, prisma });
         return {
           message: `User with ID ${deletedUser.id} deleted successfully`,
         };
       } catch (error) {
-        if (error.type) {
-          throwCustomError(error.message, error.type);
-        }
         throwCustomError(
-          "INTERNAL_SERVER_ERROR",
-          ErrorTypes.INTERNAL_SERVER_ERROR
+          error.message,
+          error.extensions || ErrorTypes.UNAUTHENTICATED
         );
       }
     },
+
     forgetPassword: async (_, { input }, { prisma }) => {
       try {
         await forgetPasswordSchema.validate(input, { abortEarly: false });
         const result = await resetPassword({ input, prisma });
         return result;
       } catch (error) {
-        if (error instanceof yup.ValidationError) {
-          const errors = {};
-          error.inner.reverse().forEach((error) => {
-            const field = error.path;
-            const message = error.message;
-            if (!errors[field]) {
-              errors[field] = message;
-            }
-          });
-          throwCustomError("Bad User Input", ErrorTypes.BAD_USER_INPUT, errors);
-        }
-        throw error;
+        throwCustomError(
+          error.message,
+          error.extensions || ErrorTypes.BAD_USER_INPUT
+        );
       }
     },
+
     verifyCodePin: async (_, { input }, { prisma }) => {
       try {
         await verifyCodePinSchema.validate(input, { abortEarly: false });
         const check = await verifyCodePin({ input, prisma });
         return check;
       } catch (error) {
-        if (error instanceof yup.ValidationError) {
-          const errors = {};
-          error.inner.reverse().forEach((error) => {
-            const field = error.path;
-            const message = error.message;
-            if (!errors[field]) {
-              errors[field] = message;
-            }
-          });
-          throwCustomError("Bad User Input", ErrorTypes.BAD_USER_INPUT, errors);
-        }
-        throw error;
+        throwCustomError(
+          error.message,
+          error.extensions || ErrorTypes.BAD_USER_INPUT
+        );
       }
     },
+
     updateForgetPassword: async (_, { input }, { prisma }) => {
       try {
         await updatePasswordSchema.validate(input, { abortEarly: false });
         const result = await updateForgetPassword({ input, prisma });
         return result;
       } catch (error) {
-        if (error instanceof yup.ValidationError) {
-          const errors = {};
-          error.inner.reverse().forEach((error) => {
-            const field = error.path;
-            const message = error.message;
-            if (!errors[field]) {
-              errors[field] = message;
-            }
-          });
-          throwCustomError("Bad User Input", ErrorTypes.BAD_USER_INPUT, errors);
-        }
-        throw error;
+        throwCustomError(
+          error.message,
+          error.extensions || ErrorTypes.BAD_USER_INPUT
+        );
       }
     },
     uploadUserImage: async (
@@ -257,16 +193,15 @@ export const authResolvers = {
       { prisma, user: authUser }
     ) => {
       try {
-        console.log(authUser);
         if (!authUser || authUser.id !== userId) {
-          throw { message: "Unauthorized", type: ErrorTypes.UNAUTHORIZED };
+          throwCustomError("Unauthorized", ErrorTypes.UNAUTHENTICATED);
         }
         const { url } = await uploadFile(file);
         return await addUserImage({ userId, url, prisma });
       } catch (error) {
         throwCustomError(
           error.message,
-          error.type || ErrorTypes.INTERNAL_SERVER_ERROR
+          error.extensions || ErrorTypes.INTERNAL_SERVER_ERROR
         );
       }
     },

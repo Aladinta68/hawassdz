@@ -1,5 +1,5 @@
-import {GraphQLError} from "graphql"
-import {ApolloServerErrorCode} from "@apollo/server/errors"
+import { GraphQLError } from "graphql";
+import { ApolloServerErrorCode } from "@apollo/server/errors";
 
 export const ErrorTypes = {
   BAD_USER_INPUT: {
@@ -33,7 +33,7 @@ export const ErrorTypes = {
   },
   STRIPE_CARD_ERROR: {
     errorCode: "STRIPE_CARD_ERROR",
-    errorStatus: 402
+    errorStatus: 402,
   },
   INTERNAL_SERVER_ERROR: {
     errorCode: ApolloServerErrorCode.INTERNAL_SERVER_ERROR,
@@ -44,15 +44,14 @@ export const ErrorTypes = {
 export const throwCustomError = (errorMessage, errorType) => {
   throw new GraphQLError(errorMessage, {
     extensions: {
-      code: errorType.errorCode,
-      httpStatus: errorType.errorStatus,
+      code: errorType?.errorCode || errorType?.code,
+      httpStatus: errorType?.errorStatus || errorType?.httpStatus,
     },
   });
 };
 
 export const formatError = (err) => {
-  console.log(err);
-
+  console.log("formatErr", err);
   if (
     err.extensions.code === "BAD_USER_INPUT" &&
     (err.extensions.httpStatus === null ||
@@ -64,7 +63,6 @@ export const formatError = (err) => {
       httpStatus: 400,
     };
   }
-
   if (
     err.extensions.httpStatus === null ||
     err.extensions.httpStatus === undefined
@@ -81,4 +79,3 @@ export const formatError = (err) => {
     httpStatus: err.extensions.httpStatus,
   };
 };
-

@@ -6,47 +6,44 @@ import {
   throwCustomError,
 } from "../../../utils/error/ErrorHandler.js";
 
-export const hashPassword = async (password) => {
+const hashPassword = async (password) => {
   try {
     const hash = await argon.hash(password);
     return hash;
   } catch (error) {
-    throwCustomError("INTERNAL SERVER ERROR", ErrorTypes.INTERNAL_SERVER_ERROR);
+    throwCustomError("Failed to hash password", ErrorTypes.INTERNAL_SERVER_ERROR);
   }
 };
 
-export const comparePassword = async (hashPassword, password) => {
+const comparePassword = async (hashPassword, password) => {
   try {
     const check = await argon.verify(hashPassword, password);
-    if (check) {
-      return true;
-    }
-    return false;
+    return check;
   } catch (error) {
-    throwCustomError("INTERNAL SERVER ERROR", ErrorTypes.INTERNAL_SERVER_ERROR);
+    throwCustomError("Failed to compare passwords", ErrorTypes.INTERNAL_SERVER_ERROR);
   }
 };
 
-export const signAccessToken = async ({ id, type }) => {
+const signAccessToken = async ({ id, type }) => {
   try {
     const payload = { id, type };
     const options = { expiresIn: "30d" };
-    const nodeEnv = process.env.ACCESS_TOKEN_SECRET;
-    const token = JWT.sign(payload, nodeEnv, options);
+    const secret = process.env.ACCESS_TOKEN_SECRET;
+    const token = JWT.sign(payload, secret, options);
     return token;
   } catch (error) {
-    throwCustomError("UNAUTHORIZED", ErrorTypes.UNAUTHORIZED);
+    throwCustomError("Failed to sign access token", ErrorTypes.UNAUTHORIZED);
   }
 };
 
-export const verifyAccessToken = async (token, type) => {
+const verifyAccessToken = async (token) => {
   try {
-    let nodeEnv;
-    nodeEnv = process.env.ACCESS_TOKEN_SECRET;
-    const payload = JWT.verify(token, nodeEnv);
-    const { id, type } = payload;
-    return { id, type };
+    const secret = process.env.ACCESS_TOKEN_SECRET;
+    const payload = JWT.verify(token, secret);
+    return payload;
   } catch (error) {
-    throwCustomError("UNAUTHORIZED", ErrorTypes.UNAUTHORIZED);
+    throwCustomError("Failed to verify access token", ErrorTypes.UNAUTHORIZED);
   }
 };
+
+export { hashPassword, comparePassword, signAccessToken, verifyAccessToken };

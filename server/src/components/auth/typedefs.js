@@ -13,7 +13,7 @@ export const authTypeDefs = gql`
     dateOfBirth: String
     gender: String
     complete: Boolean
-    image: Image
+    image: File
   }
   type Admin {
     id: ID
@@ -44,7 +44,6 @@ export const authTypeDefs = gql`
   }
   type AuthOutput {
     accessToken: String!
-    type:String!
   }
   type AuthOutputWithType {
     accessToken: String!
