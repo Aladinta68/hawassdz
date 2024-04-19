@@ -4,6 +4,6 @@ import {
 } from "@apollo/client";
 
 export const client = new ApolloClient({
-  uri: "http://localhost:2024/graphql",
+  uri: "https://hawassdz-server.vercel.app/",
   cache: new InMemoryCache(),
 });
