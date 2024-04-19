@@ -2,10 +2,9 @@ import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import { ApolloServerPluginLandingPageLocalDefault } from "apollo-server-core";
 import { formatError } from "./utils/error/ErrorHandler.js";
-import {typeDefs,resolvers} from "./components/index.js"
+import { typeDefs, resolvers } from "./components/index.js";
 import { context } from "./middleware/context.js";
 import { default as graphqlUploadExpress } from "graphql-upload/graphqlUploadExpress.mjs";
-
 
 async function startServer() {
   const server = new ApolloServer({
@@ -19,6 +18,7 @@ async function startServer() {
   await server.start();
 
   const app = express();
+  app.use(cors({ origin: "http://localhost:5173" }));
 
   app.use(express.static("public"));
 
