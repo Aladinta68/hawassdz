@@ -19,7 +19,7 @@ async function startServer() {
   await server.start();
 
   const app = express();
-  app.use(cors({ origin: "http://localhost:5173" }));
+  app.use(cors({ origin: "https://hawassdz.vercel.app" }));
 
   app.use(express.static("public"));
 
