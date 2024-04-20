@@ -15,6 +15,7 @@ export const wilayaTypeDefs = gql`
   type Mutation {
     deleteWilayaById(id: ID!): DeleteWilayaResponse
     addWilaya(input: addWilayaInput!): Wilaya!
+    updateWilayaById(id: ID!, input: UpdateWilayaInput!): Wilaya!
   }
   type File {
     url: String!
@@ -24,6 +25,12 @@ export const wilayaTypeDefs = gql`
   }
   input addWilayaInput {
     name: String
+    description: String!
+    files: [Upload!]!
+  }
+  
+  input UpdateWilayaInput {
+    name: String!
     description: String!
     files: [Upload!]!
   }

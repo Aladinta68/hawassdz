@@ -9,6 +9,7 @@ import {
   findByName,
   getMany,
   getOne,
+  updateOne,
   uploadFile,
 } from "./services.js";
 
@@ -60,7 +61,12 @@ export const wilayaResolvers = {
           const { url } = await uploadFile(file);
           imageUrls.push(url);
         }
-        const wilaya = await createOne({ name, description, imageUrls, prisma });
+        const wilaya = await createOne({
+          name,
+          description,
+          imageUrls,
+          prisma,
+        });
         return wilaya;
       } catch (error) {
         throwCustomError(
@@ -82,6 +88,24 @@ export const wilayaResolvers = {
         throwCustomError(
           error.message,
           error.extensions || ErrorTypes.UNAUTHENTICATED
+        );
+      }
+    },
+    updateWilayaById: async (_, { id, input }, { prisma, user: authUser }) => {
+      try {
+        if (!authUser || authUser.type !== "ADMIN") {
+          throwCustomError("Unauthorized", ErrorTypes.UNAUTHENTICATED);
+        }
+        const existingWilaya = await getOne({ id, prisma });
+        if (!existingWilaya) {
+          throwCustomError("Wilaya not found", ErrorTypes.NOT_FOUND);
+        }
+        const updatedWilaya = await updateOne({ id, input, prisma });
+        return updatedWilaya;
+      } catch (error) {
+        throwCustomError(
+          error.message,
+          error.extensions || ErrorTypes.INTERNAL_SERVER_ERROR
         );
       }
     },
