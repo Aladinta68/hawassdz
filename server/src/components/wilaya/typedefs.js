@@ -6,7 +6,7 @@ export const wilayaTypeDefs = gql`
     id: ID
     name: String
     description: String
-    image: File
+    image: [File]
   }
   type Query {
     getWilayaById(id: ID!): Wilaya
@@ -25,7 +25,7 @@ export const wilayaTypeDefs = gql`
   input addWilayaInput {
     name: String
     description: String!
-    file: Upload!
+    files: [Upload!]!
   }
 `;
 

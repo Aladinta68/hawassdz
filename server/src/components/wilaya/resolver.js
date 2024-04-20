@@ -3,7 +3,14 @@ import {
   throwCustomError,
 } from "../../utils/error/ErrorHandler.js";
 import { default as GraphQLUpload } from "graphql-upload/GraphQLUpload.mjs";
-import { createOne, getMany, getOne } from "./services.js";
+import {
+  createOne,
+  deleteOne,
+  findByName,
+  getMany,
+  getOne,
+  uploadFile,
+} from "./services.js";
 
 export const wilayaResolvers = {
   Upload: GraphQLUpload,
@@ -35,14 +42,25 @@ export const wilayaResolvers = {
     },
   },
   Mutation: {
-    addWilaya: async (_, { input }, { prisma, user: authUser }) => { 
+    addWilaya: async (_, { input }, { prisma, user: authUser }) => {
       try {
         if (!authUser || authUser.type !== "ADMIN") {
           throwCustomError("Unauthorized", ErrorTypes.UNAUTHENTICATED);
         }
-        const { name, description, file } = input;
-        const { url } = await uploadFile(file);
-        const wilaya = await createOne({ name, description, url, prisma });
+        const { name, description, files } = input;
+        const existWilaya = await findByName({ name, prisma });
+        if (existWilaya) {
+          throwCustomError(
+            "Credential already exist",
+            ErrorTypes.ALREADY_EXISTS
+          );
+        }
+        const imageUrls = [];
+        for (const file of files) {
+          const { url } = await uploadFile(file);
+          imageUrls.push(url);
+        }
+        const wilaya = await createOne({ name, description, imageUrls, prisma });
         return wilaya;
       } catch (error) {
         throwCustomError(

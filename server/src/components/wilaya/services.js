@@ -7,15 +7,23 @@ import {
 } from "../../utils/error/ErrorHandler.js";
 import { randomUUID } from "crypto";
 
+export const findByName = async ({ name, prisma }) => {
+  const wilaya = await prisma.wilaya.findUnique({ where: { name } });
+  return wilaya;
+};
 export const getMany = async ({ prisma }) => {
-  const wilayas = await prisma.wilaya.findMany();
+  const wilayas = await prisma.wilaya.findMany({
+    include: {
+      images: true,
+    },
+  });
   return wilayas;
 };
 
 export const getOne = async ({ id, prisma }) => {
   const wilaya = await prisma.wilaya.findUnique({
     where: { id },
-    include: { image: true },
+    include: { images: true },
   });
   return wilaya;
 };
@@ -31,7 +39,7 @@ export const deleteOne = async ({ id, prisma }) => {
   } catch (error) {
     throwCustomError(
       error.message,
-      error.type || ErrorTypes.INTERNAL_SERVER_ERROR
+      error.extensions || ErrorTypes.INTERNAL_SERVER_ERROR
     );
   }
 };
@@ -66,11 +74,7 @@ export const uploadFile = async (file) => {
   return { url: `/images/${uniqueFilename}` };
 };
 
-export const createOne = async ({ name, description, url, prisma }) => {
-  const wilaya = await prisma.wilaya.findUnique({ where: { name } });
-  if (wilaya) {
-    throwCustomError("Credential already exist", ErrorTypes.ALREADY_EXISTS);
-  }
+export const createOne = async ({ name, description, imageUrls, prisma }) => {
   const newWilaya = await prisma.wilaya.create({
     data: {
       name,
@@ -78,12 +82,27 @@ export const createOne = async ({ name, description, url, prisma }) => {
     },
   });
   const wilayaId = newWilaya.id;
-  const newImage = await prisma.image.create({
-    data: { url, wilayaId },
-  });
+  const createdImages = [];
+  for (const url of imageUrls) {
+    const newImage = await prisma.image.create({
+      data: { url, wilayaId },
+    });
+
+    createdImages.push(newImage);
+  }
   await prisma.wilaya.update({
     where: { id: wilayaId },
-    data: { image: { connect: { id: newImage.id } } },
+    data: {
+      images: { connect: createdImages.map((image) => ({ id: image.id })) },
+    },
   });
-  return { newWilaya, url };
+
+  const wilayaOutput = {
+    id: newWilaya.id,
+    name: newWilaya.name,
+    description: newWilaya.description,
+    image: createdImages.map(image => ({ url: image.url })), 
+  };
+
+  return wilayaOutput;
 };
