@@ -1,14 +1,12 @@
 import crypto from "crypto";
-import fs from "fs";
-import path from "path";
 import { comparePassword, hashPassword } from "./utils/utils.js";
 import {
   throwCustomError,
   ErrorTypes,
 } from "../../utils/error/ErrorHandler.js";
-import { randomUUID } from "crypto";
 import { HtmlTemplate } from "../../utils/mail/mail.template.js";
 import { sendMailTest } from "../../utils/mail/nodemailer.config.js";
+import { deleteFile, uploadFile } from "./../../utils/upload/images.js";
 
 const getUserOrAdminByEmail = async (email, prisma) => {
   const admin = await prisma.admin.findUnique({ where: { email } });
@@ -16,7 +14,7 @@ const getUserOrAdminByEmail = async (email, prisma) => {
   return { admin, user };
 };
 
-export const findByEmail = async ({ input, prisma }) => {
+export const findByEmailandPassword = async ({ input, prisma }) => {
   const { email, password } = input;
   const { admin, user } = await getUserOrAdminByEmail(email, prisma);
 
@@ -95,25 +93,19 @@ export const getAllUsers = async ({ prisma }) => {
 export const getUserInfo = async ({ id, prisma }) => {
   const user = await prisma.user.findUnique({
     where: { id },
-    include: { image: true }, // Include the image data
+    include: { image: true },
   });
-  console.log(user);
-
   return user;
 };
 
 export const deleteUserById = async ({ id, prisma }) => {
   try {
-    const user = await prisma.user.findUnique({ where: { id } });
-    if (!user) {
-      throwCustomError("User not found", ErrorTypes.NOT_FOUND);
-    }
     const deletedUser = await prisma.user.delete({ where: { id } });
     return deletedUser;
   } catch (error) {
     throwCustomError(
       error.message,
-      error.type || ErrorTypes.INTERNAL_SERVER_ERROR
+      error.extension || ErrorTypes.INTERNAL_SERVER_ERROR
     );
   }
 };
@@ -210,47 +202,12 @@ export const updateForgetPassword = async ({ input, prisma }) => {
   return result;
 };
 
-export const uploadFile = async (file) => {
-  const { createReadStream, filename } = await file;
-
-  if (!createReadStream || !filename) {
-    return throwCustomError(
-      "Something went Wrong ",
-      ErrorTypes.INTERNAL_SERVER_ERROR
-    );
-  }
-
-  const stream = createReadStream();
-  const uniqueFilename = `${Date.now()}-${randomUUID()} - ${filename}`;
-  const uploadDir = path.join(process.cwd(), "/public/images/");
-  const filePath = path.join(uploadDir, uniqueFilename);
-
-  if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
-  }
-
-  const writeStream = fs.createWriteStream(filePath);
-
-  await new Promise((resolve, reject) => {
-    stream
-      .pipe(writeStream)
-      .on("finish", () => resolve(filePath))
-      .on("error", (error) => reject(error));
-  });
-
-  return { url: `/images/${uniqueFilename}` };
-};
-
-export const addUserImage = async ({ userId, url, prisma }) => {
+export const addUserImage = async ({ userId, file, prisma }) => {
   const existingImage = await prisma.image.findFirst({ where: { userId } });
-
   if (existingImage) {
-    const imagePath = path.join(process.cwd(), "/public", existingImage.url);
-    if (fs.existsSync(imagePath)) {
-      fs.unlinkSync(imagePath);
-    }
+    deleteFile(existingImage.url);
   }
-
+  const { url } = await uploadFile(file);
   let updatedImage;
   if (existingImage) {
     updatedImage = await prisma.image.update({

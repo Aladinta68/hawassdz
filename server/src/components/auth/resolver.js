@@ -13,7 +13,7 @@ import {
 } from "./validations.js";
 import { default as GraphQLUpload } from "graphql-upload/GraphQLUpload.mjs";
 import {
-  findByEmail,
+  findByEmailandPassword,
   createAdmin,
   createUser,
   deleteUserById,
@@ -21,7 +21,6 @@ import {
   getUserInfo,
   resetPassword,
   updateForgetPassword,
-  uploadFile,
   verifyCodePin,
   addUserImage,
 } from "./services.js";
@@ -53,7 +52,6 @@ export const authResolvers = {
         if (!authID) {
           throwCustomError("Unauthorized", ErrorTypes.UNAUTHENTICATED);
         }
-
         const user = await getUserInfo({ id: authID, prisma });
         if (!user) {
           throwCustomError("User not found", ErrorTypes.NOT_FOUND);
@@ -88,7 +86,10 @@ export const authResolvers = {
     login: async (_, { input }, { prisma }) => {
       try {
         await loginSchema.validate(input, { abortEarly: false });
-        let { existUser, type } = await findByEmail({ input, prisma });
+        let { existUser, type } = await findByEmailandPassword({
+          input,
+          prisma,
+        });
         const accessToken = await signAccessToken({ id: existUser.id, type });
         const AuthOutputWithType = {
           accessToken,
@@ -136,6 +137,10 @@ export const authResolvers = {
       try {
         if (!authUser || authUser.type !== "ADMIN") {
           throwCustomError("Unauthorized", ErrorTypes.UNAUTHENTICATED);
+        }
+        const user = await getUserInfo({ id, prisma });
+        if (!user) {
+          throwCustomError("User not found", ErrorTypes.NOT_FOUND);
         }
         const deletedUser = await deleteUserById({ id, prisma });
         return {
@@ -193,11 +198,14 @@ export const authResolvers = {
       { prisma, user: authUser }
     ) => {
       try {
-        if (!authUser || authUser.id !== userId) {
+        if (!authUser || authUser.id !== userId || authUser.type !== "ADMIN") {
           throwCustomError("Unauthorized", ErrorTypes.UNAUTHENTICATED);
         }
-        const { url } = await uploadFile(file);
-        return await addUserImage({ userId, url, prisma });
+        const user = await getUserInfo({ userId, prisma });
+        if (!user) {
+          throwCustomError("User not found", ErrorTypes.NOT_FOUND);
+        }
+        return await addUserImage({ userId, file, prisma });
       } catch (error) {
         throwCustomError(
           error.message,

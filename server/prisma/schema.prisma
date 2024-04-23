@@ -19,6 +19,15 @@ datasource db {
 //   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 // }
 
+model Admin {
+  id        String   @id @unique @default(uuid())
+  email     String   @unique
+  userName  String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model User {
   id          String           @id @unique @default(uuid())
   firstName   String
@@ -35,13 +44,30 @@ model User {
   updatedAt   DateTime         @updatedAt
 }
 
-model Admin {
-  id        String   @id @unique @default(uuid())
-  email     String   @unique
-  userName  String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Wilaya {
+  id          String   @id @unique @default(uuid())
+  name        String   @unique
+  description String?
+  images      Image[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  Hotel       Hotel[]
+}
+
+model Hotel {
+  id          String       @id @unique @default(uuid())
+  name        String
+  description String?
+  type        String?
+  address     String?
+  wilaya      Wilaya?      @relation(fields: [wilayaId], references: [id])
+  wilayaId    String?
+  images      Image[]
+  ratings     Rating[]
+  mapLocation MapLocation?
+  contactInfo ContactInfo?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 }
 
 model RestPasswordOTP {
@@ -54,27 +80,52 @@ model RestPasswordOTP {
   user      User     @relation(fields: [email], references: [email], onDelete: Cascade)
 }
 
-model Image {
-  id        String   @id @unique @default(uuid())
-  url       String
-  user      User?    @relation(fields: [userId], references: [id])
-  userId    String?  @unique
-  Wilaya    Wilaya?  @relation(fields: [wilayaId], references: [id], onDelete: Cascade)
-  wilayaId  String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
 enum Gender {
   Male
   Female
 }
 
-model Wilaya {
-  id          String   @id @unique @default(uuid())
-  name        String   @unique
-  description String?
-  images      Image[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+model Image {
+  id        String   @id @unique @default(uuid())
+  url       String
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String?  @unique
+  Wilaya    Wilaya?  @relation(fields: [wilayaId], references: [id], onDelete: Cascade)
+  wilayaId  String?
+  Hotel     Hotel?   @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  hotelId   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model MapLocation {
+  id        String   @id @unique @default(uuid())
+  longitude Float
+  latitude  Float
+  hotel     Hotel    @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  hotelId   String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ContactInfo {
+  id        String   @id @unique @default(uuid())
+  phone     String?
+  email     String?
+  website   String?
+  facebook  String?
+  hotel     Hotel    @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  hotelId   String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Rating {
+  id        String   @id @unique @default(uuid())
+  stars     String
+  feedback  String?
+  Hotel     Hotel?   @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  hotelId   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

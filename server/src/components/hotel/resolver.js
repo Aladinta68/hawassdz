@@ -6,22 +6,20 @@ import { default as GraphQLUpload } from "graphql-upload/GraphQLUpload.mjs";
 import {
   createOne,
   deleteOne,
-  findByName,
   getMany,
   getOne,
   updateOne,
 } from "./services.js";
-
-export const wilayaResolvers = {
+export const hotelResolvers = {
   Upload: GraphQLUpload,
   Query: {
-    getWilayaById: async (_, { id }, { prisma }) => {
+    getHotelById: async (_, { id }, { prisma }) => {
       try {
-        const wilaya = await getOne({ id, prisma });
-        if (!wilaya) {
-          throwCustomError("wilaya not found", ErrorTypes.NOT_FOUND);
+        const hotel = await getOne({ id, prisma });
+        if (!hotel) {
+          throwCustomError("hotel not found", ErrorTypes.NOT_FOUND);
         }
-        return wilaya;
+        return hotel;
       } catch (error) {
         throwCustomError(
           error.message,
@@ -29,10 +27,10 @@ export const wilayaResolvers = {
         );
       }
     },
-    getAllWilayas: async (_, {}, { prisma }) => {
+    getAllHotels: async (_, {}, { prisma }) => {
       try {
-        const wilayas = await getMany({ prisma });
-        return wilayas;
+        const hotels = await getMany({ prisma });
+        return hotels;
       } catch (error) {
         throwCustomError(
           error.message,
@@ -42,24 +40,16 @@ export const wilayaResolvers = {
     },
   },
   Mutation: {
-    addWilaya: async (_, { input }, { prisma, user: authUser }) => {
+    addHotel: async (_, { input }, { prisma, user: authUser }) => {
       try {
         if (!authUser || authUser.type !== "ADMIN") {
           throwCustomError("Unauthorized", ErrorTypes.UNAUTHENTICATED);
         }
-        const { name } = input;
-        const existWilaya = await findByName({ name, prisma });
-        if (existWilaya) {
-          throwCustomError(
-            "Credential already exist",
-            ErrorTypes.ALREADY_EXISTS
-          );
-        }
-        const wilaya = await createOne({
+        const hotel = await createOne({
           input,
           prisma,
         });
-        return wilaya;
+        return hotel;
       } catch (error) {
         throwCustomError(
           error.message,
@@ -67,18 +57,18 @@ export const wilayaResolvers = {
         );
       }
     },
-    deleteWilayaById: async (_, { id }, { prisma, user: authUser }) => {
+    deleteHotelById: async (_, { id }, { prisma, user: authUser }) => {
       try {
         if (!authUser || authUser.type !== "ADMIN") {
           throwCustomError("Unauthorized", ErrorTypes.UNAUTHENTICATED);
         }
-        const wilaya = await getOne({ id, prisma });
-        if (!wilaya) {
-          throwCustomError("Wilaya not found", ErrorTypes.NOT_FOUND);
+        const hotel = await getOne({ id, prisma });
+        if (!hotel) {
+          throwCustomError("hotel not found", ErrorTypes.NOT_FOUND);
         }
-        const deletedWilaya = await deleteOne({ id,wilaya, prisma });
+        const deletedHotel = await deleteOne({ id, hotel, prisma });
         return {
-          message: `Wilaya with ID ${deletedWilaya.id} deleted successfully`,
+          message: `hotel with ID ${deletedHotel.id} deleted successfully`,
         };
       } catch (error) {
         throwCustomError(
@@ -87,17 +77,17 @@ export const wilayaResolvers = {
         );
       }
     },
-    updateWilayaById: async (_, { id, input }, { prisma, user: authUser }) => {
+    updateHotelById: async (_, { id, input }, { prisma, user: authUser }) => {
       try {
         if (!authUser || authUser.type !== "ADMIN") {
           throwCustomError("Unauthorized", ErrorTypes.UNAUTHENTICATED);
         }
-        const existingWilaya = await getOne({ id, prisma });
-        if (!existingWilaya) {
-          throwCustomError("Wilaya not found", ErrorTypes.NOT_FOUND);
+        const existingHotel = await getOne({ id, prisma });
+        if (!existingHotel) {
+          throwCustomError("hotel not found", ErrorTypes.NOT_FOUND);
         }
-        const updatedWilaya = await updateOne({ id, input,existingWilaya, prisma });
-        return updatedWilaya;
+        const updatedHotel = await updateOne({ id, input,existingHotel, prisma });
+        return updatedHotel;
       } catch (error) {
         throwCustomError(
           error.message,
@@ -108,4 +98,4 @@ export const wilayaResolvers = {
   },
 };
 
-export default wilayaResolvers;
+export default hotelResolvers;

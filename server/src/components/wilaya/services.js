@@ -1,11 +1,8 @@
-import crypto from "crypto";
-import fs from "fs";
-import path from "path";
 import {
   throwCustomError,
   ErrorTypes,
 } from "../../utils/error/ErrorHandler.js";
-import { randomUUID } from "crypto";
+import { deleteFile, uploadFile } from "../../utils/upload/images.js";
 
 export const findByName = async ({ name, prisma }) => {
   const wilaya = await prisma.wilaya.findUnique({ where: { name } });
@@ -26,21 +23,11 @@ export const getOne = async ({ id, prisma }) => {
   return wilaya;
 };
 
-export const deleteOne = async ({ id, prisma }) => {
+export const deleteOne = async ({ id, wilaya, prisma }) => {
   try {
-    const wilaya = await prisma.wilaya.findUnique({
-      where: { id },
-      include: { images: true },
-    });
-    if (!wilaya) {
-      throwCustomError("Wilaya not found", ErrorTypes.NOT_FOUND);
-    }
     if (wilaya.images && wilaya.images.length > 0) {
       wilaya.images.forEach((image) => {
-        const imagePath = path.join(process.cwd(), "public", image.url);
-        if (fs.existsSync(imagePath)) {
-          fs.unlinkSync(imagePath);
-        }
+        deleteFile(image.url);
       });
     }
     const deletedWilaya = await prisma.wilaya.delete({ where: { id } });
@@ -53,37 +40,8 @@ export const deleteOne = async ({ id, prisma }) => {
   }
 };
 
-export const uploadFile = async (file) => {
-  const { createReadStream, filename } = await file;
-
-  if (!createReadStream || !filename) {
-    return throwCustomError(
-      "Something went Wrong ",
-      ErrorTypes.INTERNAL_SERVER_ERROR
-    );
-  }
-  const stream = createReadStream();
-  const uniqueFilename = `${Date.now()}-${randomUUID()} - ${filename}`;
-  const uploadDir = path.join(process.cwd(), "/public/images/");
-  const filePath = path.join(uploadDir, uniqueFilename);
-
-  if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
-  }
-
-  const writeStream = fs.createWriteStream(filePath);
-
-  await new Promise((resolve, reject) => {
-    stream
-      .pipe(writeStream)
-      .on("finish", () => resolve(filePath))
-      .on("error", (error) => reject(error));
-  });
-
-  return { url: `/images/${uniqueFilename}` };
-};
-
-export const createOne = async ({ name, description, imageUrls, prisma }) => {
+export const createOne = async ({ input, prisma }) => {
+  const { name, description, files } = input;
   const newWilaya = await prisma.wilaya.create({
     data: {
       name,
@@ -92,48 +50,45 @@ export const createOne = async ({ name, description, imageUrls, prisma }) => {
   });
   const wilayaId = newWilaya.id;
   const createdImages = [];
-  for (const url of imageUrls) {
-    const newImage = await prisma.image.create({
-      data: { url, wilayaId },
+
+  if (files) {
+    const imageUrls = [];
+    for (const file of files) {
+      const { url } = await uploadFile(file);
+      imageUrls.push(url);
+    }
+
+    for (const url of imageUrls) {
+      const newImage = await prisma.image.create({
+        data: { url, wilayaId },
+      });
+      createdImages.push(newImage);
+    }
+    await prisma.wilaya.update({
+      where: { id: wilayaId },
+      data: {
+        images: { connect: createdImages.map((image) => ({ id: image.id })) },
+      },
     });
-
-    createdImages.push(newImage);
   }
-  await prisma.wilaya.update({
-    where: { id: wilayaId },
-    data: {
-      images: { connect: createdImages.map((image) => ({ id: image.id })) },
-    },
-  });
-
-  const wilayaOutput = {
+  return {
     id: newWilaya.id,
     name: newWilaya.name,
     description: newWilaya.description,
-    image: createdImages.map((image) => ({ url: image.url })),
+    images: createdImages.map((image) => ({ url: image.url })),
   };
-
-  return wilayaOutput;
 };
 
-export const updateOne = async ({ id, input, prisma }) => {
+export const updateOne = async ({ id, input, existingWilaya, prisma }) => {
   try {
     const { name, description, files } = input;
-
     if (files && files.length > 0) {
-      const existingWilaya = await prisma.wilaya.findUnique({
-        where: { id },
-        include: { images: true },
-      });
       if (existingWilaya.images && existingWilaya.images.length > 0) {
         await prisma.image.deleteMany({
           where: { id: { in: existingWilaya.images.map((image) => image.id) } },
         });
         existingWilaya.images.forEach((image) => {
-          const imagePath = path.join(process.cwd(), "public", image.url);
-          if (fs.existsSync(imagePath)) {
-            fs.unlinkSync(imagePath);
-          }
+          deleteFile(image.url);
         });
       }
     }
@@ -144,7 +99,7 @@ export const updateOne = async ({ id, input, prisma }) => {
         newImageUrls.push(url);
       }
     }
-    const updatedWilaya = await prisma.wilaya.update({
+    return await prisma.wilaya.update({
       where: { id },
       data: {
         name,
@@ -157,7 +112,6 @@ export const updateOne = async ({ id, input, prisma }) => {
       },
       include: { images: true },
     });
-    return updatedWilaya;
   } catch (error) {
     throwCustomError(
       error.message,
