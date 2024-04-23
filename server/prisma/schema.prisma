@@ -45,13 +45,27 @@ model User {
 }
 
 model Wilaya {
-  id          String   @id @unique @default(uuid())
-  name        String   @unique
+  id          String        @id @unique @default(uuid())
+  name        String        @unique
   description String?
   images      Image[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
   Hotel       Hotel[]
+  Destination Destination[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model Destination {
+  id          String       @id @unique @default(uuid())
+  name        String
+  description String?
+  wilaya      Wilaya       @relation(fields: [wilayaId], references: [id])
+  wilayaId    String
+  mapLocation MapLocation?
+  images      Image[]
+  ratings     Rating[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 }
 
 model Hotel {
@@ -86,26 +100,30 @@ enum Gender {
 }
 
 model Image {
-  id        String   @id @unique @default(uuid())
-  url       String
-  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String?  @unique
-  Wilaya    Wilaya?  @relation(fields: [wilayaId], references: [id], onDelete: Cascade)
-  wilayaId  String?
-  Hotel     Hotel?   @relation(fields: [hotelId], references: [id], onDelete: Cascade)
-  hotelId   String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String       @id @unique @default(uuid())
+  url           String
+  user          User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        String?      @unique
+  Wilaya        Wilaya?      @relation(fields: [wilayaId], references: [id], onDelete: Cascade)
+  wilayaId      String?
+  Hotel         Hotel?       @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  hotelId       String?
+  Destination   Destination? @relation(fields: [destinationId], references: [id], onDelete: Cascade)
+  destinationId String?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
 }
 
 model MapLocation {
-  id        String   @id @unique @default(uuid())
-  longitude Float
-  latitude  Float
-  hotel     Hotel    @relation(fields: [hotelId], references: [id], onDelete: Cascade)
-  hotelId   String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String       @id @unique @default(uuid())
+  longitude     Float
+  latitude      Float
+  hotel         Hotel?       @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  hotelId       String?      @unique
+  destination   Destination? @relation(fields: [destinationId], references: [id], onDelete: Cascade)
+  destinationId String?      @unique
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
 }
 
 model ContactInfo {
@@ -121,11 +139,13 @@ model ContactInfo {
 }
 
 model Rating {
-  id        String   @id @unique @default(uuid())
-  stars     String
-  feedback  String?
-  Hotel     Hotel?   @relation(fields: [hotelId], references: [id], onDelete: Cascade)
-  hotelId   String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String       @id @unique @default(uuid())
+  stars         String
+  feedback      String?
+  Hotel         Hotel?       @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  hotelId       String?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  Destination   Destination? @relation(fields: [destinationId], references: [id], onDelete: Cascade)
+  destinationId String?
 }

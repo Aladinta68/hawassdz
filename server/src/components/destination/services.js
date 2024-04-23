@@ -2,41 +2,42 @@ import {
   throwCustomError,
   ErrorTypes,
 } from "../../utils/error/ErrorHandler.js";
-import { deleteFile, uploadFile } from "./../../utils/upload/images.js";
+import { deleteFile, uploadFile } from "../../utils/upload/images.js";
+
 export const getMany = async ({ prisma }) => {
-  const hotels = await prisma.hotel.findMany({
+  const destinations = await prisma.destination.findMany({
     include: {
       images: true,
       ratings: true,
       mapLocation: true,
-      contactInfo: true,
       wilaya: true,
     },
   });
-  return hotels;
+  return destinations;
 };
+
 export const getOne = async ({ id, prisma }) => {
-  const hotel = await prisma.hotel.findUnique({
+  const destination = await prisma.destination.findUnique({
     where: { id },
     include: {
       images: true,
       ratings: true,
       mapLocation: true,
-      contactInfo: true,
       wilaya: true,
     },
   });
-  return hotel;
+  return destination;
 };
-export const deleteOne = async ({ id, hotel, prisma }) => {
+
+export const deleteOne = async ({ id, destination, prisma }) => {
   try {
-    if (hotel.images && hotel.images.length > 0) {
-      hotel.images.forEach((image) => {
+    if (destination.images && destination.images.length > 0) {
+      destination.images.forEach((image) => {
         deleteFile(image.url);
       });
     }
-    const deletedHotel = await prisma.hotel.delete({ where: { id } });
-    return deletedHotel;
+    const deletedWilaya = await prisma.destination.delete({ where: { id } });
+    return deletedWilaya;
   } catch (error) {
     throwCustomError(
       error.message,
@@ -49,11 +50,8 @@ export const createOne = async ({ input, prisma }) => {
   const {
     name,
     description,
-    type,
-    address,
     wilayaId,
     mapLocation,
-    contactInfo,
     files,
   } = input;
 
@@ -71,22 +69,18 @@ export const createOne = async ({ input, prisma }) => {
       );
     }
   }
-  const newHotel = await prisma.hotel.create({
+  const newDestination = await prisma.destination.create({
     data: {
       name,
       description,
-      type,
-      address,
       wilaya: {
         connect: wilayaId ? { id: wilayaId } : undefined,
       },
       mapLocation: mapLocation ? { create: mapLocation } : undefined,
-      contactInfo: contactInfo ? { create: contactInfo } : undefined,
     },
     include: {
       ratings: true,
       mapLocation: true,
-      contactInfo: true,
       wilaya: true,
     },
   });
@@ -100,42 +94,38 @@ export const createOne = async ({ input, prisma }) => {
     }
     for (const url of imageUrls) {
       const newImage = await prisma.image.create({
-        data: { url, hotelId: newHotel.id },
+        data: { url, destinationId: newDestination.id },
       });
       createdImages.push(newImage);
     }
-    await prisma.hotel.update({
-      where: { id: newHotel.id },
+    await prisma.destination.update({
+      where: { id: newDestination.id },
       data: {
         images: { connect: createdImages.map((image) => ({ id: image.id })) },
       },
     });
   }
   return {
-    id: newHotel.id,
-    name: newHotel.name,
-    description: newHotel.description,
-    type: newHotel.type,
-    address: newHotel.address,
+    id: newDestination.id,
+    name: newDestination.name,
+    description: newDestination.description,
     wilaya: existingWilaya,
-    ratings: newHotel.ratings,
-    mapLocation: newHotel.mapLocation,
-    contactInfo: newHotel.contactInfo,
+    ratings: newDestination.ratings,
+    mapLocation: newDestination.mapLocation,
     images: createdImages.map((image) => ({ url: image.url })),
   };
 };
-export const updateOne = async ({ id, input,existingHotel, prisma }) => {
+
+export const updateOne = async ({ id, input,existingDestination, prisma }) => {
   try {
     const {
       name,
       description,
-      type,
-      address,
       wilayaId,
       mapLocation,
-      contactInfo,
       files,
     } = input;
+
     if (wilayaId) {
       const existingWilaya = await prisma.wilaya.findUnique({
         where: {
@@ -150,11 +140,11 @@ export const updateOne = async ({ id, input,existingHotel, prisma }) => {
       }
     }
     if (files && files.length > 0) {
-      if (existingHotel.images && existingHotel.images.length > 0) {
+      if (existingDestination.images && existingDestination.images.length > 0) {
         await prisma.image.deleteMany({
-          where: { id: { in: existingHotel.images.map((image) => image.id) } },
+          where: { id: { in: existingDestination.images.map((image) => image.id) } },
         });
-        existingHotel.images.forEach((image) => {
+        existingDestination.images.forEach((image) => {
           deleteFile(image.url);
         });
       }
@@ -166,40 +156,36 @@ export const updateOne = async ({ id, input,existingHotel, prisma }) => {
           newImageUrls.push(url);
         }
       }
-      const hotelId = existingHotel.id;
+      const destinationId = existingDestination.id;
       const createdImages = [];
       for (const url of newImageUrls) {
         const newImage = await prisma.image.create({
-          data: { url, hotelId },
+          data: { url, destinationId },
         });
         createdImages.push(newImage);
       }
 
-      await prisma.hotel.update({
-        where: { id: hotelId },
+      await prisma.destination.update({
+        where: { id: destinationId },
         data: {
           images: { connect: createdImages.map((image) => ({ id: image.id })) },
         },
       });
     }
-    return await prisma.hotel.update({
+    return await prisma.destination.update({
       where: { id },
       data: {
         name,
         description,
-        type,
-        address,
         wilaya: {
           connect: wilayaId ? { id: wilayaId } : undefined,
         },
         mapLocation: mapLocation ? { update: mapLocation } : undefined,
-        contactInfo: contactInfo ? { update: contactInfo } : undefined,
       },
       include: {
         images: true,
         ratings: true,
         mapLocation: true,
-        contactInfo: true,
       },
     });
   } catch (error) {
@@ -209,3 +195,4 @@ export const updateOne = async ({ id, input,existingHotel, prisma }) => {
     );
   }
 };
+

@@ -32,7 +32,6 @@ export const hotelTypeDefs = gql`
     type: String
     address: String
     wilayaId: String
-    ratings: [RatingInput!]
     mapLocation: MapLocationInput
     contactInfo: ContactInfoInput
     files: [Upload!]
