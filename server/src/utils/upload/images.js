@@ -8,13 +8,13 @@ import { randomUUID } from "crypto";
 
 export const uploadFile = async (file) => {
   const { createReadStream, filename } = await file;
-
   if (!createReadStream || !filename) {
     return throwCustomError(
       "Something went Wrong ",
       ErrorTypes.INTERNAL_SERVER_ERROR
     );
   }
+
   const stream = createReadStream();
   const uniqueFilename = `${Date.now()}-${randomUUID()} - ${filename}`;
   const uploadDir = path.join(process.cwd(), "/public/images/");
@@ -41,4 +41,4 @@ export const deleteFile = (url) => {
     fs.unlinkSync(imagePath);
   }
 };
-export default {uploadFile,deleteFile};
+export default { uploadFile, deleteFile };

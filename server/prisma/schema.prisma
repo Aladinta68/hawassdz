@@ -40,6 +40,7 @@ model User {
   complete    Boolean          @default(false)
   reset       RestPasswordOTP?
   image       Image?
+  travels     Travel[]
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
 }
@@ -84,6 +85,31 @@ model Hotel {
   updatedAt   DateTime     @updatedAt
 }
 
+model Travel {
+  id             String       @id @unique @default(uuid())
+  name           String
+  type           String
+  description    String?
+  destination    String
+  longitude      String
+  dateDepart     String
+  dateArrive     String
+  numberPerson   String
+  availablePlace String
+  gender         String?
+  ageRange       String?
+  price          String
+  transportType  String
+  images         Image[]
+  ratings        Rating[]
+  mapLocation    MapLocation?
+  contactInfo    ContactInfo?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  User           User?        @relation(fields: [userId], references: [id])
+  userId         String?
+}
+
 model RestPasswordOTP {
   id        String   @id @unique @default(uuid())
   codePIN   Int      @unique
@@ -110,6 +136,8 @@ model Image {
   hotelId       String?
   Destination   Destination? @relation(fields: [destinationId], references: [id], onDelete: Cascade)
   destinationId String?
+  Travel        Travel?      @relation(fields: [travelId], references: [id], onDelete: Cascade)
+  travelId      String?
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
 }
@@ -122,6 +150,8 @@ model MapLocation {
   hotelId       String?      @unique
   destination   Destination? @relation(fields: [destinationId], references: [id], onDelete: Cascade)
   destinationId String?      @unique
+  travel        Travel?      @relation(fields: [travelId], references: [id], onDelete: Cascade)
+  travelId      String?      @unique
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
 }
@@ -132,8 +162,10 @@ model ContactInfo {
   email     String?
   website   String?
   facebook  String?
-  hotel     Hotel    @relation(fields: [hotelId], references: [id], onDelete: Cascade)
-  hotelId   String   @unique
+  hotel     Hotel?   @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  hotelId   String?  @unique
+  travel    Travel?  @relation(fields: [travelId], references: [id], onDelete: Cascade)
+  travelId  String?  @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -144,8 +176,10 @@ model Rating {
   feedback      String?
   Hotel         Hotel?       @relation(fields: [hotelId], references: [id], onDelete: Cascade)
   hotelId       String?
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
   Destination   Destination? @relation(fields: [destinationId], references: [id], onDelete: Cascade)
   destinationId String?
+  Travel        Travel?      @relation(fields: [travelId], references: [id], onDelete: Cascade)
+  travelId      String?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
 }

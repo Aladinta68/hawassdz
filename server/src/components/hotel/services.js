@@ -124,7 +124,7 @@ export const createOne = async ({ input, prisma }) => {
     images: createdImages.map((image) => ({ url: image.url })),
   };
 };
-export const updateOne = async ({ id, input,existingHotel, prisma }) => {
+export const updateOne = async ({ id, input, existingHotel, prisma }) => {
   try {
     const {
       name,
@@ -149,6 +149,26 @@ export const updateOne = async ({ id, input,existingHotel, prisma }) => {
         );
       }
     }
+    const updatedHotel = await prisma.hotel.update({
+      where: { id },
+      data: {
+        name,
+        description,
+        type,
+        address,
+        wilaya: {
+          connect: wilayaId ? { id: wilayaId } : undefined,
+        },
+        mapLocation: mapLocation ? { update: mapLocation } : undefined,
+        contactInfo: contactInfo ? { update: contactInfo } : undefined,
+      },
+      include: {
+        images: true,
+        ratings: true,
+        mapLocation: true,
+        contactInfo: true,
+      },
+    });
     if (files && files.length > 0) {
       if (existingHotel.images && existingHotel.images.length > 0) {
         await prisma.image.deleteMany({
@@ -182,26 +202,8 @@ export const updateOne = async ({ id, input,existingHotel, prisma }) => {
         },
       });
     }
-    return await prisma.hotel.update({
-      where: { id },
-      data: {
-        name,
-        description,
-        type,
-        address,
-        wilaya: {
-          connect: wilayaId ? { id: wilayaId } : undefined,
-        },
-        mapLocation: mapLocation ? { update: mapLocation } : undefined,
-        contactInfo: contactInfo ? { update: contactInfo } : undefined,
-      },
-      include: {
-        images: true,
-        ratings: true,
-        mapLocation: true,
-        contactInfo: true,
-      },
-    });
+
+    return updatedHotel;
   } catch (error) {
     throwCustomError(
       error.message,

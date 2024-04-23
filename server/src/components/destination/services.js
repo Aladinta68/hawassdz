@@ -47,13 +47,7 @@ export const deleteOne = async ({ id, destination, prisma }) => {
 };
 
 export const createOne = async ({ input, prisma }) => {
-  const {
-    name,
-    description,
-    wilayaId,
-    mapLocation,
-    files,
-  } = input;
+  const { name, description, wilayaId, mapLocation, files } = input;
 
   let existingWilaya;
   if (wilayaId) {
@@ -116,15 +110,9 @@ export const createOne = async ({ input, prisma }) => {
   };
 };
 
-export const updateOne = async ({ id, input,existingDestination, prisma }) => {
+export const updateOne = async ({ id, input, existingDestination, prisma }) => {
   try {
-    const {
-      name,
-      description,
-      wilayaId,
-      mapLocation,
-      files,
-    } = input;
+    const { name, description, wilayaId, mapLocation, files } = input;
 
     if (wilayaId) {
       const existingWilaya = await prisma.wilaya.findUnique({
@@ -139,10 +127,28 @@ export const updateOne = async ({ id, input,existingDestination, prisma }) => {
         );
       }
     }
+    const updatedDestination = await prisma.destination.update({
+      where: { id },
+      data: {
+        name,
+        description,
+        wilaya: {
+          connect: wilayaId ? { id: wilayaId } : undefined,
+        },
+        mapLocation: mapLocation ? { update: mapLocation } : undefined,
+      },
+      include: {
+        images: true,
+        ratings: true,
+        mapLocation: true,
+      },
+    });
     if (files && files.length > 0) {
       if (existingDestination.images && existingDestination.images.length > 0) {
         await prisma.image.deleteMany({
-          where: { id: { in: existingDestination.images.map((image) => image.id) } },
+          where: {
+            id: { in: existingDestination.images.map((image) => image.id) },
+          },
         });
         existingDestination.images.forEach((image) => {
           deleteFile(image.url);
@@ -172,22 +178,7 @@ export const updateOne = async ({ id, input,existingDestination, prisma }) => {
         },
       });
     }
-    return await prisma.destination.update({
-      where: { id },
-      data: {
-        name,
-        description,
-        wilaya: {
-          connect: wilayaId ? { id: wilayaId } : undefined,
-        },
-        mapLocation: mapLocation ? { update: mapLocation } : undefined,
-      },
-      include: {
-        images: true,
-        ratings: true,
-        mapLocation: true,
-      },
-    });
+    return updatedDestination;
   } catch (error) {
     throwCustomError(
       error.message,
@@ -195,4 +186,3 @@ export const updateOne = async ({ id, input,existingDestination, prisma }) => {
     );
   }
 };
-
