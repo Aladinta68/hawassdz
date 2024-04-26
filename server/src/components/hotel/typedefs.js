@@ -16,12 +16,21 @@ export const hotelTypeDefs = gql`
   }
   type Query {
     getHotelById(id: ID!): Hotel!
-    getAllHotels: [Hotel!]
+    getAllHotels(
+      page: Int
+      perPage: Int
+      sortBy: String
+      sortDirection: String
+    ): HotelsOutpot!
   }
   type Mutation {
     deleteHotelById(id: ID!): DeleteHotelResponse!
     addHotel(input: addHotelInput!): Hotel!
     updateHotelById(id: ID!, input: UpdateHotelInput!): Hotel!
+  }
+  type HotelsOutpot {
+    hotels: [Hotel!]
+    maxPage: Int
   }
   type DeleteHotelResponse {
     message: String!

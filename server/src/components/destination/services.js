@@ -4,7 +4,14 @@ import {
 } from "../../utils/error/ErrorHandler.js";
 import { deleteFile, uploadFile } from "../../utils/upload/images.js";
 
-export const getMany = async ({ prisma }) => {
+export const getMany = async ({
+  prisma,
+  page,
+  perPage,
+  sortBy,
+  sortDirection,
+}) => {
+  const offset = (page - 1) * perPage;
   const destinations = await prisma.destination.findMany({
     include: {
       images: true,
@@ -12,6 +19,9 @@ export const getMany = async ({ prisma }) => {
       mapLocation: true,
       wilaya: true,
     },
+    skip: offset,
+    take: perPage,
+    orderBy: { [sortBy]: sortDirection },
   });
   return destinations;
 };

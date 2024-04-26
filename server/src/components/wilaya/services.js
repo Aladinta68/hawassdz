@@ -8,9 +8,19 @@ export const findByName = async ({ name, prisma }) => {
   const wilaya = await prisma.wilaya.findUnique({ where: { name } });
   return wilaya;
 };
-export const getMany = async ({ prisma }) => {
+export const getMany = async ({
+  prisma,
+  page,
+  perPage,
+  sortBy,
+  sortDirection,
+}) => {
+  const offset = (page - 1) * perPage;
   const wilayas = await prisma.wilaya.findMany({
     include: { images: true },
+    skip: offset,
+    take: perPage,
+    orderBy: { [sortBy]: sortDirection },
   });
   return wilayas;
 };

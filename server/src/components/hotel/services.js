@@ -3,7 +3,14 @@ import {
   ErrorTypes,
 } from "../../utils/error/ErrorHandler.js";
 import { deleteFile, uploadFile } from "./../../utils/upload/images.js";
-export const getMany = async ({ prisma }) => {
+export const getMany = async ({
+  prisma,
+  page,
+  perPage,
+  sortBy,
+  sortDirection,
+}) => {
+  const offset = (page - 1) * perPage;
   const hotels = await prisma.hotel.findMany({
     include: {
       images: true,
@@ -12,6 +19,9 @@ export const getMany = async ({ prisma }) => {
       contactInfo: true,
       wilaya: true,
     },
+    skip: offset,
+    take: perPage,
+    orderBy: { [sortBy]: sortDirection },
   });
   return hotels;
 };

@@ -28,10 +28,23 @@ export const destinationResolvers = {
         );
       }
     },
-    getAllDestinations: async (_, {}, { prisma }) => {
+    getAllDestinations: async (
+      _,
+      { page = 1, perPage = 10, sortBy = "id", sortDirection = "asc" },
+      { prisma }
+    ) => {
       try {
-        const destinations = await getMany({ prisma });
-        return destinations;
+        const destinations = await getMany({
+          prisma,
+          page,
+          perPage,
+          sortBy,
+          sortDirection,
+        });
+        const totalCount = await prisma.destination.count();
+        const maxPage = Math.ceil(totalCount / perPage);
+
+        return { destinations, maxPage };
       } catch (error) {
         throwCustomError(
           error.message,
@@ -67,7 +80,7 @@ export const destinationResolvers = {
         if (!destination) {
           throwCustomError("destination not found", ErrorTypes.NOT_FOUND);
         }
-        const deletedDestination = await deleteOne({ id,destination, prisma });
+        const deletedDestination = await deleteOne({ id, destination, prisma });
         return {
           message: `destination with ID ${deletedDestination.id} deleted successfully`,
         };
@@ -78,7 +91,11 @@ export const destinationResolvers = {
         );
       }
     },
-    updateDestinationById: async (_, { id, input }, { prisma, user: authUser }) => {
+    updateDestinationById: async (
+      _,
+      { id, input },
+      { prisma, user: authUser }
+    ) => {
       try {
         if (!authUser || authUser.type !== "ADMIN") {
           throwCustomError("Unauthorized", ErrorTypes.UNAUTHENTICATED);
@@ -87,7 +104,12 @@ export const destinationResolvers = {
         if (!existingDestination) {
           throwCustomError("destination not found", ErrorTypes.NOT_FOUND);
         }
-        const updatedDestination = await updateOne({ id, input,existingDestination, prisma });
+        const updatedDestination = await updateOne({
+          id,
+          input,
+          existingDestination,
+          prisma,
+        });
         return updatedDestination;
       } catch (error) {
         throwCustomError(

@@ -3,12 +3,22 @@ export const wilayaTypeDefs = gql`
   scalar Upload
   type Query {
     getWilayaById(id: ID!): Wilaya!
-    getAllWilayas: [Wilaya!]
+    getAllWilayas(
+      page: Int
+      perPage: Int
+      sortBy: String
+      sortDirection: String
+    ): WilayasOutpot!
   }
+ 
   type Mutation {
     deleteWilayaById(id: ID!): DeleteWilayaResponse!
     addWilaya(input: addWilayaInput!): Wilaya!
     updateWilayaById(id: ID!, input: UpdateWilayaInput!): Wilaya!
+  }
+  type WilayasOutpot {
+    wilayas: [Wilaya!]
+    maxPage: Int
   }
   type DeleteWilayaResponse {
     message: String!

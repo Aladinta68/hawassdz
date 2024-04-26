@@ -29,10 +29,23 @@ export const wilayaResolvers = {
         );
       }
     },
-    getAllWilayas: async (_, {}, { prisma }) => {
+    getAllWilayas: async (
+      _,
+      { page = 1, perPage = 10, sortBy = "id", sortDirection = "asc" },
+      { prisma }
+    ) => {
       try {
-        const wilayas = await getMany({ prisma });
-        return wilayas;
+        const wilayas = await getMany({
+          prisma,
+          page,
+          perPage,
+          sortBy,
+          sortDirection,
+        });
+        const totalCount = await prisma.wilaya.count();
+        const maxPage = Math.ceil(totalCount / perPage);
+
+        return {wilayas,maxPage};
       } catch (error) {
         throwCustomError(
           error.message,
@@ -76,7 +89,7 @@ export const wilayaResolvers = {
         if (!wilaya) {
           throwCustomError("Wilaya not found", ErrorTypes.NOT_FOUND);
         }
-        const deletedWilaya = await deleteOne({ id,wilaya, prisma });
+        const deletedWilaya = await deleteOne({ id, wilaya, prisma });
         return {
           message: `Wilaya with ID ${deletedWilaya.id} deleted successfully`,
         };
@@ -96,7 +109,12 @@ export const wilayaResolvers = {
         if (!existingWilaya) {
           throwCustomError("Wilaya not found", ErrorTypes.NOT_FOUND);
         }
-        const updatedWilaya = await updateOne({ id, input,existingWilaya, prisma });
+        const updatedWilaya = await updateOne({
+          id,
+          input,
+          existingWilaya,
+          prisma,
+        });
         return updatedWilaya;
       } catch (error) {
         throwCustomError(

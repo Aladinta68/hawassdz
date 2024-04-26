@@ -8,7 +8,7 @@ export const authTypeDefs = gql`
     firstName: String!
     lastName: String!
     email: String!
-    phone: String!
+    phone: String
     dateOfBirth: String
     gender: String
     complete: Boolean

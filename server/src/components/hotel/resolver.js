@@ -27,10 +27,23 @@ export const hotelResolvers = {
         );
       }
     },
-    getAllHotels: async (_, {}, { prisma }) => {
+    getAllHotels: async (
+      _,
+      { page = 1, perPage = 10, sortBy = "id", sortDirection = "asc" },
+      { prisma }
+    ) => {
       try {
-        const hotels = await getMany({ prisma });
-        return hotels;
+        const hotels = await getMany({
+          prisma,
+          page,
+          perPage,
+          sortBy,
+          sortDirection,
+        });
+        const totalCount = await prisma.hotel.count();
+        const maxPage = Math.ceil(totalCount / perPage);
+
+        return { hotels, maxPage };
       } catch (error) {
         throwCustomError(
           error.message,
@@ -86,7 +99,12 @@ export const hotelResolvers = {
         if (!existingHotel) {
           throwCustomError("hotel not found", ErrorTypes.NOT_FOUND);
         }
-        const updatedHotel = await updateOne({ id, input,existingHotel, prisma });
+        const updatedHotel = await updateOne({
+          id,
+          input,
+          existingHotel,
+          prisma,
+        });
         return updatedHotel;
       } catch (error) {
         throwCustomError(

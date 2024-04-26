@@ -1,11 +1,8 @@
-import { authTypeDefs } from "./auth/index.js";
-import { authResolvers } from "./auth/index.js";
-import { wilayaResolvers } from "./wilaya/resolver.js";
-import { wilayaTypeDefs } from "./wilaya/typedefs.js";
-import { hotelResolvers } from "./hotel/resolver.js";
-import { hotelTypeDefs } from "./hotel/typedefs.js";
-import { destinationResolvers } from "./destination/resolver.js";
-import { destinationTypeDefs } from "./destination/typedefs.js";
+import { authTypeDefs,authResolvers } from "./auth/index.js";
+import { wilayaResolvers,wilayaTypeDefs } from "./wilaya/index.js";
+import { hotelResolvers ,hotelTypeDefs} from "./hotel/index.js";
+import { destinationResolvers,destinationTypeDefs } from "./destination/index.js";
+import { travelResolvers,travelTypeDefs } from "./travel/index.js";
 
 import { sharedTypeDefs } from "./shared/typdefs.js";
 
@@ -15,10 +12,12 @@ export const typeDefs = [
   wilayaTypeDefs,
   hotelTypeDefs,
   destinationTypeDefs,
+  travelTypeDefs,
 ];
 export const resolvers = [
   authResolvers,
   wilayaResolvers,
   hotelResolvers,
   destinationResolvers,
+  travelResolvers,
 ];

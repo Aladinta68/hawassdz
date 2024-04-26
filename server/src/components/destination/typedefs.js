@@ -12,12 +12,21 @@ export const destinationTypeDefs = gql`
   }
   type Query {
     getDestinationById(id: ID!): Destination!
-    getAllDestinations: [Destination!]
+    getAllDestinations(
+      page: Int
+      perPage: Int
+      sortBy: String
+      sortDirection: String
+    ): DestinationsOutpot!
   }
   type Mutation {
     deleteDestinationById(id: ID!): DeleteDestinationResponse!
     addDestination(input: addDestinationInput!): Destination!
     updateDestinationById(id: ID!, input: UpdateDestinationInput!): Destination!
+  }
+  type DestinationsOutpot {
+    destinations: [Destination!]
+    maxPage: Int
   }
   type DeleteDestinationResponse {
     message: String!
