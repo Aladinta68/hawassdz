@@ -45,7 +45,7 @@ export const wilayaResolvers = {
         const totalCount = await prisma.wilaya.count();
         const maxPage = Math.ceil(totalCount / perPage);
 
-        return {wilayas,maxPage};
+        return { wilayas, maxPage };
       } catch (error) {
         throwCustomError(
           error.message,
@@ -55,6 +55,84 @@ export const wilayaResolvers = {
     },
   },
   Mutation: {
+    addAllWilaya: async (_,__, { prisma }) => {
+      try {
+        const wilayaNames = [
+          "ولاية أدرار",
+          "ولاية الشلف",
+          "ولاية الأغواط",
+          "ولاية أم البواقي",
+          "ولاية باتنة",
+          "ولاية بجاية",
+          "ولاية بسكرة",
+          "ولاية بشار",
+          "ولاية البليدة",
+          "ولاية البويرة",
+          "ولاية تمنراست",
+          "ولاية تبسة",
+          "ولاية تلمسان",
+          "ولاية تيارت",
+          "ولاية تيزي وزو",
+          "ولاية الجزائر",
+          "ولاية الجلفة",
+          "ولاية جيجل",
+          "ولاية سطيف",
+          "ولاية سعيدة",
+          "ولاية سكيكدة",
+          "ولاية سيدي بلعباس",
+          "ولاية عنابة",
+          "ولاية قالمة",
+          "ولاية قسنطينة",
+          "ولاية المدية",
+          "ولاية مستغانم",
+          "ولاية المسيلة",
+          "ولاية معسكر",
+          "ولاية ورقلة",
+          "ولاية وهران",
+          "ولاية البيض",
+          "ولاية إليزي",
+          "ولاية برج بوعريريج",
+          "ولاية بومرداس",
+          "ولاية الطارف",
+          "ولاية تندوف",
+          "ولاية تيسمسيلت",
+          "ولاية الوادي",
+          "ولاية خنشلة",
+          "ولاية سوق أهراس",
+          "ولاية تيبازة",
+          "ولاية ميلة",
+          "ولاية عين الدفلى",
+          "ولاية النعامة",
+          "ولاية عين تموشنت",
+          "ولاية غرداية",
+          "ولاية غليزان",
+          "ولاية تيميمون",
+          "ولاية برج باجي مختار",
+          "ولاية أولاد جلال",
+          "ولاية بني عباس",
+          "ولاية إن صالح",
+          "ولاية إن قزام",
+          "ولاية تقرت",
+          "ولاية جانت",
+          "ولاية المغير",
+          "ولاية المنيعة"
+        ];
+        
+        for (const name of wilayaNames) {
+          await prisma.wilaya.create({
+            data: {
+              name: name,
+            },
+          });
+        }
+        return "all wilaya added";
+      } catch (error) {
+        throwCustomError(
+          error.message,
+          error.extensions || ErrorTypes.BAD_USER_INPUT
+        );
+      }
+    },
     addWilaya: async (_, { input }, { prisma, user: authUser }) => {
       try {
         if (!authUser || authUser.type !== "ADMIN") {

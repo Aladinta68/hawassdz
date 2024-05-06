@@ -2,7 +2,9 @@ import {
   throwCustomError,
   ErrorTypes,
 } from "../../utils/error/ErrorHandler.js";
+import { calculateOverallRating } from "../utils/calculateOverallRating.js";
 import { deleteFile, uploadFile } from "./../../utils/upload/images.js";
+
 export const getMany = async ({
   prisma,
   page,
@@ -13,6 +15,7 @@ export const getMany = async ({
   const offset = (page - 1) * perPage;
   const hotels = await prisma.hotel.findMany({
     include: {
+      equipements: true,
       images: true,
       ratings: true,
       mapLocation: true,
@@ -23,12 +26,16 @@ export const getMany = async ({
     take: perPage,
     orderBy: { [sortBy]: sortDirection },
   });
-  return hotels;
+  return hotels.map((hotel) => ({
+    ...hotel,
+    overallRating: calculateOverallRating(hotel.ratings),
+  }));
 };
 export const getOne = async ({ id, prisma }) => {
   const hotel = await prisma.hotel.findUnique({
     where: { id },
     include: {
+      equipements: true,
       images: true,
       ratings: true,
       mapLocation: true,
@@ -36,7 +43,18 @@ export const getOne = async ({ id, prisma }) => {
       wilaya: true,
     },
   });
-  return hotel;
+  if (!hotel) {
+    throwCustomError("hotel not found", ErrorTypes.NOT_FOUND);
+  }
+  if (hotel.ratings) {
+    return {
+      ...hotel,
+      overallRating: calculateOverallRating(hotel.ratings),
+    };
+  }
+  return {
+    hotel,
+  };
 };
 export const deleteOne = async ({ id, hotel, prisma }) => {
   try {
@@ -59,12 +77,12 @@ export const createOne = async ({ input, prisma }) => {
   const {
     name,
     description,
-    type,
     address,
     wilayaId,
     mapLocation,
     contactInfo,
     files,
+    equipements,
   } = input;
 
   let existingWilaya;
@@ -85,7 +103,6 @@ export const createOne = async ({ input, prisma }) => {
     data: {
       name,
       description,
-      type,
       address,
       wilaya: {
         connect: wilayaId ? { id: wilayaId } : undefined,
@@ -98,8 +115,17 @@ export const createOne = async ({ input, prisma }) => {
       mapLocation: true,
       contactInfo: true,
       wilaya: true,
+      equipements: true,
     },
   });
+  if (equipements && equipements.length > 0) {
+    await prisma.equipement.createMany({
+      data: equipements.map((item) => ({
+        item,
+        hotelId: newHotel.id,
+      })),
+    });
+  }
   const imageUrls = [];
   const createdImages = [];
 
@@ -125,13 +151,13 @@ export const createOne = async ({ input, prisma }) => {
     id: newHotel.id,
     name: newHotel.name,
     description: newHotel.description,
-    type: newHotel.type,
     address: newHotel.address,
     wilaya: existingWilaya,
     ratings: newHotel.ratings,
     mapLocation: newHotel.mapLocation,
     contactInfo: newHotel.contactInfo,
     images: createdImages.map((image) => ({ url: image.url })),
+    equipements: newHotel.equipements,
   };
 };
 export const updateOne = async ({ id, input, existingHotel, prisma }) => {
@@ -139,12 +165,12 @@ export const updateOne = async ({ id, input, existingHotel, prisma }) => {
     const {
       name,
       description,
-      type,
       address,
       wilayaId,
       mapLocation,
       contactInfo,
       files,
+      equipements,
     } = input;
     if (wilayaId) {
       const existingWilaya = await prisma.wilaya.findUnique({
@@ -164,7 +190,6 @@ export const updateOne = async ({ id, input, existingHotel, prisma }) => {
       data: {
         name,
         description,
-        type,
         address,
         wilaya: {
           connect: wilayaId ? { id: wilayaId } : undefined,
@@ -177,8 +202,21 @@ export const updateOne = async ({ id, input, existingHotel, prisma }) => {
         ratings: true,
         mapLocation: true,
         contactInfo: true,
+        equipements: true,
       },
     });
+    if (equipements && equipements.length > 0) {
+      await prisma.equipement.deleteMany({
+        where: { hotelId: id },
+      });
+      await prisma.equipement.createMany({
+        data: equipements.map((item) => ({
+          item,
+          hotelId: id,
+        })),
+      });
+    }
+
     if (files && files.length > 0) {
       if (existingHotel.images && existingHotel.images.length > 0) {
         await prisma.image.deleteMany({

@@ -11,16 +11,17 @@ import {
   Stack,
   Text,
   VStack,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { IoMailOutline } from "react-icons/io5";
 import { IoIosArrowRoundBack } from "react-icons/io";
-import { VerifyCodePin } from "../../../graphQL/mutation/user";
+import { VerifyCodePin } from "../../../api/user/mutation";
 import { useMutation } from "@apollo/client";
 
 export const CheckEmail = ({ email, HandleSendEmail }) => {
   const navigate = useNavigate();
-  const [verifyCodePin, { loading, error }] = useMutation(VerifyCodePin);
+  const [verifyCodePin, { error }] = useMutation(VerifyCodePin);
   const HandleVerifyCodepin = async (value) => {
     const sendemail = email && email.email;
     try {
@@ -28,7 +29,10 @@ export const CheckEmail = ({ email, HandleSendEmail }) => {
         variables: { input: { email: sendemail, codePIN: value } },
       });
       if (data.data.verifyCodePin) {
-        navigate("/setnewpassword"); 
+        navigate("/setnewpassword");
+      }
+      if (error) {
+        console.log(error);
       }
     } catch (errors) {
       console.log(errors);
@@ -52,7 +56,6 @@ export const CheckEmail = ({ email, HandleSendEmail }) => {
         px={{ base: 10, md: 0 }}
         py={{ base: 0, md: 10 }}
       >
-      
         <Box
           w={"100%"}
           borderRadius={20}
@@ -69,10 +72,16 @@ export const CheckEmail = ({ email, HandleSendEmail }) => {
               <Heading fontWeight={500} fontSize={25}>
                 أدخل الرمز المرسل إلى بريدك الإلكتروني
               </Heading>
-              <Text color={"#717070"} textAlign={"center"}>
+              <Text
+                color={useColorModeValue("#717070", "#ffffff")}
+                textAlign={"center"}
+              >
                 لقد أرسلنا رمز إعادة التعيين إلى
                 <br />
-                <Text color={"#000000"} fontWeight={500}>
+                <Text
+                  color={useColorModeValue("#333333c5", "#ffffff")}
+                  fontWeight={500}
+                >
                   {email && email.email}
                 </Text>
               </Text>
@@ -118,7 +127,7 @@ export const CheckEmail = ({ email, HandleSendEmail }) => {
               alignItems={"center"}
               _hover={{ color: "#ff7300" }}
               fontWeight={400}
-              color={"#333333c5"}
+              color={useColorModeValue("#333333c5", "#ffffff")}
               to={"/login"}
               as={RouterLink}
             >

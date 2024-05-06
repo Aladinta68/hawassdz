@@ -2,50 +2,20 @@ import { gql } from "apollo-server";
 
 export const authTypeDefs = gql`
   scalar Upload
-
-  type User {
-    id: ID!
-    firstName: String!
-    lastName: String!
-    email: String!
-    phone: String
-    dateOfBirth: String
-    gender: String
-    complete: Boolean
-    image: File
-  }
   type Admin {
     id: ID!
     email: String!
     userName: String!
   }
-  type Query {
-    getUserById(id: ID!): User!
-    getProfileInformation: User!
-    getAllUsers: [User!]!
-  }
   type Mutation {
     registerAdmin(input: RegisterAdminInput!): AuthOutput!
-    deleteUserById(id: ID!): DeleteUserResponse!
-    login(input: LoginInput!): AuthOutputWithType!
+    login(input: LoginInput!): AuthOutput!
     registerUser(input: RegisterUserInput!): AuthOutput!
-    forgetPassword(input: ForgetPasswordInput!): Boolean!
-    verifyCodePin(input: verifyCodePinInput!): Boolean!
-    updateForgetPassword(input: updateForgetPasswordInput!): Boolean!
-    uploadUserImage(userId: ID!, file: Upload!): File!
-  }
-  type DeleteUserResponse {
-    message: String!
   }
   type AuthOutput {
-    accessToken: String!
-  }
-  type AuthOutputWithType {
+    id: ID!
     accessToken: String!
     type: String!
-  }
-  type TokensOutput {
-    accessToken: String!
   }
   input RegisterUserInput {
     firstName: String!
@@ -61,21 +31,6 @@ export const authTypeDefs = gql`
   input LoginInput {
     email: String!
     password: String!
-  }
-
-  input verifyCodePinInput {
-    email: String!
-    codePIN: String!
-  }
-
-  input updateForgetPasswordInput {
-    email: String!
-    password: String!
-    confirmedPassword: String!
-  }
-
-  input ForgetPasswordInput {
-    email: String!
   }
 `;
 

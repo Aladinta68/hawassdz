@@ -8,6 +8,7 @@ export const destinationTypeDefs = gql`
     wilaya: Wilaya!
     images: [File]
     ratings: [Rating]
+    overallRating: Float
     mapLocation: MapLocation
   }
   type Query {

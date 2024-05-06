@@ -1,35 +1,26 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
+import { Formik, Form } from "formik";
 import {
   Box,
   Button,
   Checkbox,
   Divider,
-  FormControl,
-  FormLabel,
   HStack,
-  Input,
   Link,
   Stack,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { PasswordField } from "../../../components/form/PasswordField";
 import { GoogleIcon } from "../../../assets/icons-jsx/ProviderIcons";
 import { Logo } from "../../../assets/icons-jsx/Logo";
 import { Link as RouterLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import Cookies from "js-cookie";
-import { LOGIN } from "../../../graphQL/mutation/user";
-
+import { validationSchema } from "./validationSchema";
+import { CustomFormControl } from "../../../components/form/customFormControl";
+import { AlertMessage } from "./../../../components/alert/index";
+import { LOGIN } from './../../../api/user/mutation';
 const LoginForm = () => {
-  const validationSchema = Yup.object().shape({
-    email: Yup.string()
-      .email("بريد إلكتروني خاطئ")
-      .required("البريد الالكتروني مطلوب"),
-    password: Yup.string().required("كلمة المرور مطلوبة"),
-  });
   const navigate = useNavigate();
   const [login, { loading, error }] = useMutation(LOGIN);
   const handelSubmit = async (values) => {
@@ -65,47 +56,39 @@ const LoginForm = () => {
         validationSchema={validationSchema}
         onSubmit={handelSubmit}
       >
-        {(errors, touched) => (
+        {(formikProps) => (
           <Form>
             <Stack spacing="6">
               <Stack w={"100%"} align={"center"} justify={"center"}>
                 <Link to={"/"} as={RouterLink}>
-                  <Logo color1={useColorModeValue("#000000","#ffffff")} width={"150px"} color2={"#FA8B02"} />
+                  <Logo
+                    color1={useColorModeValue("#000000", "#ffffff")}
+                    width={"150px"}
+                    color2={"#FA8B02"}
+                  />
                 </Link>
               </Stack>
+              <Stack justify={"center"} align={"center"} w={"full"}>
+                {error?.message === "Invalid Credentials" ? (
+                  <AlertMessage type={"login"} />
+                ) : (
+                  error?.message && <AlertMessage type={"server"} />
+                )}
+              </Stack>
               <Stack spacing="5">
-                <FormControl>
-                  <FormLabel color={useColorModeValue("#333333c5","#ffffffc5")} htmlFor="email">
-                    البريد الالكتروني
-                  </FormLabel>
-                  <Field
-                    as={Input}
-                    _placeholder={{
-                      fontWeight: 300,
-                      color:useColorModeValue("","#ffffffc5")
-                    
-                    }}
-                    placeholder="البريد الالكتروني"
-                    _focusVisible={{ border: "2px solid #FA8B02" }}
-                    id="email"
-                    name="email"
-                    type="email"
-                    border={errors.errors.email && "2px solid red !important"}
-                  />
-                  <Stack color={"red"} w={"full"} align={"flex-start"}>
-                    <ErrorMessage
-                      name="email"
-                      component="div"
-                      className="error-message"
-                    />
-                  </Stack>
-                </FormControl>
-                <PasswordField
-                  border={
-                    errors.errors.password &&
-                    "2px solid red !important"
-                  }
-                  errors={errors}
+                <CustomFormControl
+                  type={"email"}
+                  name="email"
+                  placeholder="البريد الالكتروني"
+                  label="البريد الالكتروني"
+                  formikProps={formikProps}
+                />
+                <CustomFormControl
+                  type={"password"}
+                  name="password"
+                  placeholder="كلمة المرور"
+                  label="كلمة المرور"
+                  formikProps={formikProps}
                 />
               </Stack>
               <HStack justify="space-between">
@@ -138,9 +121,12 @@ const LoginForm = () => {
                   <Divider />
                 </HStack>
                 <Button
-                  border={useColorModeValue("1.3px solid #3333333d","1.3px solid #dddada3d")}
+                  border={useColorModeValue(
+                    "1.3px solid #3333333d",
+                    "1.3px solid #dddada3d"
+                  )}
                   fontWeight={500}
-                  color={useColorModeValue("#333333a3","#ffffffa3")}
+                  color={useColorModeValue("#333333a3", "#ffffffa3")}
                   variant={"unstyled"}
                   _hover={{ backgroundColor: "#3333330f" }}
                   borderRadius={25}

@@ -24,6 +24,7 @@ model Admin {
   email     String   @unique
   userName  String   @unique
   password  String
+  role      String   @default("Super Admin")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -57,32 +58,34 @@ model Wilaya {
 }
 
 model Destination {
-  id          String       @id @unique @default(uuid())
-  name        String
-  description String?
-  wilaya      Wilaya       @relation(fields: [wilayaId], references: [id])
-  wilayaId    String
-  mapLocation MapLocation?
-  images      Image[]
-  ratings     Rating[]
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  id            String       @id @unique @default(uuid())
+  name          String
+  description   String?
+  wilaya        Wilaya       @relation(fields: [wilayaId], references: [id])
+  wilayaId      String
+  mapLocation   MapLocation?
+  images        Image[]
+  ratings       Rating[]
+  overallRating Float?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
 }
 
 model Hotel {
-  id          String       @id @unique @default(uuid())
-  name        String
-  description String?
-  type        String?
-  address     String?
-  wilaya      Wilaya?      @relation(fields: [wilayaId], references: [id])
-  wilayaId    String?
-  images      Image[]
-  ratings     Rating[]
-  mapLocation MapLocation?
-  contactInfo ContactInfo?
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  id            String       @id @unique @default(uuid())
+  name          String
+  description   String?
+  address       String?
+  wilaya        Wilaya?      @relation(fields: [wilayaId], references: [id])
+  wilayaId      String?
+  equipements   Equipement[]
+  images        Image[]
+  ratings       Rating[]
+  overallRating Float?
+  mapLocation   MapLocation?
+  contactInfo   ContactInfo?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
 }
 
 model Travel {
@@ -102,12 +105,14 @@ model Travel {
   transportType  String
   images         Image[]
   ratings        Rating[]
+  overallRating  Float?
   mapLocation    MapLocation?
   contactInfo    ContactInfo?
   user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId         String
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
+  expiredAt      DateTime?
 }
 
 model RestPasswordOTP {
@@ -170,9 +175,18 @@ model ContactInfo {
   updatedAt DateTime @updatedAt
 }
 
+model Equipement {
+  id        String   @id @unique @default(uuid())
+  item      String?
+  hotel     Hotel?   @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  hotelId   String?  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model Rating {
   id            String       @id @unique @default(uuid())
-  stars         String
+  stars         Float
   feedback      String?
   Hotel         Hotel?       @relation(fields: [hotelId], references: [id], onDelete: Cascade)
   hotelId       String?

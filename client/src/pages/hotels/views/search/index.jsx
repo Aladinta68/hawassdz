@@ -1,8 +1,17 @@
 import React from "react";
+import { useQuery } from "@apollo/client";
 import { SearchLayout } from "../../../../layout/search";
-import { HotelsData } from "../../../../data/hotelsdata";
+import { GetHotels } from './../../../../api/hotel/query';
+
 export const Hotels = () => {
-  return (
-    <SearchLayout cardType="hotels" data={HotelsData.carddata} />
-  )
-}
+  const { loading, error, data } = useQuery(GetHotels, {
+    variables: {
+      page: 1,
+      perPage: 10,
+      sortBy: "name",
+      sortDirection: "asc",
+    },
+  });
+  const hotels = data?.getAllHotels?.hotels;
+  return <SearchLayout source="hotels" cardType="hotels" data={hotels} />;
+};

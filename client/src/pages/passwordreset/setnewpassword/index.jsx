@@ -1,5 +1,3 @@
-import * as Yup from "yup";
-
 import {
   Box,
   Button,
@@ -10,24 +8,18 @@ import {
   Stack,
   Text,
   VStack,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { BiKey } from "react-icons/bi";
 import { IoIosArrowRoundBack } from "react-icons/io";
-import { useEffect, useState } from "react";
-import { PasswordField } from "./../../../components/form/PasswordField";
+import { useState } from "react";
 import { SuccessPassword } from "../success";
 import { Link as RouterLink } from "react-router-dom";
 import { Form, Formik } from "formik";
+import { CustomFormControl } from "./../../../components/form/customFormControl";
+import { validationSchema } from "./validationSchema";
 
 export const Setnewpassword = () => {
- 
-  const validationSchema = Yup.object().shape({
-    newPassword: Yup.string()
-      .min(6, "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل")
-      .required("كلمة المرور مطلوبة"),
-    confirmNewPassword: Yup.string().required("كلمة المرور مطلوبة"),
-  });
-
   const [Reseted, setReseted] = useState(false);
   const HandleResetpassword = () => {
     setReseted(true);
@@ -49,11 +41,11 @@ export const Setnewpassword = () => {
         py={{ base: 0, md: 5 }}
       >
         <Formik
-          initialValues={{ newPassword: "", confirmNewPassword: "" }}
+          initialValues={{ password: "", confirmedPassword: "" }}
           validationSchema={validationSchema}
           onSubmit={HandleResetpassword}
         >
-          {(errors, touched) => (
+          {(formikProps) => (
             <Form>
               <Box
                 borderRadius={20}
@@ -71,37 +63,30 @@ export const Setnewpassword = () => {
                     <Heading fontWeight={600} fontSize={30}>
                       تعيين كلمة مرور جديدة{" "}
                     </Heading>
-                    <Text color={"#717070"} textAlign={"center"}>
+                    <Text
+                      color={useColorModeValue("#717070", "#ffffff")}
+                      textAlign={"center"}
+                    >
                       يجب أن تكون كلمة المرور الجديدة مختلفة عن كلمات المرور
                       المستخدمة سابقًا.
                     </Text>
                   </VStack>
                   <Stack spacing="5">
-                    <PasswordField
-                      border={
-                        errors &&
-                        errors.errors &&
-                        errors.errors.newPassword &&
-                        "2px solid red !important"
-                      }
-                      errors={errors}
-                      name={"newPassword"}
-                      id={"newPassword"}
+                    <CustomFormControl
+                      type={"password"}
+                      name="password"
                       label="كلمة المرور الجديدة"
                       placeholder="كلمة المرور الجديدة"
+                      formikProps={formikProps}
                     />
                   </Stack>
                   <Stack spacing="5">
-                    <PasswordField
-                      border={
-                        errors.errors.confirmNewPassword &&
-                        "2px solid red !important"
-                      }
-                      name={"confirmNewPassword"}
-                      id={"confirmNewPassword"}
-                      errors={errors}
-                      label="تأكيد كلمة المرور الجديدة"
+                    <CustomFormControl
+                      type={"password"}
+                      name="confirmedPassword"
                       placeholder="تأكيد كلمة المرور الجديدة"
+                      label="تأكيد كلمة المرور الجديدة"
+                      formikProps={formikProps}
                     />
                   </Stack>
                   <Stack spacing="6">
@@ -111,7 +96,7 @@ export const Setnewpassword = () => {
                       _hover={{ opacity: "0.9" }}
                       borderRadius={25}
                       bg="#FA8B02"
-                      onClick={HandleResetpassword}
+                      type="submit"
                     >
                       إعادة تعيين كلمة المرور
                     </Button>
@@ -129,7 +114,12 @@ export const Setnewpassword = () => {
                     to={"/login"}
                   >
                     <IoIosArrowRoundBack fontSize={20} />
-                    <Text mx={2}>العودة لتسجيل الدخول</Text>
+                    <Text
+                      color={useColorModeValue("#717070", "#ffffff")}
+                      mx={2}
+                    >
+                      العودة لتسجيل الدخول
+                    </Text>
                   </Link>
                 </Stack>
               </Box>

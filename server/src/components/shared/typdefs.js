@@ -2,6 +2,18 @@ import { gql } from "apollo-server";
 
 export const sharedTypeDefs = gql`
   scalar Upload
+
+  type User {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    email: String!
+    phone: String
+    dateOfBirth: String
+    gender: String
+    complete: Boolean
+    image: File
+  }
   type Wilaya {
     id: ID!
     name: String!
@@ -12,10 +24,13 @@ export const sharedTypeDefs = gql`
     url: String!
   }
   type Rating {
-    stars: String!
+    stars: Float!
     feedback: String
   }
-
+  type Equipement {
+    id: ID!
+    item: String
+  }
   type MapLocation {
     longitude: Float!
     latitude: Float!

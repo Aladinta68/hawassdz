@@ -6,11 +6,12 @@ export const hotelTypeDefs = gql`
     id: ID!
     name: String!
     description: String
-    type: String
     address: String
     wilaya: Wilaya
     images: [File]
     ratings: [Rating]
+    equipements: [Equipement]
+    overallRating: Float
     mapLocation: MapLocation
     contactInfo: ContactInfo
   }
@@ -38,21 +39,21 @@ export const hotelTypeDefs = gql`
   input addHotelInput {
     name: String!
     description: String
-    type: String
     address: String
     wilayaId: String
     mapLocation: MapLocationInput
     contactInfo: ContactInfoInput
+    equipements: [String!]
     files: [Upload!]
   }
   input UpdateHotelInput {
     name: String
     description: String
-    type: String
     address: String
     wilayaId: String
     mapLocation: MapLocationUpdateInput
     contactInfo: ContactInfoUpdateInput
+    equipements: [String!]
     files: [Upload!]
   }
 `;

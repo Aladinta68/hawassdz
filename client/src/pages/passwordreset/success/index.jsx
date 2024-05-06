@@ -44,38 +44,30 @@ export const SuccessPassword = () => {
                 <FaCheck fontSize={22} color="#FA8B02" />
               </Flex>
               <Heading fontWeight={600} fontSize={30}>
-                Password Reset{" "}
+                تمت إعادة تعيين كلمة المرور بنجاح{" "}
               </Heading>
               <Text color={"#717070"} textAlign={"center"}>
-                Your password has been successfully reset. Click below to login
-                in magically.
+                لقد تم إعادة تعيين كلمة المرور الخاصة بك بنجاح. انقر أدناه
+                لتسجيل الدخول .
               </Text>
             </VStack>
-            <Stack spacing="6">
-              <Button
-                variant={"unstyled"}
-                color={"#ffffff"}
-                _hover={{ opacity: "0.9" }}
-                borderRadius={25}
-                bg="#FA8B02"
-              >
-                Continue{" "}
-              </Button>
-            </Stack>
           </Stack>
           <Stack textAlign={"center"} py={5}>
             <Link
               display={"flex"}
               justifyContent={"center"}
               alignItems={"center"}
-              _hover={{ color: "#ff7300" }}
               fontWeight={400}
-              color={"#333333c5"}
+              color={"#ffffff"}
+              _hover={{ opacity: "0.9" }}
+              borderRadius={25}
+              h={'40px'}
+              bg="#FA8B02"
               as={RouterLink}
               to={"/login"}
             >
               <IoIosArrowRoundBack fontSize={20} />
-              <Text mx={2}>Back to Login</Text>
+              <Text mx={2}> اذهب لتسجيل الدخول </Text>
             </Link>
           </Stack>
         </Box>

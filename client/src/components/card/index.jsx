@@ -40,6 +40,7 @@ export const CustomCard = ({ type, data, isHorizontal }) => {
       case "destinations":
         return (
           <DestinationCardBody
+            data={data}
             renderButton={renderButton}
             isHorizontal={isHorizontal}
           />
@@ -47,6 +48,7 @@ export const CustomCard = ({ type, data, isHorizontal }) => {
       case "hotels":
         return (
           <HotelCardBody
+            data={data}
             renderButton={renderButton}
             isHorizontal={isHorizontal}
           />
@@ -54,6 +56,7 @@ export const CustomCard = ({ type, data, isHorizontal }) => {
       case "restaurants":
         return (
           <RestaurantCardBody
+            data={data}
             renderButton={renderButton}
             isHorizontal={isHorizontal}
           />
@@ -61,6 +64,7 @@ export const CustomCard = ({ type, data, isHorizontal }) => {
       case "trips":
         return (
           <TripCardBody
+            data={data}
             renderButton={renderButton}
             isHorizontal={isHorizontal}
           />
@@ -80,14 +84,13 @@ export const CustomCard = ({ type, data, isHorizontal }) => {
         return <></>;
     }
   };
-
   return (
     <Card
       w={"100%"}
       maxW={!isHorizontal && "350px"}
       onMouseOver={() => setisHovered(true)}
       onMouseOut={() => setisHovered(false)}
-      bg={useColorModeValue("#ffffff","#1d1c1c")}
+      bg={useColorModeValue("#ffffff", "#1d1c1c")}
       borderRadius={25}
       boxShadow={"rgba(149, 157, 165, 0.2) 0px 8px 24px;"}
       position={"relative"}
@@ -176,7 +179,7 @@ export const CustomCard = ({ type, data, isHorizontal }) => {
               >
                 <Localisation color={"#ffffff"} width={20} height={20} />
                 <Text color={"#ffffff"} mx={2}>
-                  {data.location}
+                  {data?.wilaya?.name}
                 </Text>
               </Flex>
             </Flex>
@@ -190,11 +193,14 @@ export const CustomCard = ({ type, data, isHorizontal }) => {
             ></Box>
             <Image
               maxH={"180px"}
+              minH={"180px"}
               h={"100%"}
               borderRadius={25}
               w={"100%"}
-              src={data.image}
-              alt="Green double couch with wooden legs"
+              src={
+                data.images ? "http://localhost:3000" + data.images[0]?.url : ""
+              }
+              alt="card image"
             />
           </VStack>
           <Flex
@@ -210,10 +216,10 @@ export const CustomCard = ({ type, data, isHorizontal }) => {
             </HStack>
             <HStack pb={1} w={"100%"}>
               <Heading fontSize={18} fontWeight={600} size="md">
-                {data.title}
+                {data?.name}
               </Heading>
               <Spacer />
-              {renderStars()}
+              {/* {renderStars()} */}
             </HStack>
             {RenderBody()}
           </Flex>

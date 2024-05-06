@@ -3,6 +3,9 @@ import {
   ErrorTypes,
 } from "../../utils/error/ErrorHandler.js";
 import { deleteFile, uploadFile } from "../../utils/upload/images.js";
+import { calculateOverallRating } from '../utils/calculateOverallRating.js';
+
+
 
 export const getMany = async ({
   prisma,
@@ -23,7 +26,10 @@ export const getMany = async ({
     take: perPage,
     orderBy: { [sortBy]: sortDirection },
   });
-  return destinations;
+  return destinations.map((destination) => ({
+    ...destination,
+    overallRating: calculateOverallRating(destination.ratings),
+  }));
 };
 
 export const getOne = async ({ id, prisma }) => {
@@ -36,7 +42,10 @@ export const getOne = async ({ id, prisma }) => {
       wilaya: true,
     },
   });
-  return destination;
+  return {
+    ...destination,
+    overallRating: calculateOverallRating(destination.ratings),
+  };
 };
 
 export const deleteOne = async ({ id, destination, prisma }) => {

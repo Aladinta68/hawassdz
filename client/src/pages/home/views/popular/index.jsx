@@ -3,6 +3,7 @@ import {
   Flex,
   HStack,
   IconButton,
+  Stack,
   Text,
   useBreakpointValue,
   useColorModeValue,
@@ -112,9 +113,9 @@ export const Popular = ({ type, mydata }) => {
               key={index}
               style={{ display: "flex", justifyContent: "center" }}
             >
-              <Box px={2} py={20} w={{ base: "95%", md: "95%" }}>
+              <Stack align={'center'} justify={'center'} px={2} py={20} w={{ base: "95%", md: "95%" }}>
                 <CustomCard type={type} data={item} />
-              </Box>
+              </Stack>
             </SwiperSlide>
           ))}
         </Swiper>

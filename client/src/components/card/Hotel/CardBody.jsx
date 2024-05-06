@@ -19,7 +19,7 @@ import { MdCoffee } from "react-icons/md";
 import { LuBedDouble } from "react-icons/lu";
 import { FaSwimmer } from "react-icons/fa";
 import { ViewIcon } from "@chakra-ui/icons";
-export const HotelCardBody = ({ renderButton, isHorizontal }) => {
+export const HotelCardBody = ({ data,renderButton, isHorizontal }) => {
   const features = [
     { icon: LuBedDouble },
     { icon: MdCoffee },
@@ -28,9 +28,6 @@ export const HotelCardBody = ({ renderButton, isHorizontal }) => {
   ];
   return (
     <VStack align={"flex-start"} w={"100%"}>
-      <Text fontWeight={"600"} fontSize={13} w={"100%"}>
-        غرفة مزدوجة ديلوكس{" "}
-      </Text>
       <List color={"#04741b"} fontSize={12}>
         <Grid
           templateColumns={isHorizontal ? "repeat(2,1fr)" : "repeat(1,1fr)"}
@@ -77,25 +74,7 @@ export const HotelCardBody = ({ renderButton, isHorizontal }) => {
         align={"center"}
         w={"100%"}
       >
-        <HStack>
-          <Text fontSize={13}>
-            1 ليلة
-            <Text px={1} as={"span"}>
-              ,1 بالغ{" "}
-            </Text>
-          </Text>
-          <Text
-            textDecor={"line-through"}
-            color={"red"}
-            fontSize={16}
-            fontWeight={400}
-          >
-            3000 DA
-          </Text>
-          <Text fontSize={20} fontWeight={600}>
-            2500 DA
-          </Text>
-        </HStack>
+       
         <Spacer />
         {renderButton() && (
           <Stack

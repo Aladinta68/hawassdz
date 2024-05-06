@@ -10,10 +10,11 @@ export const wilayaTypeDefs = gql`
       sortDirection: String
     ): WilayasOutpot!
   }
- 
+
   type Mutation {
     deleteWilayaById(id: ID!): DeleteWilayaResponse!
     addWilaya(input: addWilayaInput!): Wilaya!
+    addAllWilaya: String
     updateWilayaById(id: ID!, input: UpdateWilayaInput!): Wilaya!
   }
   type WilayasOutpot {

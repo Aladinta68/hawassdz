@@ -1,4 +1,4 @@
-import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
+import { CloseIcon, HamburgerIcon, Icon } from "@chakra-ui/icons";
 import {
   Avatar,
   Button,
@@ -14,23 +14,37 @@ import {
   Link,
   Spacer,
   Text,
+  VStack,
   useColorMode,
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { Link as RouterLink, useLocation } from "react-router-dom";
+import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../../assets/svg/logo.svg";
 import logo2 from "../../../assets/svg/logo2.svg";
-
 import { AiOutlineUser } from "react-icons/ai";
-import { IoMoon, IoSunnySharp } from "react-icons/io5";
+import { IoMoon, IoSunnySharp, IoTicketSharp } from "react-icons/io5";
+import useProfileStore from "../../../store/profile";
+import Cookies from "js-cookie";
+import { FaMapLocationDot } from "react-icons/fa6";
+import { MdLogout } from "react-icons/md";
 export const MobileAppbar = ({ links, isLogin }) => {
   const { colorMode, toggleColorMode } = useColorMode();
-
+  const ProfileData = useProfileStore((state) => state.ProfileData);
+  const setProfileData = useProfileStore((state) => state.setProfileData);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [placement, setPlacement] = useState("right");
   const location = useLocation();
+
+  const imageUrl = "http://localhost:3000" + ProfileData?.image?.url;
+
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    Cookies.remove("accessToken");
+    setProfileData(null);
+    navigate("/login");
+  };
   return (
     <>
       <HStack
@@ -131,15 +145,95 @@ export const MobileAppbar = ({ links, isLogin }) => {
             borderTopWidth="1px"
           >
             {isLogin ? (
-              <Link as={RouterLink}>
-                <HStack>
-                  <Avatar
-                    bg="red.500"
-                    icon={<AiOutlineUser fontSize="1.5rem" />}
-                  />
-                  <Text>My account</Text>
-                </HStack>
-              </Link>
+              <VStack p={5} spacing={4} w={"full"} h={"full"}>
+                <Link
+                  h={14}
+                  px={2}
+                  borderRadius={5}
+                  _hover={{
+                    backgroundColor: useColorModeValue("#ebebeb", "#141414"),
+                  }}
+                  w={"full"}
+                  to={"/profile"}
+                  as={RouterLink}
+                >
+                  <HStack
+                    spacing={5}
+                    w={"full"}
+                    h={"full"}
+                    justify={"flex-start"}
+                    align={"center"}
+                  >
+                    <Avatar boxSize={10} bg="red.500" src={imageUrl} />
+                    <Text> الحساب الشخصي</Text>
+                  </HStack>
+                </Link>
+                <Link
+                  h={12}
+                  px={2}
+                  borderRadius={5}
+                  _hover={{
+                    backgroundColor: useColorModeValue("#ebebeb", "#141414"),
+                  }}
+                  w={"full"}
+                  to={"/my_trips"}
+                  as={RouterLink}
+                >
+                  <HStack
+                    spacing={5}
+                    w={"full"}
+                    h={"full"}
+                    justify={"flex-start"}
+                    align={"center"}
+                  >
+                    <Icon as={FaMapLocationDot} />
+                    <Text> رحلاتي</Text>
+                  </HStack>
+                </Link>
+                <Link
+                  h={12}
+                  px={2}
+                  borderRadius={5}
+                  _hover={{
+                    backgroundColor: useColorModeValue("#ebebeb", "#141414"),
+                  }}
+                  w={"full"}
+                  to={"/my_reservations"}
+                  as={RouterLink}
+                >
+                  <HStack
+                    spacing={5}
+                    w={"full"}
+                    h={"full"}
+                    justify={"flex-start"}
+                    align={"center"}
+                  >
+                    <Icon as={IoTicketSharp} />
+                    <Text> حجوزاتي </Text>
+                  </HStack>
+                </Link>
+                <Link
+                  h={12}
+                  px={2}
+                  borderRadius={5}
+                  _hover={{
+                    backgroundColor: useColorModeValue("#ebebeb", "#141414"),
+                  }}
+                  w={"full"}
+                  onClick={handleLogout}
+                >
+                  <HStack
+                    spacing={5}
+                    w={"full"}
+                    h={"full"}
+                    justify={"flex-start"}
+                    align={"center"}
+                  >
+                    <Icon as={MdLogout} />
+                    <Text> تسجيل الخروج</Text>
+                  </HStack>
+                </Link>
+              </VStack>
             ) : (
               <>
                 <Link

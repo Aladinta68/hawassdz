@@ -2,6 +2,7 @@ import {
   throwCustomError,
   ErrorTypes,
 } from "../../utils/error/ErrorHandler.js";
+import { calculateOverallRating } from "../utils/calculateOverallRating.js";
 import { deleteFile, uploadFile } from "./../../utils/upload/images.js";
 export const getMany = async ({
   prisma,
@@ -23,7 +24,10 @@ export const getMany = async ({
     take: perPage,
     orderBy: { [sortBy]: sortDirection },
   });
-  return travels;
+  return travels.map((travel) => ({
+    ...travel,
+    overallRating: calculateOverallRating(travel.ratings),
+  }));
 };
 export const getOneWithUserId = async ({ id, userId, prisma }) => {
   const travel = await prisma.travel.findUnique({
@@ -36,8 +40,10 @@ export const getOneWithUserId = async ({ id, userId, prisma }) => {
       user: true,
     },
   });
-  return travel;
-};
+  return {
+    ...travel,
+    overallRating: calculateOverallRating(travel.ratings),
+  };};
 export const getOne = async ({ id, prisma }) => {
   const travel = await prisma.travel.findUnique({
     where: { id },
@@ -49,7 +55,10 @@ export const getOne = async ({ id, prisma }) => {
       user: true,
     },
   });
-  return travel;
+  return {
+    ...travel,
+    overallRating: calculateOverallRating(travel.ratings),
+  };
 };
 export const deleteOne = async ({ id, travel, prisma }) => {
   try {

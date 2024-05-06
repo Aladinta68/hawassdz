@@ -41,7 +41,7 @@ export const DesktopAppbar = ({ links, isLogin }) => {
         h={"80%"}
       >
         <Stack pl={10}>
-          <Image w={"150px"} src={useColorModeValue(logo2,logo)} />
+          <Image w={"150px"} src={useColorModeValue(logo2, logo)} />
         </Stack>
         {links.map((link, index) => (
           <Link

@@ -1,11 +1,8 @@
-// Router.js
-
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Home from "../pages/home";
 import { Restaurants } from "../pages/restaurants/views/search/index";
-import { MainLayout } from "./../layout/main";
 import { Login } from "./../pages/login/index";
 import { Signup } from "./../pages/signup/index";
 import { ForgotPassword } from "./../pages/passwordreset/forgotpassword/index";
@@ -17,6 +14,11 @@ import { Hotels } from "../pages/hotels/views/search/index";
 import ProtectedLoginRoute from "./element/ProtectedLoginRoute";
 import PublicRoute from "./element/PublicRoute";
 import { NotFound } from "./../pages/NotFound/index";
+import { UserProfile } from "../pages/user/Profile";
+import { ProtectedUsernRoute } from "./element/ProtectedUsernRoute";
+import { MyTrips } from "../pages/user/myTrips";
+import { MyReservation } from "./../pages/user/reservation/index";
+import { AddTripPage } from "./../pages/trips/views/addTrips/index";
 
 const router = createBrowserRouter([
   {
@@ -58,6 +60,27 @@ const router = createBrowserRouter([
       {
         path: "/trip_details",
         element: <TripDetails />,
+      },
+    ],
+  },
+  {
+    element: <ProtectedUsernRoute />,
+    children: [
+      {
+        path: "/profile",
+        element: <UserProfile />,
+      },
+      {
+        path: "/my_trips",
+        element: <MyTrips />,
+      },
+      {
+        path: "/my_reservations",
+        element: <MyReservation />,
+      },
+      {
+        path: "/add_trip",
+        element: <AddTripPage />,
       },
     ],
   },

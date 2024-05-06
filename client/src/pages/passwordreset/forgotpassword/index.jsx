@@ -1,19 +1,14 @@
-import * as Yup from "yup";
 import {
-  Alert,
-  AlertIcon,
   Box,
   Button,
   Container,
   Flex,
-  FormControl,
-  FormLabel,
   Heading,
-  Input,
   Link,
   Stack,
   Text,
   VStack,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { BiKey } from "react-icons/bi";
 import { IoIosArrowRoundBack } from "react-icons/io";
@@ -21,18 +16,17 @@ import { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { CheckEmail } from "../checkemail";
 import { useMutation } from "@apollo/client";
-import { SendEmailCode } from "../../../graphQL/mutation/user";
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { Form, Formik } from "formik";
+import { SendEmailCode } from "./../../../api/user/mutation";
+import { validationSchema } from "./validationSchema";
+import { CustomFormControl } from "./../../../components/form/customFormControl";
+import { AlertMessage } from "./../../../components/alert/index";
 
 export const ForgotPassword = () => {
-  const validationSchema = Yup.object().shape({
-    email: Yup.string()
-      .email("بريد إلكتروني خاطئ")
-      .required("البريد الالكتروني مطلوب"),
-  });
   const [SendMail, setSendMail] = useState(false);
   const [email, setemail] = useState(null);
   const [forgetPassword, { loading, error }] = useMutation(SendEmailCode);
+
   const HandleSendEmail = async (values) => {
     try {
       const data = await forgetPassword({
@@ -46,6 +40,7 @@ export const ForgotPassword = () => {
       console.log(errors);
     }
   };
+
   return !SendMail ? (
     <Container
       display={"flex"}
@@ -60,7 +55,7 @@ export const ForgotPassword = () => {
         validationSchema={validationSchema}
         onSubmit={HandleSendEmail}
       >
-        {(errors) => (
+        {(formikProps) => (
           <Form>
             <Stack
               w={"100%"}
@@ -86,46 +81,29 @@ export const ForgotPassword = () => {
                     <Heading fontWeight={600} fontSize={30}>
                       هل نسيت كلمة السر
                     </Heading>
-                    <Text color={"#717070"} textAlign={"center"}>
+                    <Text
+                      color={useColorModeValue("#333333c5", "#ffffff")}
+                      textAlign={"center"}
+                    >
                       لا تقلق، سوف نرسل لك تعليمات إعادة التعيين.
                     </Text>
                   </VStack>
                   <Stack justify={"center"} align={"center"} w={"full"}>
                     {error?.message ===
-                      "User with this email doesn't exist." && (
-                      <Alert status="error">
-                        <AlertIcon />
-                        هذا البريد الإلكتروني غير موجود.
-                      </Alert>
+                    "User with this email doesn't exist." ? (
+                      <AlertMessage type={"forgotPasswordInvalidEmail"} />
+                    ) : (
+                      error?.message && <AlertMessage type={"server"} />
                     )}
                   </Stack>
                   <Stack w={"sm"} spacing="5">
-                    <FormControl w={"100%"}>
-                      <FormLabel color={"#333333c5"} htmlFor="email">
-                        البريد الالكتروني
-                      </FormLabel>
-                      <Field
-                        as={Input}
-                        _placeholder={{
-                          fontWeight: 300,
-                        }}
-                        placeholder="البريد الالكتروني"
-                        _focusVisible={{ border: "2px solid #FA8B02" }}
-                        id="email"
-                        name="email"
-                        type="email"
-                        border={
-                          errors.errors.email && "2px solid red !important"
-                        }
-                      />
-                      <Stack color={"red"} w={"full"} align={"flex-start"}>
-                        <ErrorMessage
-                          name="email"
-                          component="div"
-                          className="error-message"
-                        />
-                      </Stack>
-                    </FormControl>
+                    <CustomFormControl
+                      type={"email"}
+                      name="email"
+                      placeholder="البريد الالكتروني"
+                      label="البريد الالكتروني"
+                      formikProps={formikProps}
+                    />
                   </Stack>
                   <Stack spacing="6">
                     <Button
@@ -156,7 +134,7 @@ export const ForgotPassword = () => {
                     alignItems={"center"}
                     _hover={{ color: "#ff7300" }}
                     fontWeight={400}
-                    color={"#333333c5"}
+                    color={useColorModeValue("#333333c5", "#ffffff")}
                     to={"/login"}
                     as={RouterLink}
                   >
