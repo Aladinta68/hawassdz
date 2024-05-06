@@ -19,7 +19,16 @@ import { Paggination } from "../../components/Paggination";
 import { handleHeading, handleImage, handleText } from "./utils/headerData";
 import { center, setGridTemp, setisHorizontal } from "./utils/pageFomat";
 
-export const SearchLayout = ({ source, cardType, data }) => {
+export const SearchLayout = ({
+  loading,
+  setSortPage,
+  SelectedPage,
+  setSelectedPage,
+  source,
+  cardType,
+  data,
+  maxPage,
+}) => {
   const breakpoint = useBreakpointValue({ base: "base", md: "md" });
   const [isRow, setisRow] = useState(false);
 
@@ -63,11 +72,17 @@ export const SearchLayout = ({ source, cardType, data }) => {
             w={"100%"}
           >
             <Stack w={{ base: "100%", xl: "60%" }} h={"100%"}>
-              <Header setisRow={setisRow} isRow={isRow} />
+              <Header
+                data={data}
+                setSortPage={setSortPage}
+                setisRow={setisRow}
+                isRow={isRow}
+              />
               <Divider />
               {data && data.length > 0 ? (
                 <>
                   <ListItem
+                    loading={loading}
                     cardType={cardType}
                     data={data}
                     center={() => center({ breakpoint, isRow })}
@@ -78,9 +93,9 @@ export const SearchLayout = ({ source, cardType, data }) => {
                   />
                   <Stack pt={10} w={"100%"} align={"center"} justify={"center"}>
                     <Paggination
-                      DataLength={data.length}
-                      Selected={data.PageNumber}
-                      onPageChange={"handlePage"}
+                      SelectedPage={SelectedPage}
+                      setSelectedPage={setSelectedPage}
+                      MaxPage={maxPage}
                     />
                   </Stack>
                 </>

@@ -31,15 +31,25 @@ export const Header = () => {
       alignItems={"center"}
       w={"100%"}
     >
-      <VStack h={250} align={"center"} justify={"center"} spacing={10}>
-        <Heading fontSize={{base:24,md:35}} fontWeight={{base:400,md:600}} textAlign={{ base: "center" }}>
+      <VStack
+        w={{ base: "90%", md: "100%" }}
+        h={250}
+        align={"center"}
+        justify={"center"}
+        spacing={10}
+      >
+        <Heading
+          fontSize={{ base: 24, md: 35 }}
+          fontWeight={{ base: 400, md: 600 }}
+          textAlign={{ base: "center" }}
+        >
           احجز افضل التجارب و الفعاليات في الجزائر
         </Heading>
         <InputGroup h={14}>
           <InputLeftElement w={"10%"} h={"full"}>
             <IconButton
               cursor={"pointer"}
-              bg={useColorModeValue("#000000","#005ff8")}
+              bg={useColorModeValue("#000000", "#005ff8")}
               color={"#ffffff"}
               rounded={"full"}
               aria-label="Search database"
@@ -47,7 +57,7 @@ export const Header = () => {
             />{" "}
           </InputLeftElement>
           <Input
-            bg={useColorModeValue("#f3f3f3","#1d1c1c")}
+            bg={useColorModeValue("#f3f3f3", "#1d1c1c")}
             px={16}
             border={"none"}
             borderRadius={35}
@@ -55,7 +65,7 @@ export const Header = () => {
             h={"full"}
             dir="rtl"
             type="tel"
-            _placeholder={{color:useColorModeValue("#000000","#ffffff")}}
+            _placeholder={{ color: useColorModeValue("#000000", "#ffffff") }}
             placeholder=" ابحث عن افضل التجارب و الفعاليات .."
           />
         </InputGroup>

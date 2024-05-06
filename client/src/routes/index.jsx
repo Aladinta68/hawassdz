@@ -15,10 +15,11 @@ import ProtectedLoginRoute from "./element/ProtectedLoginRoute";
 import PublicRoute from "./element/PublicRoute";
 import { NotFound } from "./../pages/NotFound/index";
 import { UserProfile } from "../pages/user/Profile";
-import { ProtectedUsernRoute } from "./element/ProtectedUsernRoute";
+import { ProtectedUserRoute } from "./element/ProtectedUserRoute";
 import { MyTrips } from "../pages/user/myTrips";
 import { MyReservation } from "./../pages/user/reservation/index";
 import { AddTripPage } from "./../pages/trips/views/addTrips/index";
+import { HotelDetails } from "../pages/hotels/views/details";
 
 const router = createBrowserRouter([
   {
@@ -34,7 +35,7 @@ const router = createBrowserRouter([
         element: <Destinations />,
       },
       {
-        path: "/destination_details",
+        path: `/destination_details/:id`,
         element: <></>,
       },
       {
@@ -42,7 +43,7 @@ const router = createBrowserRouter([
         element: <Restaurants />,
       },
       {
-        path: "/restaurant_details",
+        path: `/restaurant_details/:id`,
         element: <></>,
       },
       {
@@ -50,21 +51,21 @@ const router = createBrowserRouter([
         element: <Hotels />,
       },
       {
-        path: "/hotel_details",
-        element: <></>,
+        path: `/hotel_details/:id`,
+        element: <HotelDetails/>,
       },
       {
         path: "/trips",
         element: <Trips />,
       },
       {
-        path: "/trip_details",
+        path: `/trip_details/:id`,
         element: <TripDetails />,
       },
     ],
   },
   {
-    element: <ProtectedUsernRoute />,
+    element: <ProtectedUserRoute />,
     children: [
       {
         path: "/profile",

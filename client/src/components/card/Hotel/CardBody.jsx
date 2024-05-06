@@ -16,21 +16,65 @@ import React from "react";
 import { FaCheck } from "react-icons/fa6";
 import { FaWifi } from "react-icons/fa6";
 import { MdCoffee } from "react-icons/md";
-import { LuBedDouble } from "react-icons/lu";
 import { FaSwimmer } from "react-icons/fa";
 import { ViewIcon } from "@chakra-ui/icons";
-export const HotelCardBody = ({ data,renderButton, isHorizontal }) => {
+import { IoBarbellOutline } from "react-icons/io5";
+import { MdLocalBar } from "react-icons/md";
+import { RiParkingBoxFill } from "react-icons/ri";
+
+export const HotelCardBody = ({ data, renderButton, isHorizontal }) => {
   const features = [
-    { icon: LuBedDouble },
-    { icon: MdCoffee },
-    { icon: FaWifi },
-    { icon: FaSwimmer },
+    {
+      icon: IoBarbellOutline,
+      contains:
+        data?.equipements &&
+        data?.equipements?.some(
+          (equipment) => equipment.item === "موقف سيارات مجاني"
+        ),
+    },
+    {
+      icon: RiParkingBoxFill,
+      contains:
+        data?.equipements &&
+        data?.equipements?.some(
+          (equipment) => equipment.item === "موقف سيارات مجاني"
+        ),
+    },
+    {
+      icon: MdCoffee,
+      contains:
+        data?.equipements &&
+        data?.equipements?.some(
+          (equipment) => equipment.item === "شامل وجبة الإفطار"
+        ),
+    },
+    {
+      icon: MdLocalBar,
+      contains:
+        data?.equipements &&
+        data?.equipements?.some((equipment) => equipment.item === "بار/صالة"),
+    },
+    {
+      icon: FaWifi,
+      contains:
+        data?.equipements &&
+        data?.equipements?.some(
+          (equipment) => equipment.item === "إنترنت عالي السرعة مجاني (Wi-Fi)"
+        ),
+    },
+    {
+      icon: FaSwimmer,
+      contains:
+        data?.equipements &&
+        data?.equipements?.some((equipment) => equipment.item === "حمام سباحة"),
+    },
   ];
   return (
     <VStack align={"flex-start"} w={"100%"}>
       <List color={"#04741b"} fontSize={12}>
         <Grid
-          templateColumns={isHorizontal ? "repeat(2,1fr)" : "repeat(1,1fr)"}
+          gap={2}
+          templateColumns={isHorizontal ? "repeat(1,1fr)" : "repeat(1,1fr)"}
         >
           <GridItem>
             <ListItem>
@@ -50,23 +94,22 @@ export const HotelCardBody = ({ data,renderButton, isHorizontal }) => {
           </GridItem>
         </Grid>
       </List>
-      <HStack
-        py={2}
-        justifyContent={!isHorizontal && "space-between"}
-        w={"100%"}
-      >
-        {features.map((feature, index) => (
-          <HStack
-            px={4}
-            py={1}
-            spacing={3}
-            bg={useColorModeValue("#f4f2f2", "#141414")}
-            borderRadius={5}
-            key={index}
-          >
-            <Icon color={feature.color} fontSize={20} as={feature.icon} />
-          </HStack>
-        ))}
+      <HStack py={2} w={"100%"}>
+        {features.map(
+          (feature, index) =>
+            feature.contains && (
+              <HStack
+                px={4}
+                py={1}
+                spacing={3}
+                bg={useColorModeValue("#f4f2f2", "#141414")}
+                borderRadius={5}
+                key={index}
+              >
+                <Icon color={feature.color} fontSize={20} as={feature.icon} />
+              </HStack>
+            )
+        )}
       </HStack>
       <Stack
         direction={!isHorizontal ? "column" : "row"}
@@ -74,7 +117,6 @@ export const HotelCardBody = ({ data,renderButton, isHorizontal }) => {
         align={"center"}
         w={"100%"}
       >
-       
         <Spacer />
         {renderButton() && (
           <Stack

@@ -52,3 +52,43 @@ export const GetHotels = gql`
     }
   }
 `;
+export const GetHotelByID = gql`
+  query GetHotelById($getHotelByIdId: ID!) {
+    getHotelById(id: $getHotelByIdId) {
+      id
+      name
+      description
+      address
+      wilaya {
+        id
+        name
+        description
+        images {
+          url
+        }
+      }
+      images {
+        url
+      }
+      ratings {
+        stars
+        feedback
+      }
+      equipements {
+        id
+        item
+      }
+      overallRating
+      mapLocation {
+        longitude
+        latitude
+      }
+      contactInfo {
+        phone
+        email
+        website
+        facebook
+      }
+    }
+  }
+`;
