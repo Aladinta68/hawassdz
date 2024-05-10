@@ -16,6 +16,6 @@
       ]
     }
   ],
-  
-  "rewrites": [{ "source": "/(.*)", "destination": "/server" }]
+
+  "rewrites": [{ "source": "/(.*)", "destination": "/server/$1" }]
 }
