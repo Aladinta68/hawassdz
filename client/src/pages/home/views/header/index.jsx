@@ -32,7 +32,7 @@ export const Header = () => {
       w={"100%"}
     >
       <VStack
-        w={{ base: "90%", md: "100%" }}
+        w={{ base: "90%", md: "40%",lg:"50%" }}
         h={250}
         align={"center"}
         justify={"center"}

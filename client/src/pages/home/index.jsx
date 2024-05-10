@@ -38,8 +38,10 @@ const Home = () => {
   if (destinationError) {
     console.log(destinationError);
   }
+  
   const destinations = destinationData?.getAllDestinations?.destinations;
   const hotels = hotelData?.getAllHotels?.hotels;
+
   return (
     <Flex direction={"column"}>
       <Header />
