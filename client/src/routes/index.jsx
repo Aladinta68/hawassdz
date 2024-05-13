@@ -20,6 +20,8 @@ import { MyTrips } from "../pages/user/myTrips";
 import { MyReservation } from "./../pages/user/reservation/index";
 import { AddTripPage } from "./../pages/trips/views/addTrips/index";
 import { HotelDetails } from "../pages/hotels/views/details";
+import { RestaurantDetails } from "./../pages/restaurants/views/details/index";
+import { DestinationDetails } from './../pages/destinations/views/details/index';
 
 const router = createBrowserRouter([
   {
@@ -36,7 +38,7 @@ const router = createBrowserRouter([
       },
       {
         path: `/destination_details/:id`,
-        element: <></>,
+        element: <DestinationDetails/>,
       },
       {
         path: "/restaurants",
@@ -44,7 +46,7 @@ const router = createBrowserRouter([
       },
       {
         path: `/restaurant_details/:id`,
-        element: <></>,
+        element: <RestaurantDetails />,
       },
       {
         path: "/hotels",
@@ -52,7 +54,7 @@ const router = createBrowserRouter([
       },
       {
         path: `/hotel_details/:id`,
-        element: <HotelDetails/>,
+        element: <HotelDetails />,
       },
       {
         path: "/trips",

@@ -7,10 +7,14 @@ import useProfileStore from "./../../store/profile";
 export const Appbar = () => {
   const links = [
     { name: "الرئيسيه", url: "/" },
-    { name: "المناطق السياحيه", url: "/destinations" },
-    { name: "الفنادق", url: "/hotels" },
-    { name: "المطاعم", url: "/restaurants" },
-    { name: "الفعاليات والرحلات ", url: "/trips" },
+    {
+      name: "المناطق السياحيه",
+      url: "/destinations",
+      detailUrl: "/destination_details",
+    },
+    { name: "الفنادق", url: "/hotels", detailUrl: "/hotel_details" },
+    { name: "المطاعم", url: "/restaurants", detailUrl: "/restaurant_details" },
+    { name: "الفعاليات والرحلات ", url: "/trips", detailUrl: "/trip_details" },
   ];
   const ProfileData = useProfileStore((state) => state.ProfileData);
   const isLogin = ProfileData && true;

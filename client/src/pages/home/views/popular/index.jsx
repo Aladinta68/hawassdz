@@ -27,7 +27,9 @@ export const Popular = ({ loading, type, mydata }) => {
 
   return (
     <Flex direction={"column"} justifyContent={"center"} alignItems={"center"}>
-      <Header swiperRef={swiperRef} type={type} />
+      {mydata && mydata.length > 0 && (
+        <Header swiperRef={swiperRef} type={type} />
+      )}
       <Flex
         w={"100%"}
         alignItems={"center"}

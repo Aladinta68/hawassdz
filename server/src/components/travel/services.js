@@ -16,6 +16,7 @@ export const getMany = async ({
     include: {
       images: true,
       ratings: true,
+
       mapLocation: true,
       contactInfo: true,
       user: true,
@@ -43,13 +44,22 @@ export const getOneWithUserId = async ({ id, userId, prisma }) => {
   return {
     ...travel,
     overallRating: calculateOverallRating(travel.ratings),
-  };};
+  };
+};
 export const getOne = async ({ id, prisma }) => {
   const travel = await prisma.travel.findUnique({
     where: { id },
     include: {
       images: true,
-      ratings: true,
+      ratings: {
+        include: {
+          user: {
+            include: {
+              image: true,
+            },
+          },
+        },
+      },
       mapLocation: true,
       contactInfo: true,
       user: true,
@@ -217,6 +227,7 @@ export const updateOne = async ({
       include: {
         images: true,
         ratings: true,
+
         mapLocation: true,
         contactInfo: true,
         user: true,

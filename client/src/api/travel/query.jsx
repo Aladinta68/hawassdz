@@ -33,6 +33,21 @@ export const GetTravels = gql`
         ratings {
           stars
           feedback
+          user {
+            id
+            firstName
+            lastName
+            email
+            phone
+            dateOfBirth
+            gender
+            complete
+            image {
+              url
+            }
+          }
+          createdAt
+          updatedAt
         }
         mapLocation {
           longitude

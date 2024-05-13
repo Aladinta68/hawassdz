@@ -14,13 +14,43 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { GrRestaurant } from "react-icons/gr";
+import { ViewIcon } from "@chakra-ui/icons";
+import { RiParkingBoxFill } from "react-icons/ri";
+import { MdOutlineTakeoutDining } from "react-icons/md";
 import { MdDeliveryDining } from "react-icons/md";
-import { IoTimeOutline } from "react-icons/io5";
-import { FaCheck } from "react-icons/fa6";
-import { ViewIcon } from '@chakra-ui/icons';
+import { FaWheelchair } from "react-icons/fa";
 
-export const RestaurantCardBody = ({ renderButton, isHorizontal }) => {
-  const features = [{ icon: MdDeliveryDining }];
+export const RestaurantCardBody = ({ data, renderButton, isHorizontal }) => {
+  const features = [
+    {
+      icon: MdDeliveryDining,
+      contains:
+        data?.equipements &&
+        data?.equipements?.some((equipment) => equipment.item === "التوصيل"),
+    },
+    {
+      icon: MdOutlineTakeoutDining,
+      contains:
+        data?.equipements &&
+        data?.equipements?.some((equipment) => equipment.item === "التيك أواي"),
+    },
+    {
+      icon: RiParkingBoxFill,
+      contains:
+        data?.equipements &&
+        data?.equipements?.some(
+          (equipment) => equipment.item === "مواقف السيارات متاحة"
+        ),
+    },
+    {
+      icon: FaWheelchair,
+      contains:
+        data?.equipements &&
+        data?.equipements?.some(
+          (equipment) => equipment.item === "مدخل للكراسي المتحركة"
+        ),
+    },
+  ];
   return (
     <VStack pt={2} align={"flex-start"} w={"100%"}>
       <List fontSize={13}>
@@ -31,23 +61,7 @@ export const RestaurantCardBody = ({ renderButton, isHorizontal }) => {
             <ListItem>
               <HStack>
                 <Icon as={GrRestaurant} />
-                <Text>الفرنسية والأوروبية</Text>
-              </HStack>
-            </ListItem>
-          </GridItem>
-          <GridItem>
-            <ListItem>
-              <HStack>
-                <Icon as={IoTimeOutline} />
-                <Text>7j 12:00 PM - 9:30 PM</Text>
-              </HStack>
-            </ListItem>
-          </GridItem>
-          <GridItem>
-            <ListItem>
-              <HStack>
-                <Icon as={FaCheck} />
-                <Text>موقف سيارات</Text>
+                <Text>{data?.type}</Text>
               </HStack>
             </ListItem>
           </GridItem>
@@ -67,13 +81,18 @@ export const RestaurantCardBody = ({ renderButton, isHorizontal }) => {
           </HStack>
         ))}
       </HStack>
-      <Stack align={'center'} direction={!isHorizontal?"column":"row"} w={"100%"}>
-        <Text fontSize={14} fontWeight={500}>
-        نطاق السعر <Text px={2} fontWeight={600} as={"span"}> 1500DA - 20000DA</Text>
-        </Text>
+      <Stack
+        align={"center"}
+        direction={!isHorizontal ? "column" : "row"}
+        w={"100%"}
+      >
         <Spacer />
         {renderButton() && (
-          <Stack w={!isHorizontal&&'100%'} pt={{ base: 2, md: 0 }} align={"end"}>
+          <Stack
+            w={!isHorizontal && "100%"}
+            pt={{ base: 2, md: 0 }}
+            align={"end"}
+          >
             <Button
               variant={"unstyled"}
               _hover={{ opacity: 0.8 }}

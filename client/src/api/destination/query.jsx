@@ -30,6 +30,21 @@ export const GetDestinations = gql`
         ratings {
           stars
           feedback
+          user {
+            id
+            firstName
+            lastName
+            email
+            phone
+            dateOfBirth
+            gender
+            complete
+            image {
+              url
+            }
+          }
+          createdAt
+          updatedAt
         }
         overallRating
         mapLocation {
@@ -38,6 +53,50 @@ export const GetDestinations = gql`
         }
       }
       maxPage
+    }
+  }
+`;
+export const GetOneDestination = gql`
+  query GetDestinationById($getDestinationByIdId: ID!) {
+    getDestinationById(id: $getDestinationByIdId) {
+      id
+      name
+      description
+      wilaya {
+        id
+        name
+        description
+        images {
+          url
+        }
+      }
+      images {
+        url
+      }
+      ratings {
+        stars
+        feedback
+        user {
+          id
+          firstName
+          lastName
+          email
+          phone
+          dateOfBirth
+          gender
+          complete
+          image {
+            url
+          }
+        }
+        createdAt
+        updatedAt
+      }
+      overallRating
+      mapLocation {
+        longitude
+        latitude
+      }
     }
   }
 `;

@@ -48,10 +48,14 @@ export const DesktopAppbar = ({ links, isLogin }) => {
             fontWeight={500}
             p={2}
             borderBottom={
-              location.pathname === link.url ? "2px solid #FA8B02" : ""
+              location.pathname === link.url ||
+              location.pathname.includes(link.detailUrl)
+                ? "2px solid #FA8B02"
+                : ""
             }
             color={
-              location.pathname === link.url
+              location.pathname === link.url ||
+              location.pathname.includes(link.detailUrl)
                 ? "#FA8B02"
                 : useColorModeValue("#000000", "#ffffff")
             }

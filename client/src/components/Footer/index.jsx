@@ -27,20 +27,25 @@ export const Footer = () => {
   const [ishoveredPhone, setishoveredPhone] = useState(false);
   const [ishoveredmail, setishoveredmail] = useState(false);
   return (
-    <Flex color={"#ffffff"} direction={"column"} bg={useColorModeValue("#333333","#000000")} bottom={0}>
+    <Flex
+      color={"#ffffff"}
+      direction={"column"}
+      bg={useColorModeValue("#333333", "#000000")}
+      bottom={0}
+    >
       <Container maxW={"8xl"}>
         <Flex py={5}>
           <Image w={"150px"} src={logo} />
         </Flex>
         <Flex
           justifyContent={"space-between"}
-          borderY={useColorModeValue("1px solid gray","1px solid #202020")}
+          borderY={useColorModeValue("1px solid gray", "1px solid #202020")}
           py={5}
           direction={{ base: "column", md: "row" }}
         >
-          <Flex  my={{ base: 0, md: 0 }} direction={"column"}>
+          <Flex my={{ base: 5, md: 0 }} direction={"column"}>
             <Text fontWeight={600} py={2}>
-              Services
+              الصفحات
             </Text>
             <List>
               <ListItem py={1}>
@@ -50,7 +55,7 @@ export const Footer = () => {
                   as={RouterLink}
                   to={""}
                 >
-                  Bike and Rickshaw rental
+                  الرئيسية
                 </Link>
               </ListItem>
               <ListItem py={1}>
@@ -60,7 +65,7 @@ export const Footer = () => {
                   as={RouterLink}
                   to={""}
                 >
-                  Bike and Rickshaw
+                  المناطق السياحيه
                 </Link>
               </ListItem>
               <ListItem py={1}>
@@ -70,44 +75,7 @@ export const Footer = () => {
                   as={RouterLink}
                   to={""}
                 >
-                  Bike and Rickshaw rental
-                </Link>
-              </ListItem>
-            </List>
-          </Flex>
-          <Flex  my={{ base: 5, md: 0 }} direction={"column"}>
-            <Text fontWeight={600} py={2}>
-              Pages
-            </Text>
-            <List>
-              <ListItem py={1}>
-                <Link
-                  _hover={{ color: "#FA8B02" }}
-                  transition={"ease-in-out 0.3s"}
-                  as={RouterLink}
-                  to={""}
-                >
-                  Home
-                </Link>
-              </ListItem>
-              <ListItem py={1}>
-                <Link
-                  _hover={{ color: "#FA8B02" }}
-                  transition={"ease-in-out 0.3s"}
-                  as={RouterLink}
-                  to={""}
-                >
-                  Destinations
-                </Link>
-              </ListItem>
-              <ListItem py={1}>
-                <Link
-                  _hover={{ color: "#FA8B02" }}
-                  transition={"ease-in-out 0.3s"}
-                  as={RouterLink}
-                  to={""}
-                >
-                  Restaurants
+                  المطاعم
                 </Link>
               </ListItem>
               <ListItem>
@@ -117,7 +85,7 @@ export const Footer = () => {
                   as={RouterLink}
                   to={""}
                 >
-                  Hotels
+                  الفنادق
                 </Link>
               </ListItem>
               <ListItem py={1}>
@@ -127,14 +95,14 @@ export const Footer = () => {
                   as={RouterLink}
                   to={""}
                 >
-                  Trips
+                  الفعاليات والرحلات
                 </Link>
               </ListItem>
             </List>
           </Flex>
           <Flex my={{ base: 5, md: 0 }} direction={"column"}>
             <Text fontWeight={600} py={2}>
-              Help
+              المساعده
             </Text>
             <List>
               <ListItem py={1}>
@@ -144,7 +112,7 @@ export const Footer = () => {
                   as={RouterLink}
                   to={""}
                 >
-                  Terms of Use
+                  شروط الاستخدام
                 </Link>
               </ListItem>
               <ListItem py={1}>
@@ -154,7 +122,7 @@ export const Footer = () => {
                   as={RouterLink}
                   to={""}
                 >
-                  Provicy Policy
+                  سياسة الخصوصية{" "}
                 </Link>
               </ListItem>
             </List>
@@ -200,7 +168,9 @@ export const Footer = () => {
                 >
                   <FaPhoneAlt fontSize={18} color="#FA8B02" />
                 </Box>
-                <Text mx={2}>(213)557444857</Text>
+                <Text dir="ltr" mx={2}>
+                  (213)557444857
+                </Text>
               </ListItem>
               <ListItem
                 onMouseOver={() => setishoveredmail(true)}
@@ -217,7 +187,9 @@ export const Footer = () => {
                     <MdMail fontSize={20} color="#FA8B02" />
                   )}
                 </Box>
-                <Text mx={2}>HawassDZ@gmail.com</Text>
+                <Text dir="ltr" mx={2}>
+                  HawassDZ@gmail.com
+                </Text>
               </ListItem>
             </List>
           </Flex>
@@ -228,7 +200,7 @@ export const Footer = () => {
             direction={"column"}
           >
             <Text fontWeight={600} py={2}>
-              Social Media
+              وسائل التواصل الاجتماعي{" "}
             </Text>
             <HStack py={1}>
               <Link p={2} rounded={"full"} bg={"#FA8B02"}>
@@ -272,7 +244,7 @@ export const Footer = () => {
           textAlign={"center"}
           py={5}
         >
-          <Text>Copyright © 2024. All rights reserved. </Text>
+          <Text>حقوق الطبع والنشر © 2024. جميع الحقوق محفوظة. </Text>
         </Flex>
       </Container>
     </Flex>

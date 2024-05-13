@@ -32,6 +32,7 @@ export const Rating = ({
             cursor={"pointer"}
             mx={0.5}
             key={index}
+            name="stars"
             aria-label={`Star ${index + 1}`}
             color={index < rating ? "yellow.500" : "gray.300"}
             onClick={() => handleStarClick(index)}

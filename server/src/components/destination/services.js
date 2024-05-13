@@ -3,9 +3,7 @@ import {
   ErrorTypes,
 } from "../../utils/error/ErrorHandler.js";
 import { deleteFile, uploadFile } from "../../utils/upload/images.js";
-import { calculateOverallRating } from '../utils/calculateOverallRating.js';
-
-
+import { calculateOverallRating } from "../utils/calculateOverallRating.js";
 
 export const getMany = async ({
   prisma,
@@ -37,7 +35,15 @@ export const getOne = async ({ id, prisma }) => {
     where: { id },
     include: {
       images: true,
-      ratings: true,
+      ratings: {
+        include: {
+          user: {
+            include: {
+              image: true,
+            },
+          },
+        },
+      },
       mapLocation: true,
       wilaya: true,
     },

@@ -26,6 +26,9 @@ export const sharedTypeDefs = gql`
   type Rating {
     stars: Float!
     feedback: String
+    user: User
+    createdAt: String
+    updatedAt: String
   }
   type Equipement {
     id: ID!

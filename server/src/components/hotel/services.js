@@ -37,7 +37,15 @@ export const getOne = async ({ id, prisma }) => {
     include: {
       equipements: true,
       images: true,
-      ratings: true,
+      ratings: {
+        include: {
+          user: {
+            include: {
+              image: true,
+            },
+          },
+        },
+      },
       mapLocation: true,
       contactInfo: true,
       wilaya: true,
@@ -112,6 +120,7 @@ export const createOne = async ({ input, prisma }) => {
     },
     include: {
       ratings: true,
+
       mapLocation: true,
       contactInfo: true,
       wilaya: true,
@@ -200,6 +209,7 @@ export const updateOne = async ({ id, input, existingHotel, prisma }) => {
       include: {
         images: true,
         ratings: true,
+
         mapLocation: true,
         contactInfo: true,
         equipements: true,

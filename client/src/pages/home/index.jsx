@@ -7,12 +7,25 @@ import { Steps } from "./views/steps/index";
 import { useQuery } from "@apollo/client";
 import { GetHotels } from "../../api/hotel/query";
 import { GetDestinations } from "../../api/destination/query";
+import { GetRestaurants } from "./../../api/restaurant/query";
 const Home = () => {
   const {
     loading: hotelLoading,
     error: hotelError,
     data: hotelData,
   } = useQuery(GetHotels, {
+    variables: {
+      page: 1,
+      perPage: 8,
+      sortBy: "name",
+      sortDirection: "asc",
+    },
+  });
+  const {
+    loading: restaurantLoading,
+    error: restaurantError,
+    data: restaurantData,
+  } = useQuery(GetRestaurants, {
     variables: {
       page: 1,
       perPage: 8,
@@ -35,12 +48,16 @@ const Home = () => {
   if (hotelError) {
     console.log(hotelError);
   }
+  if (restaurantError) {
+    console.log(restaurantError);
+  }
   if (destinationError) {
     console.log(destinationError);
   }
-  
+
   const destinations = destinationData?.getAllDestinations?.destinations;
   const hotels = hotelData?.getAllHotels?.hotels;
+  const restaurants = restaurantData?.getAllRestaurants?.restaurants;
 
   return (
     <Flex direction={"column"}>
@@ -55,7 +72,11 @@ const Home = () => {
         <Spacer height={50} />
         <Popular type="hotels" mydata={hotels} loading={hotelLoading} />
         <Spacer height={50} />
-        <Popular type="restaurants" mydata={[]} loading={""} />
+        <Popular
+          type="restaurants"
+          mydata={restaurants}
+          loading={restaurantLoading}
+        />
         <Spacer height={50} />
         <Steps />
         <Spacer height={0} />

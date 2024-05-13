@@ -29,7 +29,7 @@ export const HotelCardBody = ({ data, renderButton, isHorizontal }) => {
       contains:
         data?.equipements &&
         data?.equipements?.some(
-          (equipment) => equipment.item === "موقف سيارات مجاني"
+          (equipment) => equipment.item === "مركز لياقة بدنية/صالة ألعاب رياضية"
         ),
     },
     {

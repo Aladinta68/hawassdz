@@ -100,8 +100,8 @@ export const CustomCard = ({ loading, type, data, isHorizontal }) => {
           borderRadius={25}
           h={isHorizontal ? "250px" : "395px"}
           w={isHorizontal ? "full" : "300px"}
-          justify={'center'}
-          align={'center'}
+          justify={"center"}
+          align={"center"}
         >
           <Skeleton borderRadius={25} w={"full"} height="200px" />
           <SkeletonText
@@ -170,7 +170,7 @@ export const CustomCard = ({ loading, type, data, isHorizontal }) => {
                       <FaStar color="#ffffff" />
                     </Flex>
                     <Text color={"#ffffff"} mx={2}>
-                      {data && data.overallRating ? data.overallRating : "0"}
+                      {data && data.overallRating ? data.overallRating.toFixed(1) : "0"}
                     </Text>
                   </Flex>
                   <Flex
