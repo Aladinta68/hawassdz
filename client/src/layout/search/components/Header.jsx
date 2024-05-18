@@ -21,29 +21,48 @@ import React from "react";
 import { IoGridOutline } from "react-icons/io5";
 import { LuFilter } from "react-icons/lu";
 
-export const Header = ({ data, setSortPage, setisRow, isRow }) => {
+export const Header = ({
+  refetch,
+  data,
+  currentSortBy,
+  currentSortDirection,
+  setisRow,
+  isRow,
+}) => {
   const breakpoint = useBreakpointValue({ base: "base", md: "md" });
+
   const handleSortChange = (event) => {
     const selectedValue = event.target.value;
+    let sortBy = "name";
+    let sortDirection = "asc";
+
     if (selectedValue === "name_asc") {
-      setSortPage({ sortBy: "name", sortDirection: "asc" });
+      sortBy = "name";
+      sortDirection = "asc";
     }
     if (selectedValue === "name_desc") {
-      setSortPage({ sortBy: "name", sortDirection: "desc" });
+      sortBy = "name";
+      sortDirection = "desc";
     }
     if (selectedValue === "createdAt_asc") {
-      setSortPage({ sortBy: "createdAt", sortDirection: "asc" });
+      sortBy = "createdAt";
+      sortDirection = "asc";
     }
     if (selectedValue === "createdAt_desc") {
-      setSortPage({ sortBy: "createdAt", sortDirection: "desc" });
+      sortBy = "createdAt";
+      sortDirection = "desc";
     }
+    refetch({
+      sortBy: sortBy,
+      sortDirection: sortDirection,
+    });
   };
   return (
     <VStack
       bg={useColorModeValue("#ffffff", "#000000")}
       zIndex={2}
-      pos={{base:"sticky",md:"static"}}
-      top={{base:"60px",md:"0"}}
+      pos={{ base: "sticky", md: "static" }}
+      top={{ base: "60px", md: "0" }}
       py={{ base: 8, md: 0 }}
     >
       <Stack w={"100%"}>
@@ -71,7 +90,7 @@ export const Header = ({ data, setSortPage, setisRow, isRow }) => {
               fontWeight={500}
               variant={"unstyled"}
             >
-              المرشحات
+              الفلتر
             </Button>
           </MenuButton>
           <MenuList></MenuList>
@@ -82,7 +101,7 @@ export const Header = ({ data, setSortPage, setisRow, isRow }) => {
           <Select
             w={"auto"}
             dir="ltr"
-            defaultValue={"name_asc"}
+            defaultValue={`${currentSortBy}_${currentSortDirection}`}
             onChange={handleSortChange}
           >
             <option value={"name_asc"}>اسم (تصاعدي)</option>

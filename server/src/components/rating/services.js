@@ -1,7 +1,7 @@
 import {
   throwCustomError,
   ErrorTypes,
-} from "../../utils/error/ErrorHandler.js";
+} from "../../utils/error/errorHandler.js";
 
 export const createOne = async ({ userId, input, prisma }) => {
   try {

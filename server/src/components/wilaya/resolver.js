@@ -1,7 +1,7 @@
 import {
   ErrorTypes,
   throwCustomError,
-} from "../../utils/error/ErrorHandler.js";
+} from "../../utils/error/errorHandler.js";
 import { default as GraphQLUpload } from "graphql-upload/GraphQLUpload.mjs";
 import {
   createOne,

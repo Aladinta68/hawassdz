@@ -1,7 +1,7 @@
 import {
   throwCustomError,
   ErrorTypes,
-} from "../../utils/error/ErrorHandler.js";
+} from "../../utils/error/errorHandler.js";
 import { calculateOverallRating } from "../utils/calculateOverallRating.js";
 import { deleteFile, uploadFile } from "./../../utils/upload/images.js";
 export const getMany = async ({

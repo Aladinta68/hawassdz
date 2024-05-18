@@ -21,17 +21,17 @@ import { center, setGridTemp, setisHorizontal } from "./utils/pageFomat";
 
 export const SearchLayout = ({
   loading,
-  setSortPage,
-  SelectedPage,
-  setSelectedPage,
+  refetch,
   source,
   cardType,
   data,
   maxPage,
+  currentPage,
+  currentSortBy,
+  currentSortDirection,
 }) => {
   const breakpoint = useBreakpointValue({ base: "base", md: "md" });
   const [isRow, setisRow] = useState(false);
-
   return (
     <VStack pb={20} w={"full"} h={"full"}>
       <Stack mt={5} mb={50} pos={"relative"} w={"full"} h={"250px"}>
@@ -74,15 +74,27 @@ export const SearchLayout = ({
             <Stack w={{ base: "100%", xl: "60%" }} h={"100%"}>
               <Header
                 data={data}
-                setSortPage={setSortPage}
+                currentSortBy={currentSortBy}
+                currentSortDirection={currentSortDirection}
                 setisRow={setisRow}
                 isRow={isRow}
+                refetch={refetch}
               />
               <Divider />
-              {data && data.length > 0 ? (
+
+              {loading && (
+                <ListItem
+                  loading={true}
+                  cardType={cardType}
+                  data={[{}, {}, {}, {}]}
+                  center={() => center({ breakpoint, isRow })}
+                  setGridTemp={() => setGridTemp({ isRow, breakpoint })}
+                  setisHorizontal={() => setisHorizontal({ breakpoint, isRow })}
+                />
+              )}
+              {data?.length > 0 && (
                 <>
                   <ListItem
-                    loading={loading}
                     cardType={cardType}
                     data={data}
                     center={() => center({ breakpoint, isRow })}
@@ -93,13 +105,14 @@ export const SearchLayout = ({
                   />
                   <Stack pt={10} w={"100%"} align={"center"} justify={"center"}>
                     <Paggination
-                      SelectedPage={SelectedPage}
-                      setSelectedPage={setSelectedPage}
-                      MaxPage={maxPage}
+                      currentPage={currentPage}
+                      refetch={refetch}
+                      maxPage={maxPage}
                     />
                   </Stack>
                 </>
-              ) : (
+              )}
+              {!loading && data?.length <= 0 && (
                 <Alert status="warning">
                   <AlertIcon />
                   لا توجد اي بيانات لعرضها!

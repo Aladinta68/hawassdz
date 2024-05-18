@@ -3,7 +3,7 @@ import { comparePassword, hashPassword } from "./utils/utils.js";
 import {
   throwCustomError,
   ErrorTypes,
-} from "../../utils/error/ErrorHandler.js";
+} from "../../utils/error/errorHandler.js";
 import { HtmlTemplate } from "../../utils/mail/mail.template.js";
 import { sendMailTest } from "../../utils/mail/nodemailer.config.js";
 import { deleteFile, uploadFile } from "./../../utils/upload/images.js";

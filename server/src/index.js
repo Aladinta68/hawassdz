@@ -2,7 +2,7 @@ import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import cors from "cors";
 import { ApolloServerPluginLandingPageLocalDefault } from "apollo-server-core";
-import { formatError } from "./utils/error/ErrorHandler.js";
+import { formatError } from "./utils/error/errorHandler.js";
 import { typeDefs, resolvers } from "./components/index.js";
 import { context } from "./middleware/context.js";
 import { default as graphqlUploadExpress } from "graphql-upload/graphqlUploadExpress.mjs";

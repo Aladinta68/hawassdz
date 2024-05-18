@@ -13,6 +13,7 @@ import { MdDelete } from "react-icons/md";
 import { MdModeEditOutline } from "react-icons/md";
 
 export const Rate = ({ item, userData }) => {
+  console.log("userData", userData);
   return (
     <HStack
       h={"full"}
@@ -55,8 +56,8 @@ export const Rate = ({ item, userData }) => {
         </Text>
       </VStack>
       <Spacer />
-      {item?.user?.id === userData?.getUserByToken?.id && (
-        <HStack  spacing={5} align={"center"} justify={"center"} h={"100%"}>
+      {userData && item?.user?.id === userData?.getUserByToken?.id && (
+        <HStack spacing={5} align={"center"} justify={"center"} h={"100%"}>
           <IconButton
             cursor={"pointer"}
             variant={"ghost"}

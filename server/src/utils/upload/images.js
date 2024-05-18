@@ -3,7 +3,7 @@ import path from "path";
 import {
   throwCustomError,
   ErrorTypes,
-} from "../../utils/error/ErrorHandler.js";
+} from "../error/errorHandler.js";
 import { randomUUID } from "crypto";
 
 export const uploadFile = async (file) => {

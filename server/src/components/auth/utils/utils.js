@@ -4,7 +4,7 @@ import JWT from "jsonwebtoken";
 import {
   ErrorTypes,
   throwCustomError,
-} from "../../../utils/error/ErrorHandler.js";
+} from "../../../utils/error/errorHandler.js";
 
 const hashPassword = async (password) => {
   try {

@@ -1,34 +1,35 @@
-import React, { useState } from "react";
+import React from "react";
 import { SearchLayout } from "../../../../layout/search";
 import { GetDestinations } from "../../../../api/destination/query";
 import { useQuery } from "@apollo/client";
 export const Destinations = () => {
-  const [SelectedPage, setSelectedPage] = useState(1);
-  const [SortPage, setSortPage] = useState({
-    sortBy: "name",
-    sortDirection: "asc",
-  });
-
-  const { loading, error, data } = useQuery(GetDestinations, {
-    variables: {
-      page: SelectedPage,
-      perPage: 4,
-      sortBy: SortPage.sortBy,
-      sortDirection: SortPage.sortDirection,
-    },
-  });
+  const { loading, error, data, refetch, variables } = useQuery(
+    GetDestinations,
+    {
+      variables: {
+        page: 1,
+        perPage: 4,
+        sortBy: "name",
+        sortDirection: "asc",
+      },
+    }
+  );
   if (error) {
     console.log(error);
   }
+  const currentPage = variables.page;
+  const currentSortBy = variables.sortBy;
+  const currentSortDirection = variables.sortDirection;
   const destinations = data?.getAllDestinations?.destinations;
   const maxPage = data?.getAllDestinations.maxPage;
   return (
     <SearchLayout
-      setSortPage={setSortPage}
-      loading={loading}
-      SelectedPage={SelectedPage}
-      setSelectedPage={setSelectedPage}
+      currentPage={currentPage}
+      currentSortBy={currentSortBy}
+      currentSortDirection={currentSortDirection}
       maxPage={maxPage}
+      refetch={refetch}
+      loading={loading}
       data={destinations}
       source={"destinations"}
       cardType="destinations"

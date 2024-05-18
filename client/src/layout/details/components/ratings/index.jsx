@@ -52,9 +52,10 @@ export const DetailsRating = ({ type, data }) => {
       {data && data.ratings && data.ratings.length > 0 && (
         <Stack w={"full"} align={"center"} justify={"center"} py={5}>
           <Paggination
-            SelectedPage={SelectedPage}
             setSelectedPage={setSelectedPage}
             MaxPage={Math.ceil(data.ratings.length / itemsPerPage)}
+            currentPage={SelectedPage}
+            maxPage={Math.ceil(data.ratings.length / itemsPerPage)}
           />
         </Stack>
       )}

@@ -2,7 +2,7 @@ import { comparePassword, hashPassword } from "./utils/utils.js";
 import {
   throwCustomError,
   ErrorTypes,
-} from "../../utils/error/ErrorHandler.js";
+} from "../../utils/error/errorHandler.js";
 const getUserOrAdminByEmail = async (email, prisma) => {
   const admin = await prisma.admin.findUnique({ where: { email } });
   const user = await prisma.user.findUnique({ where: { email } });

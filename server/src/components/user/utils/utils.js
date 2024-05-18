@@ -3,7 +3,7 @@ import argon from "argon2";
 import {
   ErrorTypes,
   throwCustomError,
-} from "../../../utils/error/ErrorHandler.js";
+} from "../../../utils/error/errorHandler.js";
 const comparePassword = async (hashPassword, password) => {
   try {
     const check = await argon.verify(hashPassword, password);
