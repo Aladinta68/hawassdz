@@ -10,6 +10,7 @@ import {
   getOne,
   getOneWithUserId,
   updateOne,
+  getManyByUser,
 } from "./services.js";
 export const travelResolvers = {
   Upload: GraphQLUpload,
@@ -21,6 +22,34 @@ export const travelResolvers = {
           throwCustomError("travel not found", ErrorTypes.NOT_FOUND);
         }
         return travel;
+      } catch (error) {
+        throwCustomError(
+          error.message,
+          error.extensions || ErrorTypes.INTERNAL_SERVER_ERROR
+        );
+      }
+    },
+    getTravelsByUser: async (
+      _,
+      { page = 1, perPage = 10, sortBy = "id", sortDirection = "asc" },
+      { prisma, user: authUser }
+    ) => {
+      if (!authUser || authUser.type !== "USER") {
+        throwCustomError("Unauthorized", ErrorTypes.UNAUTHENTICATED);
+      }
+      const userId = authUser.id;
+      try {
+        const travels = await getManyByUser({
+          userId,
+          prisma,
+          page,
+          perPage,
+          sortBy,
+          sortDirection,
+        });
+        const totalCount = await prisma.travel.count();
+        const maxPage = Math.ceil(totalCount / perPage);
+        return { travels, maxPage };
       } catch (error) {
         throwCustomError(
           error.message,

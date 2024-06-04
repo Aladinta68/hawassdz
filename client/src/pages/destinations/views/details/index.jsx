@@ -8,10 +8,8 @@ export const DestinationDetails = () => {
   const { loading, error, data } = useQuery(GetOneDestination, {
     variables: { getDestinationByIdId: id },
   });
-
-  if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
-  const destination = data.getDestinationById;
+  const destination = data?.getDestinationById;
 
-  return <DetailsLayout type="destination" data={destination} />;
+  return <DetailsLayout loading={loading} type="destination" data={destination} />;
 };

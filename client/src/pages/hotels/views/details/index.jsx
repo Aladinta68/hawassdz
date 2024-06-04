@@ -9,8 +9,7 @@ export const HotelDetails = () => {
     variables: { getHotelByIdId: id },
   });
 
-  if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
-  const hotel = data.getHotelById;
-  return <DetailsLayout type="hotel" data={hotel} />;
+  const hotel = data?.getHotelById;
+  return <DetailsLayout loading={loading} type="hotel" data={hotel} />;
 };

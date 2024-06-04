@@ -1,247 +1,226 @@
 import {
+  Box,
   Button,
-  Checkbox,
   Container,
-  Grid,
-  GridItem,
-  HStack,
-  Stack,
-  Text,
   VStack,
+  Stepper,
+  Step,
+  StepIndicator,
+  StepStatus,
+  StepIcon,
+  StepSeparator,
+  useSteps,
+  StepNumber,
+  StepDescription,
+  HStack,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import React, { useState } from "react";
-import { CustomFormControl } from "./../../../../components/form/customFormControl";
-import { validationSchema } from "./validationSchema";
+import {
+  validationSchemaStepOne,
+  validationSchemaStepTwo,
+  validationSchemaStepThree,
+  validationSchemaStepFour,
+  validationSchemaStepFive,
+} from "./utils/validationSchemas";
+import { StepOne } from "./components/StepOne";
+import { StepTwo } from "./components/StepTwo";
+import { StepThree } from "./components/StepThree";
+import { StepFour } from "./components/StepFour";
+import { StepFive } from "./components/StepFive";
+import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
+import { steps } from "./utils/steps";
+import { ADD_TRAVEL } from "../../../../api/travel/mutation";
+import { useMutation } from "@apollo/client";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
+
+const validationSchemas = [
+  validationSchemaStepOne,
+  validationSchemaStepTwo,
+  validationSchemaStepThree,
+  validationSchemaStepFour,
+  validationSchemaStepFive,
+];
 
 export const AddTripPage = () => {
-  const handleSubmit = async (values) => {
-    console.log(values);
-  };
-  const genderOptions = [
-    { value: "gender", label: "الجنس", selected: true, disabled: true },
-    { value: "Male", label: "ذكر" },
-    { value: "Female", label: "انثى" },
-  ];
-  const ageRangeOptions = [
-    { value: "all", label: "الكل", selected: true },
-    { value: ">18", label: ">18" },
-    { value: "18-30", label: "18-30" },
-    { value: ">30", label: ">30" },
-    { value: "30-50", label: "30-50" },
-    { value: ">50", label: ">50" },
-  ];
+  const [fileSelected, setFileSelected] = useState([]);
+  const navigate = useNavigate();
 
-  const [freePrice, setfreePrice] = useState(false);
+  const { activeStep, setActiveStep } = useSteps({
+    index: 0,
+    count: steps.length,
+  });
+  const handleNext = () => {
+    setActiveStep((prevStep) => prevStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevStep) => prevStep - 1);
+  };
+  const breakpoint = useBreakpointValue({ base: "base", md: "md" });
+
+  const accessToken = Cookies.get("accessToken");
+  const [addTravel, { loading, error }] = useMutation(ADD_TRAVEL);
+
+  const handleSubmit = async (values) => {
+    const myInput = {
+      type: values.type,
+      transportType: values.transportType,
+      price: values.price.toString(),
+      numberPerson: values.numberPerson.toString(),
+      name: values.name,
+      mapLocation: {
+        latitude: 0,
+        longitude: 0,
+      },
+      longitude: values.longitude.toString(),
+      gender: values.gender,
+      files: fileSelected,
+      destination: values.destination,
+      description: values.description,
+      dateDepart: values.dateDepart,
+      dateArrive: values.dateArrive,
+      contactInfo: {
+        website: values?.website,
+        phone: values.phone.toString(),
+        facebook: values?.facebook,
+        email: values?.email,
+      },
+      ageRange: values.ageRange,
+    };
+    console.log("myInput", myInput);
+    try {
+      const response = await addTravel({
+        variables: { input: myInput },
+        context: {
+          headers: {
+            Authorization: accessToken,
+          },
+        },
+      });
+      if (response) {
+        console.log("res", response);
+        setFileSelected([]);
+        navigate("/add_trip");
+      }
+      if (loading) {
+        console.log(loading);
+      }
+      if (error) {
+        console.log(error);
+      }
+    } catch (error) {
+      console.error("Error", error);
+    }
+  };
+
   return (
     <Container maxW={"8xl"}>
-      <VStack spacing={10} py={50} align={"flex-start"} w={"70%"}>
-        <Text textDecor={"underline"} fontSize={20} fontWeight={500}>
-          / اضافة رحلة
-        </Text>
+      <VStack spacing={10} py={"100px"} align={"flex-start"} w={"full%"}>
+        {breakpoint !== "base" && (
+          <Stepper size="lg" w={"90%"} index={activeStep}>
+            {steps.map((step, index) => (
+              <Step key={index}>
+                <StepIndicator>
+                  <StepStatus
+                    complete={<StepIcon />}
+                    incomplete={<StepNumber />}
+                    active={<StepNumber />}
+                  />
+                </StepIndicator>
+                <Box flexShrink="0">
+                  <StepDescription style={{ width: "100px" }}>
+                    {step.description}
+                  </StepDescription>
+                </Box>
+                <StepSeparator />
+              </Step>
+            ))}
+          </Stepper>
+        )}
         <Formik
-          initialValues={""}
-          validationSchema={validationSchema}
-          onSubmit={handleSubmit}
+          initialValues={{
+            name: "",
+            type: "",
+            destination: "",
+            price: "",
+            dateDepart: "",
+            dateArrive: "",
+            longitude: "",
+            numberPerson: "",
+            transportType: "",
+            gender: "",
+            ageRange: "",
+            description: "",
+            images: [],
+            phone: "",
+            email: "",
+            website: "",
+            facebook: "",
+          }}
+          validationSchema={validationSchemas[activeStep]}
+          onSubmit={(values, actions) => {
+            if (activeStep === steps.length - 1) {
+              handleSubmit(values);
+              actions.resetForm();
+            } else {
+              handleNext();
+            }
+          }}
         >
           {(formikProps) => (
             <Form style={{ width: "100%" }}>
-              <VStack w={"full"} align={"flex-start"} spacing={10}>
-                <Grid w={"full"} templateColumns="repeat(2, 1fr)" gap={6}>
-                  <GridItem w="100%">
-                    <CustomFormControl
-                      type={"text"}
-                      name="name"
-                      label="عنوان الرحلة"
-                      placeholder="عنوان الرحلة"
-                      formikProps={formikProps}
-                      isRequired={true}
-                    />
-                  </GridItem>
-                  <GridItem w="100%">
-                    <CustomFormControl
-                      type={"text"}
-                      name="type"
-                      label=" نوع الرحلة"
-                      placeholder="رحلة سياحية, تسلق جبال ...."
-                      formikProps={formikProps}
-                      isRequired={true}
-                    />
-                  </GridItem>
-                  <GridItem w="100%">
-                    <CustomFormControl
-                      type={"text"}
-                      name="destination"
-                      label=" الوجهة"
-                      placeholder=" الوجهة"
-                      formikProps={formikProps}
-                      isRequired={true}
-                    />
-                  </GridItem>
-                  <GridItem w="100%">
-                    <CustomFormControl
-                      type={"number"}
-                      name="numberPerson"
-                      label="عدد الاشخاص"
-                      formikProps={formikProps}
-                      isRequired={true}
-                    />
-                  </GridItem>
-                  <GridItem w="100%">
-                    <CustomFormControl
-                      type={"date"}
-                      name="dateDepart"
-                      label="تاريخ الاقلاع"
-                      formikProps={formikProps}
-                      isRequired={true}
-                    />
-                  </GridItem>
-                  <GridItem w="100%">
-                    <CustomFormControl
-                      type={"date"}
-                      name="dateArrive"
-                      label=" تاريخ العودة"
-                      formikProps={formikProps}
-                      isRequired={true}
-                    />
-                  </GridItem>
-                  <GridItem w="100%">
-                    <CustomFormControl
-                      type={"number"}
-                      name="longitude"
-                      label=" طول المسار"
-                      placeholder="20km"
-                      formikProps={formikProps}
-                      isRequired={true}
-                    />
-                  </GridItem>
-                  <GridItem w="100%">
-                    <CustomFormControl
-                      type={"text"}
-                      name="transportType"
-                      label="  نوع النقل "
-                      formikProps={formikProps}
-                      isRequired={true}
-                    />
-                  </GridItem>
-                  <GridItem w="100%">
-                    <CustomFormControl
-                      type={"select"}
-                      name="gender"
-                      label="الجنس"
-                      SelectOptions={genderOptions}
-                      selectDefaultValue={"gender"}
-                      formikProps={formikProps}
-                    />
-                  </GridItem>
-                  <GridItem w="100%">
-                    <CustomFormControl
-                      type={"select"}
-                      name="ageRange"
-                      label="نطاق العمر"
-                      SelectOptions={ageRangeOptions}
-                      selectDefaultValue={"all"}
-                      formikProps={formikProps}
-                    />
-                  </GridItem>
-                  <GridItem w="100%">
-                    <HStack
-                      w={"full"}
-                      justify={"flex-start"}
-                      align={"flex-end"}
+              <Box p={4}>
+                {activeStep === 0 && <StepOne formikProps={formikProps} />}
+                {activeStep === 1 && <StepTwo formikProps={formikProps} />}
+                {activeStep === 2 && <StepThree formikProps={formikProps} />}
+                {activeStep === 3 && (
+                  <StepFour
+                    fileSelected={fileSelected}
+                    setFileSelected={setFileSelected}
+                    formikProps={formikProps}
+                  />
+                )}
+                {activeStep === 4 && <StepFive formikProps={formikProps} />}
+                <HStack spacing={4} mt={10}>
+                  {activeStep > 0 && (
+                    <Button
+                      leftIcon={<ArrowForwardIcon />}
+                      bg={"#464545"}
+                      fontSize={16}
+                      fontWeight={500}
+                      color={"#ffffff"}
+                      _hover={{
+                        opacity: 0.8,
+                      }}
+                      onClick={handleBack}
                     >
-                      {" "}
-                      <CustomFormControl
-                        type={"text"}
-                        name="price"
-                        label="السعر"
-                        formikProps={formikProps}
-                        isRequired={true}
-                        isDisabled={freePrice}
-                      />
-                      <Stack
-                        px={10}
-                        pb={2}
-                        align={"flex-start"}
-                        justify={"flex "}
-                        w={"70%"}
-                      >
-                        <Checkbox
-                          defaultChecked={freePrice}
-                          onChange={(e) => setfreePrice(e.target.checked)}
-                          size={"lg"}
-                        >
-                          مجاني
-                        </Checkbox>
-                      </Stack>
-                    </HStack>
-                  </GridItem>
-                  <GridItem colSpan={1} w="100%">
-                    <CustomFormControl
-                      type={"file"}
-                      name="image"
-                      label="صور"
-                      formikProps={formikProps}
-                    />
-                  </GridItem>
-                  <GridItem colSpan={1} w="100%">
-                    <CustomFormControl
-                      isRequired={true}
-                      type={"Textarea"}
-                      name="description"
-                      label="وصف الرحلة"
-                      formikProps={formikProps}
-                    />
-                  </GridItem>
-                  <GridItem colSpan={2} h={10} />
-                  <GridItem w="100%">
-                    <CustomFormControl
-                      type={"text"}
-                      name="phone"
-                      label="رقم الهاتف"
-                      formikProps={formikProps}
-                      isRequired={true}
-                    />
-                  </GridItem>
-                  <GridItem w="100%">
-                    <CustomFormControl
-                      type={"text"}
-                      name="email"
-                      label="الامايل"
-                      formikProps={formikProps}
-                    />
-                  </GridItem>
-                  <GridItem w="100%">
-                    <CustomFormControl
-                      type={"text"}
-                      name="website"
-                      label="الموقع الالكتروني"
-                      formikProps={formikProps}
-                    />
-                  </GridItem>
-                  <GridItem w="100%">
-                    <CustomFormControl
-                      type={"text"}
-                      name="facebook"
-                      label="الفايسبوك"
-                      formikProps={formikProps}
-                    />
-                  </GridItem>
-                </Grid>
-                <Button
-                  bg={"#de9307"}
-                  fontSize={16}
-                  fontWeight={500}
-                  color={"#ffffff"}
-                  _hover={{
-                    opacity: 0.8,
-                  }}
-                  w={{ base: "100%", md: "40" }}
-                  type="submit"
-                >
-                  اضافة
-                </Button>
-              </VStack>
+                      رجوع
+                    </Button>
+                  )}
+                  <Button
+                    isLoading={loading}
+                    rightIcon={
+                      activeStep !== steps.length - 1 && <ArrowBackIcon />
+                    }
+                    bg={activeStep === steps.length - 1 ? "#3b58cb" : "#353535"}
+                    fontSize={16}
+                    fontWeight={500}
+                    color={"#ffffff"}
+                    _hover={{
+                      opacity: 0.8,
+                    }}
+                    w={activeStep === steps.length - 1 && "200px"}
+                    type={"submit"}
+                  >
+                    {activeStep === steps.length - 1
+                      ? "انشاء الرحلة"
+                      : "التالي"}
+                  </Button>
+                </HStack>
+              </Box>
             </Form>
           )}
         </Formik>

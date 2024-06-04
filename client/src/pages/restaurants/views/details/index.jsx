@@ -9,8 +9,7 @@ export const RestaurantDetails = () => {
     variables: { getRestaurantByIdId: id },
   });
 
-  if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
-  const restaurant = data.getRestaurantById;
-  return <DetailsLayout type="restaurant" data={restaurant} />;
+  const restaurant = data?.getRestaurantById;
+  return <DetailsLayout loading={loading} type="restaurant" data={restaurant} />;
 };

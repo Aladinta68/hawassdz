@@ -13,6 +13,7 @@ export const travelTypeDefs = gql`
     dateArrive: String
     numberPerson: String
     availablePlace: String
+    overallRating: Float
     gender: String
     ageRange: String
     price: String
@@ -22,9 +23,17 @@ export const travelTypeDefs = gql`
     mapLocation: MapLocation
     contactInfo: ContactInfo
     user: User
+    createdAt: String
+    updatedAt: String
   }
   type Query {
     getTravelById(id: ID!): Travel!
+    getTravelsByUser(
+      page: Int
+      perPage: Int
+      sortBy: String
+      sortDirection: String
+    ): TravelsOutpot!
     getAllTravels(
       page: Int
       perPage: Int

@@ -205,7 +205,7 @@ export const CustomCard = ({ loading, type, data, isHorizontal }) => {
                   borderRadius={25}
                   w={"100%"}
                   src={
-                    data && data.images && data.images[0].url
+                    data && data.images && data?.images[0]?.url
                       ? "http://localhost:3000" + data.images[0]?.url
                       : noImage
                   }

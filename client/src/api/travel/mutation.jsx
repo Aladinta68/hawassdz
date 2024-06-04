@@ -50,3 +50,10 @@ export const ADD_TRAVEL = gql`
     }
   }
 `;
+export const DeleteTravel = gql`
+  mutation DeleteTravelById($deleteTravelByIdId: ID!) {
+    deleteTravelById(id: $deleteTravelByIdId) {
+      message
+    }
+  }
+`;

@@ -70,6 +70,9 @@ export const Paggination = ({
       />
       {Array.from({ length: maxPage }, (_, index) => (
         <Button
+          display={"flex"}
+          justifyContent={"center"}
+          alignItems={"center"}
           onClick={() => handleClick(index)}
           transition={"ease-in-out 0.4s"}
           _hover={{ backgroundColor: "#b5b3f6" }}

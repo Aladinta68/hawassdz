@@ -1,44 +1,68 @@
-import fs from "fs";
-import path from "path";
-import {
-  throwCustomError,
-  ErrorTypes,
-} from "../error/errorHandler.js";
-import { randomUUID } from "crypto";
+import cloudinary from "cloudinary";
+import { throwCustomError, ErrorTypes } from "../error/errorHandler.js";
 
+cloudinary.config({
+  cloud_name: "detuiiqar",
+  api_key: "514975719388813",
+  api_secret: "QOpv9-15Ql70I8nAMyUqFOb8kZ0",
+});
 export const uploadFile = async (file) => {
-  const { createReadStream, filename } = await file;
-  if (!createReadStream || !filename) {
-    return throwCustomError(
-      "Something went Wrong ",
+  try {
+    const { createReadStream, filename } = await file;
+
+    // Invoke createReadStream to get the stream
+    const stream = createReadStream();
+
+    // Convert the stream to a Buffer
+    const chunks = [];
+    for await (const chunk of stream) {
+      chunks.push(chunk);
+    }
+    const buffer = Buffer.concat(chunks);
+
+    if (!buffer || !filename) {
+      throwCustomError("Invalid file", ErrorTypes.BAD_USER_INPUT);
+    }
+
+    // Convert the Buffer to a Base64 encoded string
+    const base64String = buffer.toString("base64");
+
+    const result = await cloudinary.uploader.upload(
+      `data:image/jpeg;base64,${base64String}`,
+      {
+        folder: "hawassDzImages",
+        use_filename: true,
+      }
+    );
+
+    return { url: result.secure_url };
+  } catch (error) {
+    throwCustomError(
+      error.message || "Failed to upload image",
       ErrorTypes.INTERNAL_SERVER_ERROR
     );
   }
-
-  const stream = createReadStream();
-  const uniqueFilename = `${Date.now()}-${randomUUID()} - ${filename}`;
-  const uploadDir = path.join(process.cwd(), "/public/images/");
-  const filePath = path.join(uploadDir, uniqueFilename);
-
-  if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
-  }
-
-  const writeStream = fs.createWriteStream(filePath);
-
-  await new Promise((resolve, reject) => {
-    stream
-      .pipe(writeStream)
-      .on("finish", () => resolve(filePath))
-      .on("error", (error) => reject(error));
-  });
-  return { url: `/images/${uniqueFilename}` };
 };
 
-export const deleteFile = (url) => {
-  const imagePath = path.join(process.cwd(), "public", url);
-  if (fs.existsSync(imagePath)) {
-    fs.unlinkSync(imagePath);
+export const deleteFile = async (url) => {
+  try {
+    const public_id = url.substring(
+      url.lastIndexOf("/") + 1,
+      url.lastIndexOf(".")
+    );
+    const result = await cloudinary.uploader.destroy(public_id);
+    if (result.result === "ok") {
+      return { message: "Image deleted successfully" };
+    } else {
+      throwCustomError(
+        "Failed to delete image",
+        ErrorTypes.INTERNAL_SERVER_ERROR
+      );
+    }
+  } catch (error) {
+    throwCustomError(
+      "Failed to delete image",
+      ErrorTypes.INTERNAL_SERVER_ERROR
+    );
   }
 };
-export default { uploadFile, deleteFile };

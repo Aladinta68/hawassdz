@@ -13,12 +13,15 @@ export const sharedTypeDefs = gql`
     gender: String
     complete: Boolean
     image: File
+    createdAt: String
+    updatedAt: String
   }
   type Wilaya {
     id: ID!
     name: String!
     description: String
     images: [File]
+    
   }
   type File {
     url: String!

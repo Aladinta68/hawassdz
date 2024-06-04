@@ -4,6 +4,43 @@ import {
 } from "../../utils/error/errorHandler.js";
 import { calculateOverallRating } from "../utils/calculateOverallRating.js";
 import { deleteFile, uploadFile } from "./../../utils/upload/images.js";
+export const getManyByUser = async ({
+  userId,
+  prisma,
+  page = 1,
+  perPage = 10,
+  sortBy = "createdAt",
+  sortDirection = "asc",
+}) => {
+  const offset = (page - 1) * perPage;
+
+  const travels = await prisma.travel.findMany({
+    where: {
+      userId,
+    },
+    include: {
+      images: true,
+      ratings: true,
+      mapLocation: true,
+      contactInfo: true,
+      user: true,
+    },
+    skip: offset,
+    take: perPage,
+    orderBy: { [sortBy]: sortDirection },
+  });
+  if (travels.length === 0) {
+    throwCustomError(
+      "No travels found for the specified user.",
+      ErrorTypes.NOT_FOUND
+    );
+  }
+  return travels.map((travel) => ({
+    ...travel,
+    overallRating: calculateOverallRating(travel.ratings),
+  }));
+};
+
 export const getMany = async ({
   prisma,
   page,
@@ -41,9 +78,14 @@ export const getOneWithUserId = async ({ id, userId, prisma }) => {
       user: true,
     },
   });
+  if (travel?.ratings) {
+    return {
+      ...travel,
+      overallRating: calculateOverallRating(travel.ratings),
+    };
+  }
   return {
-    ...travel,
-    overallRating: calculateOverallRating(travel.ratings),
+    travel,
   };
 };
 export const getOne = async ({ id, prisma }) => {

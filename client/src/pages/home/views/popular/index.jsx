@@ -44,24 +44,42 @@ export const Popular = ({ loading, type, mydata }) => {
           loop={true}
           slidesPerView={slidesPerView}
         >
-          {mydata &&
-            mydata.length > 0 &&
-            mydata.map((item, index) => (
-              <SwiperSlide
-                key={index}
-                style={{ display: "flex", justifyContent: "center" }}
-              >
-                <Stack
-                  align={"center"}
-                  justify={"center"}
-                  px={2}
-                  py={20}
-                  w={{ base: "95%", md: "95%" }}
+          {loading
+            ? ["", "", "", ""].map((item, index) => (
+                <SwiperSlide
+                  key={index}
+                  style={{width:"100%", display: "flex", justifyContent: "center" }}
                 >
-                  <CustomCard loading={loading} type={type} data={item} />
-                </Stack>
-              </SwiperSlide>
-            ))}
+                  <Stack
+                    
+                    align={"center"}
+                    justify={"center"}
+                    px={2}
+                    py={20}
+                    w={{ base: "95%", md: "95%" }}
+                  >
+                    <CustomCard loading={true} type={type} data={[""]} />
+                  </Stack>
+                </SwiperSlide>
+              ))
+            : mydata &&
+              mydata.length > 0 &&
+              mydata.map((item, index) => (
+                <SwiperSlide
+                  key={index}
+                  style={{ display: "flex", justifyContent: "center" }}
+                >
+                  <Stack
+                    align={"center"}
+                    justify={"center"}
+                    px={2}
+                    py={20}
+                    w={{ base: "95%", md: "95%" }}
+                  >
+                    <CustomCard type={type} data={item} />
+                  </Stack>
+                </SwiperSlide>
+              ))}
         </Swiper>
       </Flex>
     </Flex>
