@@ -59,7 +59,6 @@ const Home = () => {
       sortBy: "name",
       sortDirection: "asc",
       status: "active",
-
     },
   });
   if (hotelError) {

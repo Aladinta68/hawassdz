@@ -40,7 +40,7 @@ export const travelTypeDefs = gql`
       perPage: Int
       sortBy: String
       sortDirection: String
-      isActive: Boolean
+      status: String
     ): TravelsOutpot!
   }
 
