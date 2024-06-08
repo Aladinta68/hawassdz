@@ -128,6 +128,7 @@ export const DetailsImages = ({ data }) => {
                     />{" "}
                     {index === 2 && (
                       <Button
+                      onClick={() => onOpen()}
                         _hover={{
                           backgroundColor: "#2d2d2d",
                         }}

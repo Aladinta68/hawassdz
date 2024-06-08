@@ -26,9 +26,10 @@ export const DetailsLayout = ({ loading, type, data }) => {
           >
             <DetailsHeader type={type} data={data} />
             <DetailsImages data={data.images} />
-            <DetailsDescription data={data} />
-            {type === "hotel" ||
-              (type === "restaurant" && <DetailsEquipement />)}
+            <DetailsDescription type={type} data={data} />
+            {(type === "hotel" || type === "restaurant") && (
+              <DetailsEquipement data={data?.equipements} />
+            )}
             <DetailsRating type={type} data={data} />
             <DetailsMap />
           </VStack>

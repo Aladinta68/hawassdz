@@ -1,23 +1,17 @@
-import { Container, Flex } from "@chakra-ui/react";
 import React from "react";
-import { TripInformation } from "./components/TripInformation/index";
-
+import { DetailsLayout } from "../../../../layout/details";
+import { Navigate, useParams } from "react-router-dom";
+import { useQuery } from "@apollo/client";
+import { GetHotelByID } from "../../../../api/hotel/query";
 export const TripDetails = () => {
-  return (
-    <Flex justify={"center"} align={"center"} direction={"column"}>
-      <Container py={20} px={0} maxW={"6xl"}>
-        <Flex direction={"row"}>
-          <Flex
-            align={"center"}
-            pr={5}
-            pl={{ base: 5, md: 0 }}
-            w={{ base: "100%", md: "100%" }}
-            direction={"column"}
-          >
-            <TripInformation />
-          </Flex>
-        </Flex>
-      </Container>
-    </Flex>
-  );
+  const { id } = useParams();
+  const { loading, error, data } = useQuery(GetHotelByID, {
+    variables: { getHotelByIdId: id },
+  });
+
+  if (error) {
+    return <Navigate to="/notFound" />;
+  }
+  const hotel = data?.getHotelById;
+  return <DetailsLayout loading={loading} type="hotel" data={hotel} />;
 };

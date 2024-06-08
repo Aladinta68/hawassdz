@@ -170,7 +170,9 @@ export const CustomCard = ({ loading, type, data, isHorizontal }) => {
                       <FaStar color="#ffffff" />
                     </Flex>
                     <Text color={"#ffffff"} mx={2}>
-                      {data && data.overallRating ? data.overallRating.toFixed(1) : "0"}
+                      {data && data.overallRating
+                        ? data.overallRating.toFixed(1)
+                        : "0"}
                     </Text>
                   </Flex>
                   <Flex
@@ -186,7 +188,9 @@ export const CustomCard = ({ loading, type, data, isHorizontal }) => {
                   >
                     <Localisation color={"#ffffff"} width={20} height={20} />
                     <Text color={"#ffffff"} mx={2}>
-                      {data?.wilaya?.name}
+                      {type === "trips"
+                        ? data?.destination
+                        : data?.wilaya?.name}
                     </Text>
                   </Flex>
                 </Flex>

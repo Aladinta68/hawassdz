@@ -1,12 +1,14 @@
 import { gql } from "@apollo/client";
 export const GetTravels = gql`
   query GetAllTravels(
+    $isActive: Boolean
     $page: Int
     $perPage: Int
     $sortBy: String
     $sortDirection: String
   ) {
     getAllTravels(
+      isActive: $isActive
       page: $page
       perPage: $perPage
       sortBy: $sortBy

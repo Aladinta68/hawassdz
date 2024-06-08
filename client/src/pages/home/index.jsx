@@ -20,6 +20,7 @@ const Home = () => {
       perPage: 8,
       sortBy: "name",
       sortDirection: "asc",
+      
     },
   });
   const {
@@ -57,6 +58,8 @@ const Home = () => {
       perPage: 8,
       sortBy: "name",
       sortDirection: "asc",
+      isActive: false,
+
     },
   });
   if (hotelError) {
