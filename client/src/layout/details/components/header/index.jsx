@@ -193,7 +193,7 @@ export const DetailsHeader = ({ type, data }) => {
         {type === "trips" && (
           <HStack pt={10}>
             <Text ml={3}>السعر</Text>
-            <Text fontSize={25}>{data?.price} DZD</Text>
+            <Text color={'#ff8c00'} fontSize={25}>{data?.price} DZD</Text>
           </HStack>
         )}
       </VStack>

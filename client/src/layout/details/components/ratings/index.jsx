@@ -44,7 +44,9 @@ export const DetailsRating = ({ type, data }) => {
       <HStack w={"100%"}>
         <Text fontWeight={600}>جميع التقييمات ({data?.ratings.length})</Text>
         <Spacer />
-        {isLogged && <Add type={type} userData={userData} />}
+        {data?.user?.id !== userData?.getUserByToken?.id && isLogged && (
+          <Add type={type} userData={userData} />
+        )}
       </HStack>
       {data?.ratings.slice(startIndex, endIndex).map((item, index) => (
         <Rate key={index} item={item} userData={userData} />

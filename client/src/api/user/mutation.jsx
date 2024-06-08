@@ -35,3 +35,22 @@ export const UploadProfileImage = gql`
     }
   }
 `;
+export const UpdateUser = gql`
+  mutation UpdateUser($input: UpdateUserInput!) {
+    updateUser(input: $input) {
+      id
+      firstName
+      lastName
+      email
+      phone
+      dateOfBirth
+      gender
+      complete
+      image {
+        url
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;

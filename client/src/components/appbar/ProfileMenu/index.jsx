@@ -63,7 +63,7 @@ export const ProfileMenu = ({ ProfileData }) => {
             {" "}
             <HStack spacing={3}>
               <Icon as={FaMapLocationDot} />
-              <Text> فعالياتي</Text>
+              <Text> الفعاليات والرحلات</Text>
             </HStack>
           </MenuItem>
           <MenuItem

@@ -27,13 +27,13 @@ import { IoMoon, IoSunnySharp, IoTicketSharp } from "react-icons/io5";
 import Cookies from "js-cookie";
 import { FaMapLocationDot } from "react-icons/fa6";
 import { MdLogout } from "react-icons/md";
-export const MobileAppbar = ({ links, isLogin,ProfileData }) => {
+export const MobileAppbar = ({ links, isLogin, ProfileData }) => {
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [placement, setPlacement] = useState("right");
   const location = useLocation();
 
-  const imageUrl =  ProfileData?.image?.url;
+  const imageUrl = ProfileData?.image?.url;
 
   const navigate = useNavigate();
   const handleLogout = () => {
@@ -182,7 +182,7 @@ export const MobileAppbar = ({ links, isLogin,ProfileData }) => {
                     align={"center"}
                   >
                     <Icon as={FaMapLocationDot} />
-                    <Text> فعالياتي</Text>
+                    <Text> الفعاليات والرحلات</Text>
                   </HStack>
                 </Link>
                 <Link

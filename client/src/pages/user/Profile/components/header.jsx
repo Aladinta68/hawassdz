@@ -32,7 +32,6 @@ export const ProfileHeader = () => {
         Authorization: accessToken,
       },
     },
-    skip: !accessToken,
   });
   if (errorQuery) {
     console.error(error);

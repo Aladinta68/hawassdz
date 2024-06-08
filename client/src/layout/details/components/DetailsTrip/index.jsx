@@ -116,7 +116,7 @@ export const DetailsTrip = ({ data }) => {
       icon: MdFamilyRestroom,
     },
     {
-      label: data?.TransportType,
+      label: data?.transportType && "نوع النقل",
       icon: renderTransportIcon(data?.transportType),
     },
   ];

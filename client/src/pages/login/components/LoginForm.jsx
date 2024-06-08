@@ -19,7 +19,8 @@ import Cookies from "js-cookie";
 import { validationSchema } from "./validationSchema";
 import { CustomFormControl } from "../../../components/form/customFormControl";
 import { AlertMessage } from "./../../../components/alert/index";
-import { LOGIN } from './../../../api/user/mutation';
+import { LOGIN } from "./../../../api/user/mutation";
+
 const LoginForm = () => {
   const navigate = useNavigate();
   const [login, { loading, error }] = useMutation(LOGIN);

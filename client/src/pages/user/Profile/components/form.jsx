@@ -1,13 +1,13 @@
-import { Button, Stack, Text, VStack } from "@chakra-ui/react";
+import { Button, Stack, Text, VStack, useToast } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import { CustomFormControl } from "../../../../components/form/customFormControl";
 import { validationSchema } from "./validationSchema";
-import { useQuery } from "@apollo/client";
-import  Cookies  from 'js-cookie';
+import { useMutation, useQuery } from "@apollo/client";
+import Cookies from "js-cookie";
 import { GetUserInformation } from "../../../../api/user/query";
+import { UpdateUser } from "../../../../api/user/mutation";
 
 export const ProfileForm = () => {
-
   const accessToken = Cookies.get("accessToken");
 
   let ProfileData;
@@ -37,15 +37,58 @@ export const ProfileForm = () => {
   );
 };
 const MyForm = ({ ProfileData }) => {
+  const accessToken = Cookies.get("accessToken");
+  const toast = useToast();
+
+  const [updateUser, { loading }] = useMutation(UpdateUser, {
+    refetchQueries: [
+      {
+        query: GetUserInformation,
+        context: {
+          headers: {
+            Authorization: accessToken,
+          },
+        },
+      },
+    ],
+    awaitRefetchQueries: true,
+  });
+
   const handleSubmit = async (values) => {
-    console.log(values);
+    try {
+      const result = await updateUser({
+        variables: { input: values },
+        context: {
+          headers: {
+            Authorization: accessToken,
+          },
+        },
+      });
+      if (result) {
+        toast({
+          title: "",
+          description: "تم تعديل الحساب بنجاح",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        });
+      }
+    } catch (error) {
+      console.error("Error updating user:", error);
+    }
   };
   const initialValues = {
     firstName: ProfileData?.firstName,
     lastName: ProfileData?.lastName,
-    phoneNumber: ProfileData?.phoneNumber,
+    gender: ProfileData?.gender,
+    phone: ProfileData?.phone,
     dateOfBirth: ProfileData?.dateOfBirth,
   };
+  const genderOptions = [
+    { value: "gender", label: "الجنس", disabled: true },
+    { value: "Male", label: "ذكر" },
+    { value: "Female", label: "انثى" },
+  ];
   return (
     <Formik
       initialValues={initialValues}
@@ -72,7 +115,7 @@ const MyForm = ({ ProfileData }) => {
               />
               <CustomFormControl
                 type={"text"}
-                name="phoneNumber"
+                name="phone"
                 label="رقم الهاتف"
                 formikProps={formikProps}
               />
@@ -82,7 +125,16 @@ const MyForm = ({ ProfileData }) => {
                 label="تاريخ الميلاد"
                 formikProps={formikProps}
               />
+              <CustomFormControl
+                type={"select"}
+                name="gender"
+                label="الجنس"
+                SelectOptions={genderOptions}
+                selectDefaultValue={ProfileData.gender || "gender"}
+                formikProps={formikProps}
+              />
               <Button
+                isLoading={loading}
                 bg={"#de9307"}
                 fontSize={16}
                 fontWeight={500}
