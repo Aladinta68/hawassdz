@@ -27,6 +27,7 @@ export const GetTravels = gql`
         availablePlace
         gender
         ageRange
+        status
         price
         transportType
         images {
@@ -119,6 +120,7 @@ export const GetALLTravelsByUser = gql`
         }
         overallRating
         price
+        status
         numberPerson
         name
         mapLocation {
