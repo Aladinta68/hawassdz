@@ -23,6 +23,7 @@ export const travelTypeDefs = gql`
     mapLocation: MapLocation
     contactInfo: ContactInfo
     user: User
+    isActive: Boolean
     createdAt: String
     updatedAt: String
   }
@@ -39,6 +40,7 @@ export const travelTypeDefs = gql`
       perPage: Int
       sortBy: String
       sortDirection: String
+      isActive: Boolean
     ): TravelsOutpot!
   }
 

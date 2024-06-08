@@ -59,7 +59,7 @@ export const travelResolvers = {
     },
     getAllTravels: async (
       _,
-      { page = 1, perPage = 10, sortBy = "id", sortDirection = "asc" },
+      { page = 1, perPage = 10, sortBy = "id", sortDirection = "asc",isActive },
       { prisma }
     ) => {
       try {
@@ -69,6 +69,7 @@ export const travelResolvers = {
           perPage,
           sortBy,
           sortDirection,
+          isActive,
         });
         const totalCount = await prisma.travel.count();
         const maxPage = Math.ceil(totalCount / perPage);
