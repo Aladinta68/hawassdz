@@ -2,9 +2,30 @@ import { Flex } from "@chakra-ui/react";
 import React from "react";
 import { DesktopAppbar } from "./desktop";
 import { MobileAppbar } from "./mobile";
-import useProfileStore from "./../../store/profile";
+import { GetUserInformation } from "../../api/user/query";
+import { useQuery } from "@apollo/client";
+import  Cookies  from 'js-cookie';
 
 export const Appbar = () => {
+  const accessToken = Cookies.get("accessToken");
+
+  let ProfileData;
+  const { loading, error, data } = useQuery(GetUserInformation, {
+    context: {
+      headers: {
+        Authorization: accessToken,
+      },
+    },
+    skip: !accessToken,
+  });
+  if (error) {
+    console.error(error);
+    Cookies.remove("accessToken");
+  }
+  if (data) {
+    ProfileData = data?.getUserByToken;
+  }
+
   const links = [
     { name: "الرئيسيه", url: "/" },
     {
@@ -16,12 +37,11 @@ export const Appbar = () => {
     { name: "المطاعم", url: "/restaurants", detailUrl: "/restaurant_details" },
     { name: "الفعاليات والرحلات ", url: "/trips", detailUrl: "/trip_details" },
   ];
-  const ProfileData = useProfileStore((state) => state.ProfileData);
-  const isLogin = ProfileData && true;
+
   return (
     <Flex justifyContent={"center"} alignItems={"center"}>
-      <DesktopAppbar isLogin={isLogin} links={links} />
-      <MobileAppbar isLogin={isLogin} links={links} />
+      <DesktopAppbar ProfileData={ProfileData} isLogin={ProfileData} links={links} />
+      <MobileAppbar ProfileData={ProfileData} isLogin={ProfileData} links={links} />
     </Flex>
   );
 };

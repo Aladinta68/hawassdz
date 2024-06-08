@@ -1,17 +1,18 @@
 import React from "react";
-import { useQuery } from "@apollo/client";
+import { useQuery,NetworkStatus } from "@apollo/client";
 import { SearchLayout } from "../../../../layout/search";
-import { GetRestaurants } from './../../../../api/restaurant/query';
+import { GetRestaurants} from './../../../../api/restaurant/query';
 
 export const Restaurants = () => {
 
-  const { loading, error, data, refetch, variables  } = useQuery(GetRestaurants, {
+  const { loading, error, data, refetch, variables,networkStatus  } = useQuery(GetRestaurants, {
     variables: {
       page: 1,
       perPage: 4,
       sortBy: "name",
       sortDirection: "asc",
     },
+    notifyOnNetworkStatusChange: true,
   });
   if (error) {
     console.log(error);
@@ -28,7 +29,7 @@ export const Restaurants = () => {
       currentSortDirection={currentSortDirection}
       maxPage={maxPage}
       refetch={refetch}
-      loading={loading}
+      loading={loading || networkStatus === NetworkStatus.refetch}
       data={restaurants}
       source="restaurants"
       cardType="restaurants"

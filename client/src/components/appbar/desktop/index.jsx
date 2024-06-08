@@ -20,7 +20,7 @@ import { ActionMenu } from "../ActionsMenu";
 import { IoMoon } from "react-icons/io5";
 import { IoSunnySharp } from "react-icons/io5";
 
-export const DesktopAppbar = ({ links, isLogin }) => {
+export const DesktopAppbar = ({ links, isLogin,ProfileData }) => {
   const { colorMode, toggleColorMode } = useColorMode();
   const location = useLocation();
   return (
@@ -82,7 +82,7 @@ export const DesktopAppbar = ({ links, isLogin }) => {
           <Button fontWeight={500} variant={"unstyled"}>
             English
           </Button>
-          {isLogin ? <ProfileMenu /> : <ActionMenu />}
+          {isLogin ? <ProfileMenu ProfileData={ProfileData} /> : <ActionMenu />}
         </HStack>{" "}
       </HStack>
     </Flex>

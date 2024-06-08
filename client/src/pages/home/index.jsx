@@ -76,8 +76,6 @@ const Home = () => {
   const hotels = hotelData?.getAllHotels?.hotels;
   const restaurants = restaurantData?.getAllRestaurants?.restaurants;
   const travels = travelData?.getAllTravels?.travels;
-
-  
   return (
     <Flex direction={"column"}>
       <Header />
@@ -98,9 +96,8 @@ const Home = () => {
         />
         <Spacer height={50} />
         <Steps />
-        <Spacer height={0} />
-        <Popular type="trips" mydata={travels} loading={travelLoading} />
         <Spacer height={50} />
+        <Popular type="trips" mydata={travels} loading={travelLoading} />
         <Description />
         <Divider height={50} />
       </Container>

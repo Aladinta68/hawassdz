@@ -10,18 +10,6 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
-import SwiperCore from "swiper";
-import {
-  Navigation,
-  Pagination,
-  Scrollbar,
-  A11y,
-  Autoplay,
-} from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/swiper-bundle.css";
-
-SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, Autoplay]);
 
 export const Header = () => {
   return (
@@ -32,7 +20,7 @@ export const Header = () => {
       w={"100%"}
     >
       <VStack
-        w={{ base: "90%", md: "40%",lg:"50%" }}
+        w={{ base: "90%", md: "70%", lg: "60%",xl:"50%","2xl":"40%" }}
         h={250}
         align={"center"}
         justify={"center"}
@@ -45,8 +33,8 @@ export const Header = () => {
         >
           احجز افضل التجارب و الفعاليات في الجزائر
         </Heading>
-        <InputGroup h={14}>
-          <InputLeftElement w={"10%"} h={"full"}>
+        <InputGroup bg={useColorModeValue("#f3f3f3", "#1d1c1c")} h={14}>
+          <InputLeftElement w={"50px"} h={"full"}>
             <IconButton
               cursor={"pointer"}
               bg={useColorModeValue("#000000", "#005ff8")}
@@ -57,14 +45,11 @@ export const Header = () => {
             />{" "}
           </InputLeftElement>
           <Input
-            bg={useColorModeValue("#f3f3f3", "#1d1c1c")}
-            px={16}
             border={"none"}
-            borderRadius={35}
             w={"full"}
             h={"full"}
             dir="rtl"
-            type="tel"
+            type="text"
             _placeholder={{ color: useColorModeValue("#000000", "#ffffff") }}
             placeholder=" ابحث عن افضل التجارب و الفعاليات .."
           />

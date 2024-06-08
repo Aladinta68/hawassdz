@@ -1,6 +1,6 @@
 import React from "react";
 import { DetailsLayout } from "../../../../layout/details";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GetHotelByID } from "../../../../api/hotel/query";
 export const HotelDetails = () => {
@@ -9,7 +9,8 @@ export const HotelDetails = () => {
     variables: { getHotelByIdId: id },
   });
 
-  if (error) return <p>Error: {error.message}</p>;
-  const hotel = data?.getHotelById;
+  if (error) {
+    return <Navigate to="/notFound" />;
+  }  const hotel = data?.getHotelById;
   return <DetailsLayout loading={loading} type="hotel" data={hotel} />;
 };

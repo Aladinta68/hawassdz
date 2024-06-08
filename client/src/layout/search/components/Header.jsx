@@ -63,7 +63,7 @@ export const Header = ({
       zIndex={2}
       pos={{ base: "sticky", md: "static" }}
       top={{ base: "60px", md: "0" }}
-      py={{ base: 8, md: 0 }}
+      py={{ base: 4, md: 0 }}
     >
       <Stack w={"100%"}>
         <InputGroup w={"100%"}>

@@ -23,26 +23,21 @@ import React, { useState } from "react";
 import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../../assets/svg/logo.svg";
 import logo2 from "../../../assets/svg/logo2.svg";
-import { AiOutlineUser } from "react-icons/ai";
 import { IoMoon, IoSunnySharp, IoTicketSharp } from "react-icons/io5";
-import useProfileStore from "../../../store/profile";
 import Cookies from "js-cookie";
 import { FaMapLocationDot } from "react-icons/fa6";
 import { MdLogout } from "react-icons/md";
-export const MobileAppbar = ({ links, isLogin }) => {
+export const MobileAppbar = ({ links, isLogin,ProfileData }) => {
   const { colorMode, toggleColorMode } = useColorMode();
-  const ProfileData = useProfileStore((state) => state.ProfileData);
-  const setProfileData = useProfileStore((state) => state.setProfileData);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [placement, setPlacement] = useState("right");
   const location = useLocation();
 
-  const imageUrl = "http://localhost:3000" + ProfileData?.image?.url;
+  const imageUrl =  ProfileData?.image?.url;
 
   const navigate = useNavigate();
   const handleLogout = () => {
     Cookies.remove("accessToken");
-    setProfileData(null);
     navigate("/login");
   };
   return (

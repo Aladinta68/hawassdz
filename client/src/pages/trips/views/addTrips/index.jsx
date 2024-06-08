@@ -35,6 +35,7 @@ import { ADD_TRAVEL } from "../../../../api/travel/mutation";
 import { useMutation } from "@apollo/client";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import { GetALLTravelsByUser, GetTravels } from "../../../../api/travel/query";
 
 const validationSchemas = [
   validationSchemaStepOne,
@@ -62,7 +63,28 @@ export const AddTripPage = () => {
   const breakpoint = useBreakpointValue({ base: "base", md: "md" });
 
   const accessToken = Cookies.get("accessToken");
-  const [addTravel, { loading, error }] = useMutation(ADD_TRAVEL);
+  const [addTravel, { loading, error }] = useMutation(ADD_TRAVEL, {
+    refetchQueries: [
+      {
+        query: GetALLTravelsByUser,
+        context: {
+          headers: {
+            Authorization: accessToken,
+          },
+        },
+      },
+      {
+        query: GetTravels,
+        variables: {
+          page: 1,
+          perPage: 4,
+          sortBy: "name",
+          sortDirection: "asc",
+        },
+        notifyOnNetworkStatusChange: true,
+      },
+    ],
+  });
 
   const handleSubmit = async (values) => {
     const myInput = {
@@ -90,7 +112,6 @@ export const AddTripPage = () => {
       },
       ageRange: values.ageRange,
     };
-    console.log("myInput", myInput);
     try {
       const response = await addTravel({
         variables: { input: myInput },
@@ -101,9 +122,8 @@ export const AddTripPage = () => {
         },
       });
       if (response) {
-        console.log("res", response);
         setFileSelected([]);
-        navigate("/add_trip");
+        navigate("/my_trips");
       }
       if (loading) {
         console.log(loading);

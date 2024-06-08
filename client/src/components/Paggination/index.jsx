@@ -8,7 +8,6 @@ import React from "react";
 import { GoChevronLeft } from "react-icons/go";
 
 export const Paggination = ({
-  setSelectedPage,
   currentPage,
   refetch,
   maxPage,
@@ -22,9 +21,6 @@ export const Paggination = ({
         sortDirection: "asc",
       });
     }
-    if (setSelectedPage) {
-      setSelectedPage(pageIndex + 1);
-    }
   };
   const handlePrevious = () => {
     if (currentPage > 1) {
@@ -35,9 +31,6 @@ export const Paggination = ({
           sortBy: "name",
           sortDirection: "asc",
         });
-      }
-      if (setSelectedPage) {
-        setSelectedPage(currentPage - 1);
       }
     }
   };
@@ -50,9 +43,6 @@ export const Paggination = ({
           sortBy: "name",
           sortDirection: "asc",
         });
-      }
-      if (setSelectedPage) {
-        setSelectedPage(currentPage + 1);
       }
     }
   };

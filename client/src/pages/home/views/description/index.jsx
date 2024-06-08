@@ -37,14 +37,14 @@ export const Description = () => {
             <Text fontWeight={600} fontSize={20} color={"#FA8B02"}>
               20+
             </Text>
-            <Text olor={useColorModeValue("#0000007e","#ffffff")}>
+            <Text color={useColorModeValue("#000000","#ffffff")}>
             سنوات <br /> الخبرة            </Text>
           </VStack>
           <VStack mx={5} alignItems={"flex-start"}>
             <Text fontWeight={600} fontSize={20} color={"#FA8B02"}>
               100+
             </Text>
-            <Text color={useColorModeValue("#0000007e","#ffffff")}>
+            <Text color={useColorModeValue("#000000","#ffffff")}>
             عميل <br />
               سعيد
             </Text>
@@ -53,7 +53,7 @@ export const Description = () => {
             <Text fontWeight={600} fontSize={20} color={"#FA8B02"}>
               15+
             </Text>
-            <Text olor={useColorModeValue("#0000007e","#ffffff")}>
+            <Text color={useColorModeValue("#000000","#ffffff")}>
             خيار
                <br /> من الخدمات
             </Text>
@@ -62,7 +62,7 @@ export const Description = () => {
             <Text fontWeight={600} fontSize={20} color={"#FA8B02"}>
               10+
             </Text>
-            <Text olor={useColorModeValue("#0000007e","#ffffff")}>
+            <Text color={useColorModeValue("#000000","#ffffff")}>
             احترافي
                <br /> أدلة
             </Text>

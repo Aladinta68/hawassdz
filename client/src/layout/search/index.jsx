@@ -34,7 +34,13 @@ export const SearchLayout = ({
   const [isRow, setisRow] = useState(false);
   return (
     <VStack pb={20} w={"full"} h={"full"}>
-      <Stack mt={5} mb={50} pos={"relative"} w={"full"} h={"250px"}>
+      <Stack
+        mt={{ base: "60px", md: "2" }}
+        mb={{ base: 0, md: 50 }}
+        pos={"relative"}
+        w={"full"}
+        h={{ base: "150px", md: "250px" }}
+      >
         <Image
           pos={"absolute"}
           w={"full"}
@@ -92,7 +98,7 @@ export const SearchLayout = ({
                   setisHorizontal={() => setisHorizontal({ breakpoint, isRow })}
                 />
               )}
-              {data?.length > 0 && (
+              {!loading&&data?.length > 0 && (
                 <>
                   <ListItem
                     cardType={cardType}

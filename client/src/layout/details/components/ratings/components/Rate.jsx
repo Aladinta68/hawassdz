@@ -13,7 +13,6 @@ import { MdDelete } from "react-icons/md";
 import { MdModeEditOutline } from "react-icons/md";
 
 export const Rate = ({ item, userData }) => {
-  console.log("userData", userData);
   return (
     <HStack
       h={"full"}
@@ -24,12 +23,7 @@ export const Rate = ({ item, userData }) => {
       w={"100%"}
     >
       <Avatar
-        src={
-          item &&
-          item.user &&
-          item.user.image &&
-          `http://localhost:3000/${item.user.image.url}`
-        }
+        src={item?.user?.image?.url}
         bg={"#3747f9"}
         size={"sm"}
         mt={1}

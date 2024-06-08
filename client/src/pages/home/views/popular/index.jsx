@@ -48,10 +48,13 @@ export const Popular = ({ loading, type, mydata }) => {
             ? ["", "", "", ""].map((item, index) => (
                 <SwiperSlide
                   key={index}
-                  style={{width:"100%", display: "flex", justifyContent: "center" }}
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
                 >
                   <Stack
-                    
                     align={"center"}
                     justify={"center"}
                     px={2}

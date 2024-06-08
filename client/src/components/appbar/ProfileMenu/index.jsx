@@ -19,19 +19,14 @@ import { MdManageAccounts } from "react-icons/md";
 import { IoTicketSharp } from "react-icons/io5";
 import { FaMapLocationDot } from "react-icons/fa6";
 import { Link as RouterLink } from "react-router-dom";
-import useProfileStore from "../../../store/profile";
 
-export const ProfileMenu = () => {
-  const setProfileData = useProfileStore((state) => state.setProfileData);
-  const ProfileData = useProfileStore((state) => state.ProfileData);
-
+export const ProfileMenu = ({ProfileData}) => {
   const navigate = useNavigate();
   const handleLogout = () => {
     Cookies.remove("accessToken");
-    setProfileData(null);
     navigate("/login");
   };
-  const imageUrl = "http://localhost:3000" + ProfileData?.image?.url;
+  const imageUrl = ProfileData?.image?.url;
 
   return (
     <Menu>

@@ -12,11 +12,30 @@ import {
 import React from "react";
 import headerimg from "../../../../assets/profile/headerMauve.png";
 import { AddIcon } from "@chakra-ui/icons";
-import useProfileStore from "../../../../store/profile";
 import { Link as RouterLink } from "react-router-dom";
+import { useQuery } from "@apollo/client";
+import { GetUserInformation } from "../../../../api/user/query";
+import  Cookies  from 'js-cookie';
 
 export const MyTripsHeader = () => {
-  const ProfileData = useProfileStore((state) => state.ProfileData);
+  const accessToken = Cookies.get("accessToken");
+
+  let ProfileData;
+  const { loading, error, data } = useQuery(GetUserInformation, {
+    context: {
+      headers: {
+        Authorization: accessToken,
+      },
+    },
+    skip: !accessToken,
+  });
+  if (error) {
+    console.error(error);
+    Cookies.remove("accessToken");
+  }
+  if (data) {
+    ProfileData = data?.getUserByToken;
+  }
 
   return (
     <VStack
@@ -48,7 +67,7 @@ export const MyTripsHeader = () => {
       <Stack
         pt={{ base: 5, md: 0 }}
         direction={{ md: "row", base: "column" }}
-        spacing={{base:2,md:8}}
+        spacing={{ base: 2, md: 8 }}
         align={"center"}
         justify={{ base: "center", md: "flex-start" }}
         px={5}
@@ -69,7 +88,7 @@ export const MyTripsHeader = () => {
           colorScheme="blue"
           variant="solid"
           as={RouterLink}
-          to={ProfileData?.complete&&'/add_trip'}
+          to={ProfileData?.complete && "/add_trip"}
         >
           انشاء رحلة
         </Button>{" "}

@@ -8,7 +8,7 @@ export const ProgressBars = ({ data }) => {
   let Rating3 = [];
   let Rating2 = [];
   let Rating1 = [];
-  data.ratings.forEach((rating) => {
+  data?.ratings.forEach((rating) => {
     const stars = rating.stars;
     if (stars === 5) {
       Rating5.push(stars);

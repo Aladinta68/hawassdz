@@ -1,34 +1,70 @@
 import {
   Avatar,
   Badge,
+  Box,
+  Icon,
   Image,
   Input,
   Spacer,
+  Spinner,
   Stack,
   Text,
   VStack,
   useColorModeValue,
+  useToast,
 } from "@chakra-ui/react";
 import React from "react";
 import headerimg from "../../../../assets/profile/header.png";
-import { useMutation } from "@apollo/client";
-import useProfileStore from ".././../../../store/profile";
+import { useMutation, useQuery } from "@apollo/client";
+import { UploadProfileImage } from "./../../../../api/user/mutation";
 import Cookies from "js-cookie";
-import { UploadProfileImage } from './../../../../api/user/mutation';
+import { GetUserInformation } from "./../../../../api/user/query";
+import { FaPen } from "react-icons/fa";
+
 export const ProfileHeader = () => {
-  const ProfileData = useProfileStore((state) => state.ProfileData);
-  const setProfileData = useProfileStore((state) => state.setProfileData);
   const accessToken = Cookies.get("accessToken");
-  const [uploadUserImage, { loading, error }] = useMutation(UploadProfileImage);
+  const toast = useToast();
+
+  let ProfileData;
+  const { error: errorQuery, data: userData } = useQuery(GetUserInformation, {
+    context: {
+      headers: {
+        Authorization: accessToken,
+      },
+    },
+    skip: !accessToken,
+  });
+  if (errorQuery) {
+    console.error(error);
+    Cookies.remove("accessToken");
+  }
+  if (userData) {
+    ProfileData = userData?.getUserByToken;
+  }
+
+  const [uploadUserImage, { loading }] = useMutation(UploadProfileImage, {
+    refetchQueries: [
+      {
+        query: GetUserInformation,
+        context: {
+          headers: {
+            Authorization: accessToken,
+          },
+        },
+      },
+    ],
+    awaitRefetchQueries: true, // Ensure refetch completes before resolving mutation
+  });
   const handleFileSelect = (event) => {
     const file = event.target.files[0];
     if (file) {
       uploadImage(file);
     }
   };
+
   const uploadImage = async (file) => {
     try {
-      const response = await uploadUserImage({
+      const result = await uploadUserImage({
         variables: { userId: ProfileData.id, file: file },
         context: {
           headers: {
@@ -36,30 +72,20 @@ export const ProfileHeader = () => {
           },
         },
       });
-      if (response) {
-        const newUrl = response.data.uploadUserImage.url;
-        setProfileData({
-          ...ProfileData,
-          image: {
-            ...ProfileData.image,
-            url: newUrl,
-          },
+      if (result) {
+        toast({
+          title: "",
+          description: "تم تحميل الصورة بنجاح",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
         });
-      }
-      if (loading) {
-        console.log(loading);
-      }
-      if (error) {
-        console.log(error);
       }
     } catch (error) {
       console.error("Error uploading image:", error);
     }
   };
-  const imageUrl = ProfileData?.image?.url
-    ? "http://localhost:3000" + ProfileData?.image?.url
-    : null;
-
+  const imageUrl = ProfileData?.image?.url;
   return (
     <VStack
       pos={"relative"}
@@ -95,24 +121,36 @@ export const ProfileHeader = () => {
         backdropFilter={"saturate(200%) blur(50px)"}
         boxShadow={"rgba(0, 0, 0, 0.02) 0px 2px 5.5px"}
       >
-        <Stack cursor={"pointer"} align={"center"} borderRadius={20}>
-          <label htmlFor="file-upload">
-            <Input
-              accept="image/*"
-              onChange={handleFileSelect}
-              type={"file"}
-              id={"file-upload"}
-              display={"none"}
-            />
-            <Image
-              cursor={"pointer"}
-              src={imageUrl}
-              as={imageUrl ? "img" : Avatar}
-              h={70}
-              w={70}
-              borderRadius={"20"}
-            />
-          </label>
+        <Stack
+          pos={"relative"}
+          cursor={"pointer"}
+          align={"center"}
+          borderRadius={20}
+        >
+          {loading ? (
+            <Spinner m={4} />
+          ) : (
+            <>
+              <label htmlFor="file-upload">
+                <Input
+                  accept="image/*"
+                  onChange={handleFileSelect}
+                  type={"file"}
+                  id={"file-upload"}
+                  display={"none"}
+                />
+                <Image
+                  cursor={"pointer"}
+                  src={imageUrl}
+                  as={imageUrl ? "img" : Avatar}
+                  h={70}
+                  w={70}
+                  borderRadius={"20"}
+                />
+              </label>
+              <Icon top={0} right={0} pos={"absolute"} as={FaPen} />
+            </>
+          )}
         </Stack>
         <Stack
           direction={{ md: "row", base: "column" }}
@@ -134,11 +172,7 @@ export const ProfileHeader = () => {
             fontSize={13}
             colorScheme={ProfileData?.complete ? "green" : "orange"}
           >
-            {ProfileData?.complete ? (
-              <Text>حسابك مكتمل</Text>
-            ) : (
-              <Text> حسابك غير مكتمل !</Text>
-            )}
+            {!ProfileData?.complete && <Text> حسابك غير مكتمل !</Text>}
           </Badge>
         </Stack>
       </Stack>

@@ -42,20 +42,20 @@ export const DetailsRating = ({ type, data }) => {
       <Heading>التقييمات</Heading>
       <ProgressBars data={data} />
       <HStack w={"100%"}>
-        <Text fontWeight={600}>جميع التقييمات ({data.ratings.length})</Text>
+        <Text fontWeight={600}>جميع التقييمات ({data?.ratings.length})</Text>
         <Spacer />
         {isLogged && <Add type={type} userData={userData} />}
       </HStack>
-      {data.ratings.slice(startIndex, endIndex).map((item, index) => (
+      {data?.ratings.slice(startIndex, endIndex).map((item, index) => (
         <Rate key={index} item={item} userData={userData} />
       ))}
-      {data && data.ratings && data.ratings.length > 0 && (
+      {data && data?.ratings && data?.ratings.length > 0 && (
         <Stack w={"full"} align={"center"} justify={"center"} py={5}>
           <Paggination
             setSelectedPage={setSelectedPage}
-            MaxPage={Math.ceil(data.ratings.length / itemsPerPage)}
+            MaxPage={Math.ceil(data?.ratings.length / itemsPerPage)}
             currentPage={SelectedPage}
-            maxPage={Math.ceil(data.ratings.length / itemsPerPage)}
+            maxPage={Math.ceil(data?.ratings.length / itemsPerPage)}
           />
         </Stack>
       )}

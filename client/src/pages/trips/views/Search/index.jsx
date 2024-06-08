@@ -1,15 +1,16 @@
 import React from "react";
 import { SearchLayout } from "../../../../layout/search";
 import { GetTravels } from "./../../../../api/travel/query";
-import { useQuery } from "@apollo/client";
+import { useQuery,NetworkStatus } from "@apollo/client";
 export const Trips = () => {
-  const { loading, error, data, refetch, variables } = useQuery(GetTravels, {
+  const { loading, error, data, refetch, variables,networkStatus } = useQuery(GetTravels, {
     variables: {
       page: 1,
       perPage: 4,
       sortBy: "name",
       sortDirection: "asc",
     },
+    notifyOnNetworkStatusChange: true, 
   });
   if (error) {
     console.log(error);
@@ -26,7 +27,7 @@ export const Trips = () => {
       currentSortDirection={currentSortDirection}
       maxPage={maxPage}
       refetch={refetch}
-      loading={loading}
+      loading={loading || networkStatus === NetworkStatus.refetch}
       data={travels}
       source={"trips"}
       cardType="trips"
