@@ -2,14 +2,12 @@ import { Container, Stack, VStack } from "@chakra-ui/react";
 import React from "react";
 import { DetailsHeader } from "./components/header";
 import { DetailsImages } from "./components/images";
-import { DetailsRating } from "./components/ratings/index";
 import { DetailsMap } from "./components/map";
 import { DetailsDescription } from "./components/description/index";
 import { DetailsEquipement } from "./components/equipement/index";
 import { LoadingSpinner } from "./../../components/LoadingSpinner/index";
-import { DetailsTrip } from './components/DetailsTrip/index';
 
-export const DetailsLayout = ({ loading, type, data }) => {
+export const DetailsLayoutNotActive = ({ loading, type, data }) => {
   return (
     <>
       {loading ? (
@@ -31,10 +29,6 @@ export const DetailsLayout = ({ loading, type, data }) => {
             {(type === "hotel" || type === "restaurant") && (
               <DetailsEquipement data={data?.equipements} />
             )}
-            {type === "trips"  && (
-              <DetailsTrip data={data} />
-            )}
-            <DetailsRating type={type} data={data} />
             <DetailsMap />
           </VStack>
         </Container>

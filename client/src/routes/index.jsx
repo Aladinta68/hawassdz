@@ -22,6 +22,7 @@ import { AddTripPage } from "./../pages/trips/views/addTrips/index";
 import { HotelDetails } from "../pages/hotels/views/details";
 import { RestaurantDetails } from "./../pages/restaurants/views/details/index";
 import { DestinationDetails } from './../pages/destinations/views/details/index';
+import { TripDetailsNonActive } from './../pages/trips/views/TripDetails/nonActive';
 
 const router = createBrowserRouter([
   {
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
       {
         path: `/trip_details/:id`,
         element: <TripDetails />,
+      },
+      {
+        path: `/trip_details_non_active/:id`,
+        element: <TripDetailsNonActive />,
       },
     ],
   },

@@ -1,9 +1,9 @@
 import React from "react";
-import { DetailsLayout } from "../../../../layout/details";
 import { Navigate, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GetALLTravelsById } from "../../../../api/travel/query";
-export const TripDetails = () => {
+import { DetailsLayoutNotActive } from './../../../../layout/details copy/index';
+export const TripDetailsNonActive = () => {
   const { id } = useParams();
   const { loading, error, data } = useQuery(GetALLTravelsById, {
     variables: { getTravelByIdId: id },
@@ -13,5 +13,6 @@ export const TripDetails = () => {
     return <Navigate to="/notFound" />;
   }
   const hotel = data?.getTravelById;
-  return <DetailsLayout loading={loading} type="trips" data={hotel} />;
+  return <DetailsLayoutNotActive loading={loading} type="trips" data={hotel} />;
 };
+

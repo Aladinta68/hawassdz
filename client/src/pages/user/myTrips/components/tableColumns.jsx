@@ -29,6 +29,7 @@ export const colDefs = [
     sortable: true,
     resizable: false,
     flex: 1,
+    minWidth: 150,
     cellRenderer: (params) => (
       <HStack w={"full"} h={"full"} align={"center"} justify={"center"}>
         <Text>{new Date(parseInt(params?.value)).toLocaleTimeString()}</Text>
@@ -42,6 +43,7 @@ export const colDefs = [
     sortable: true,
     resizable: false,
     flex: 1,
+    minWidth: 120,
     cellRenderer: (params) => (
       <Stack w={"full"} h={"full"} align={"center"} justify={"center"}>
         <Text>{params?.value ? params.value : 0}</Text>
@@ -54,9 +56,21 @@ export const colDefs = [
     sortable: true,
     resizable: false,
     flex: 1,
+    minWidth: 100,
     cellRenderer: (params) => (
       <Stack w={"full"} h={"full"} align={"center"} justify={"center"}>
-        <Text>{params?.value === "Free" ? "مجاني" : params?.value}</Text>
+        <Text>
+          {params?.value === "Free" ? (
+            "مجاني"
+          ) : (
+            <Text>
+              <Text as={"span"} mr={2}>
+                DZD
+              </Text>
+              {params?.value}
+            </Text>
+          )}
+        </Text>
       </Stack>
     ),
   },
@@ -66,6 +80,7 @@ export const colDefs = [
     sortable: true,
     resizable: false,
     flex: 1,
+    minWidth: 150,
     cellRenderer: (params) => (
       <Stack w={"full"} h={"full"} align={"center"} justify={"center"}>
         <Text>{params?.value}</Text>
@@ -78,6 +93,7 @@ export const colDefs = [
     sortable: true,
     resizable: false,
     flex: 1,
+    minWidth: 150,
     cellRenderer: (params) => (
       <Stack w={"full"} h={"full"} align={"center"} justify={"center"}>
         <Text>{params?.value ? params?.value : 0}</Text>
@@ -90,6 +106,7 @@ export const colDefs = [
     sortable: true,
     resizable: false,
     flex: 1,
+    minWidth: 150,
     cellRenderer: (params) => (
       <Stack w={"full"} h={"full"} align={"center"} justify={"center"}>
         <Badge
@@ -98,10 +115,31 @@ export const colDefs = [
           display={"flex"}
           justifyContent={"center"}
           alignItems={"center"}
-          colorScheme="purple"
+          colorScheme={
+            params?.value === "pending"
+              ? "purple"
+              : params?.value === "active"
+              ? "green"
+              : "red"
+          }
         >
-          {params?.value ? params.value : "قيد الانتظار"}
+          {params?.value === "pending" && "قيد الانتظار"}
+          {params?.value === "active" && " نشط الان"}
+          {params?.value === "rejected" && " مرفوض"}
         </Badge>
+      </Stack>
+    ),
+  },
+  {
+    field: "type",
+    headerName: "نوع الرحلة",
+    sortable: true,
+    resizable: false,
+    flex: 1,
+    minWidth: 150,
+    cellRenderer: (params) => (
+      <Stack w={"full"} h={"full"} align={"center"} justify={"center"}>
+        <Text>{params?.value}</Text>
       </Stack>
     ),
   },
@@ -111,6 +149,7 @@ export const colDefs = [
     sortable: true,
     resizable: false,
     flex: 1,
+    minWidth: 250,
     cellRenderer: (params) => (
       <Stack w={"full"} h={"full"} align={"center"} justify={"center"}>
         <Text>{params?.value}</Text>
@@ -129,18 +168,21 @@ export const colDefs = [
       const toast = useToast();
       const accessToken = Cookies.get("accessToken");
 
-      const [deleteTravel] = useMutation(DeleteTravel, {
-        refetchQueries: [
-          {
-            query: GetALLTravelsByUser,
-            context: {
-              headers: {
-                Authorization: accessToken,
+      const [deleteTravel, { loading: deleteTravelLoading }] = useMutation(
+        DeleteTravel,
+        {
+          refetchQueries: [
+            {
+              query: GetALLTravelsByUser,
+              context: {
+                headers: {
+                  Authorization: accessToken,
+                },
               },
             },
-          },
-        ],
-      });
+          ],
+        }
+      );
       const handleDelete = async () => {
         try {
           const response = await deleteTravel({
@@ -183,7 +225,11 @@ export const colDefs = [
                 display={"flex"}
                 alignItems={"flex-start"}
               >
-                <Button onClick={handleDelete} colorScheme="red">
+                <Button
+                  isLoading={deleteTravelLoading}
+                  onClick={handleDelete}
+                  colorScheme="red"
+                >
                   {" "}
                   حذف
                 </Button>
@@ -222,7 +268,11 @@ export const colDefs = [
         <Stack w={"full"} h={"full"} align={"center"} justify={"center"}>
           <IconButton
             as={RouterLink}
-            to={`/trip_details/${params?.data?.id}`}
+            to={
+              params?.data?.status === "active"
+                ? `/trip_details/${params?.data?.id}`
+                : `/trip_details_non_active/${params?.data?.id}`
+            }
             variant={"ghost"}
             icon={<ViewIcon />}
           />

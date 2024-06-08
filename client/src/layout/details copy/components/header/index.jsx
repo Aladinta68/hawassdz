@@ -1,7 +1,6 @@
 import {
   HStack,
   Heading,
-  Icon,
   IconButton,
   Spacer,
   Stack,
@@ -14,17 +13,7 @@ import { PiSealCheckFill } from "react-icons/pi";
 import { Rating } from "./../../../../components/rating/index";
 import { FaFacebook, FaLaptop, FaLocationDot, FaPhone } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
-import {
-  FaGlobe,
-  FaMountain,
-  FaFilm,
-  FaUmbrellaBeach,
-  FaGamepad,
-  FaUtensils,
-  FaCompass,
-  FaHistory,
-  FaSun,
-} from "react-icons/fa";
+
 export const DetailsHeader = ({ type, data }) => {
   const handleShareButtonClick = () => {
     if (navigator.share) {
@@ -43,61 +32,7 @@ export const DetailsHeader = ({ type, data }) => {
       console.warn("Web Share API not supported");
     }
   };
-  const renderTypeTripIcon = (label) => {
-    switch (label) {
-      case "جولات ثقافية":
-        return {
-          icon: FaGlobe,
-          color: "blue.500",
-        };
-      case "رحلات المغامرة والتسلق":
-        return {
-          icon: FaMountain,
-          color: "green.500",
-        };
-      case "تجارب السينما":
-        return {
-          icon: FaFilm,
-          color: "purple.500",
-        };
-      case "الإقامة الاستجمامية":
-        return {
-          icon: FaUmbrellaBeach,
-          color: "teal.500",
-        };
-      case "مغامرات و الألعاب":
-        return {
-          icon: FaGamepad,
-          color: "orange.500",
-        };
-      case "جولات الطعام":
-        return {
-          icon: FaUtensils,
-          color: "pink.500",
-        };
-      case "سفاري الصحراء":
-        return {
-          icon: FaCompass,
-          color: "yellow.500",
-        };
-      case "رحلات تاريخية":
-        return {
-          icon: FaHistory,
-          color: "cyan.500",
-        };
-      case "الشواطئ":
-        return {
-          icon: FaSun,
-          color: "red.500",
-        };
-      default:
-        return {
-          icon: null,
-          color: "gray.500",
-        };
-    }
-  };
-  const { icon, color } = renderTypeTripIcon(data?.type);
+
   return (
     <VStack align={"flex-start"} w={"full"}>
       <HStack pb={2} w={"100%"}>
@@ -131,7 +66,7 @@ export const DetailsHeader = ({ type, data }) => {
           <HStack>
             <FaLocationDot />
             <Text fontSize={20} fontWeight={400}>
-              {type === "trips" ? data?.destination : data?.wilaya?.name}
+              {data?.wilaya?.name}
             </Text>
           </HStack>
           {data?.address && (
@@ -182,18 +117,6 @@ export const DetailsHeader = ({ type, data }) => {
           >
             <MdEmail />
             <Text>{data?.contactInfo?.email}</Text>
-          </HStack>
-        )}
-        {type === "trips" && (
-          <HStack>
-            <Icon color={color} as={icon} />
-            <Text>{data?.type}</Text>
-          </HStack>
-        )}
-        {type === "trips" && (
-          <HStack pt={10}>
-            <Text ml={3}>السعر</Text>
-            <Text fontSize={25}>{data?.price} DZD</Text>
           </HStack>
         )}
       </VStack>

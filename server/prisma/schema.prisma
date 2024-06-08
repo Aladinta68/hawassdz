@@ -114,15 +114,15 @@ model Travel {
   type           String
   description    String?
   destination    String
-  longitude      String
-  dateDepart     String
-  dateArrive     String
-  numberPerson   String
-  availablePlace String
+  longitude      String?
+  dateDepart     String?
+  dateArrive     String?
+  numberPerson   String?
+  availablePlace String?
   gender         String?
   ageRange       String?
   price          String
-  transportType  String
+  transportType  String?
   images         Image[]
   ratings        Rating[]
   overallRating  Float?

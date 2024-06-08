@@ -60,8 +60,7 @@ export const MyTripsHeader = () => {
         w={"full"}
         h={"80%"}
       >
-        {" "}
-        <Heading color={"#ffffff"}>رحلاتي</Heading>
+        <Heading color={"#ffffff"}>الرحلات والفعاليات</Heading>
       </Stack>
       <Spacer pos={"relative"} />
       <Stack
@@ -90,12 +89,12 @@ export const MyTripsHeader = () => {
           as={RouterLink}
           to={ProfileData?.complete && "/add_trip"}
         >
-          انشاء رحلة
+          انشاء رحلة او فعالية
         </Button>{" "}
         {!ProfileData?.complete && (
           <Alert w={"fit-content"} status="error">
             <AlertIcon />
-            حسابك غير مكتمل، يرجى إكمال حسابك لتتمكن من إنشاء رحلات{" "}
+            حسابك غير مكتمل، يرجى إكمال حسابك لتتمكن من إنشاء  رحلات او فعاليات{" "}
           </Alert>
         )}
       </Stack>

@@ -164,3 +164,77 @@ export const GetALLTravelsByUser = gql`
     }
   }
 `;
+
+export const GetALLTravelsById = gql`
+  query GetTravelById($getTravelByIdId: ID!) {
+    getTravelById(id: $getTravelByIdId) {
+      id
+      name
+      type
+      description
+      destination
+      longitude
+      dateDepart
+      dateArrive
+      numberPerson
+      availablePlace
+      overallRating
+      gender
+      ageRange
+      price
+      transportType
+      images {
+        url
+      }
+      ratings {
+        stars
+        feedback
+        user {
+          id
+          firstName
+          lastName
+          email
+          phone
+          dateOfBirth
+          gender
+          complete
+          image {
+            url
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      mapLocation {
+        longitude
+        latitude
+      }
+      contactInfo {
+        phone
+        email
+        website
+        facebook
+      }
+      user {
+        id
+        firstName
+        lastName
+        email
+        phone
+        dateOfBirth
+        gender
+        complete
+        image {
+          url
+        }
+        createdAt
+        updatedAt
+      }
+      status
+      createdAt
+      updatedAt
+    }
+  }
+`;

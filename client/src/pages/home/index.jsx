@@ -9,6 +9,7 @@ import { GetHotels } from "../../api/hotel/query";
 import { GetDestinations } from "../../api/destination/query";
 import { GetRestaurants } from "./../../api/restaurant/query";
 import { GetTravels } from "../../api/travel/query";
+import { Categories } from "./views/categories";
 const Home = () => {
   const {
     loading: hotelLoading,
@@ -20,7 +21,6 @@ const Home = () => {
       perPage: 8,
       sortBy: "name",
       sortDirection: "asc",
-      
     },
   });
   const {
@@ -82,6 +82,8 @@ const Home = () => {
     <Flex direction={"column"}>
       <Header />
       <Container maxW={"8xl"}>
+        <Spacer height={50} />
+        <Categories />
         <Spacer height={50} />
         <Popular
           type="destinations"

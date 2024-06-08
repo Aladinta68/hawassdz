@@ -39,7 +39,18 @@ import { GiCanoe } from "react-icons/gi";
 import { FaHorse } from "react-icons/fa";
 import { GiCamel } from "react-icons/gi";
 import { MdSubway } from "react-icons/md";
-
+import {
+  FaGlobe,
+  FaMountain,
+  FaFilm,
+  FaUmbrellaBeach,
+  FaGamepad,
+  FaUtensils,
+  FaCompass,
+  FaHistory,
+  FaSun,
+  FaLeaf,
+} from "react-icons/fa";
 export const TripCardBody = ({ data, renderButton, isHorizontal }) => {
   const renderTransportIcon = (transportType) => {
     switch (transportType) {
@@ -120,56 +131,121 @@ export const TripCardBody = ({ data, renderButton, isHorizontal }) => {
     const dayDifference = differentTime / (1000 * 60 * 60 * 24);
     return dayDifference;
   };
+
+  const renderTypeTripIcon = (label) => {
+    switch (label) {
+      case "جولات ثقافية":
+        return {
+          icon: FaGlobe,
+          color: "blue.500",
+        };
+      case "رحلات المغامرة والتسلق":
+        return {
+          icon: FaMountain,
+          color: "green.500",
+        };
+      case "تجارب السينما":
+        return {
+          icon: FaFilm,
+          color: "purple.500",
+        };
+      case "الإقامة الاستجمامية":
+        return {
+          icon: FaUmbrellaBeach,
+          color: "teal.500",
+        };
+      case "مغامرات و الألعاب":
+        return {
+          icon: FaGamepad,
+          color: "orange.500",
+        };
+      case "جولات الطعام":
+        return {
+          icon: FaUtensils,
+          color: "pink.500",
+        };
+      case "سفاري الصحراء":
+        return {
+          icon: FaCompass,
+          color: "yellow.500",
+        };
+      case "رحلات تاريخية":
+        return {
+          icon: FaHistory,
+          color: "cyan.500",
+        };
+      case "الشواطئ":
+        return {
+          icon: FaSun,
+          color: "red.500",
+        };
+      default:
+        return {
+          icon: null,
+          color: "gray.500",
+        };
+    }
+  };
+  const { icon, color } = renderTypeTripIcon(data?.type);
   return (
     <VStack align={"flex-start"} w={"100%"}>
-      <Text fontWeight={"600"} fontSize={13} w={"100%"}>
-        {data?.type}
-      </Text>
+      <HStack>
+        {icon && <Icon as={icon} color={color} />}{" "}
+        <Text fontWeight={"600"} fontSize={13} w={"100%"}>
+          {data?.type}
+        </Text>
+      </HStack>{" "}
       <List fontSize={14}>
         <ListItem>
-          <HStack>
-            <Icon as={IoCalendarNumber} />
-            <Text>{data?.dateDepart}</Text>
-          </HStack>
+          {data?.dateDepart && (
+            <HStack>
+              <Icon as={IoCalendarNumber} />
+              <Text>{data?.dateDepart}</Text>
+            </HStack>
+          )}
         </ListItem>
         <ListItem>
-          <HStack>
-            <Icon as={MdTimer} />
-            <Text>
-              {getDifferentTime(data?.dateDepart, data?.dateArrive)}
-              <Text mr={2} as={"span"}>
-                {getDifferentTime(data?.dateDepart, data?.dateArrive) === 1 ||
-                getDifferentTime(data?.dateDepart, data?.dateArrive) > 10
-                  ? "يوم"
-                  : "أيام"}
+          {" "}
+          {data?.dateDepart && data?.dateArrive && (
+            <HStack>
+              <Icon as={MdTimer} />
+              <Text>
+                {getDifferentTime(data?.dateDepart, data?.dateArrive)}
+                <Text mr={2} as={"span"}>
+                  {getDifferentTime(data?.dateDepart, data?.dateArrive) === 1 ||
+                  getDifferentTime(data?.dateDepart, data?.dateArrive) > 10
+                    ? "يوم"
+                    : "أيام"}
+                </Text>
               </Text>
-            </Text>{" "}
-          </HStack>
+            </HStack>
+          )}{" "}
         </ListItem>
         <ListItem>
-          <HStack>
-            <Icon as={HiMiniUserGroup} />
-            <Text>{data?.numberPerson}</Text>{" "}
-          </HStack>
+          {data?.numberPerson && (
+            <HStack>
+              <Icon as={HiMiniUserGroup} />
+              <Text>{data?.numberPerson}</Text>{" "}
+            </HStack>
+          )}
         </ListItem>
       </List>
-      <HStack
-        py={2}
-        justifyContent={!isHorizontal && "space-between"}
-        w={"100%"}
-      >
-        {features.map((feature, index) => (
-          <HStack
-            px={4}
-            py={1}
-            spacing={3}
-            bg={useColorModeValue("#f4f2f2", "#141414")}
-            borderRadius={5}
-            key={index}
-          >
-            <Icon color={feature.color} fontSize={20} as={feature.icon} />
-          </HStack>
-        ))}
+      <HStack py={2} justifyContent={!isHorizontal && ""} w={"100%"}>
+        {features.map(
+          (feature, index) =>
+            feature.icon && (
+              <HStack
+                px={4}
+                py={1}
+                spacing={3}
+                bg={useColorModeValue("#f4f2f2", "#141414")}
+                borderRadius={5}
+                key={index}
+              >
+                <Icon color={feature.color} fontSize={20} as={feature.icon} />
+              </HStack>
+            )
+        )}
       </HStack>
       <Stack
         direction={!isHorizontal ? "column" : "row"}
@@ -199,10 +275,12 @@ export const TripCardBody = ({ data, renderButton, isHorizontal }) => {
               <Text fontSize={13}>متاح - {data?.availablePlace} أماكن</Text>
             </HStack>
           ) : (
-            <HStack color={"red"}>
-              <CgUnavailable />
-              <Text fontSize={13}>غير متاح</Text>
-            </HStack>
+            parseInt(data?.availablePlace) === 0 && (
+              <HStack color={"red"}>
+                <CgUnavailable />
+                <Text fontSize={13}>غير متاح</Text>
+              </HStack>
+            )
           )}
         </HStack>
         <Spacer />

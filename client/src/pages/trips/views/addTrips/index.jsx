@@ -89,29 +89,29 @@ export const AddTripPage = () => {
 
   const handleSubmit = async (values) => {
     const myInput = {
-      type: values.type,
-      transportType: values.transportType,
-      price: values.price.toString(),
-      numberPerson: values.numberPerson.toString(),
-      name: values.name,
+      type: values.type || "",
+      transportType: values.transportType || "",
+      price: values.price ? values.price.toString() : "",
+      numberPerson: values.numberPerson ? values.numberPerson.toString() : "",
+      name: values.name || "",
       mapLocation: {
         latitude: 0,
         longitude: 0,
       },
-      longitude: values.longitude.toString(),
-      gender: values.gender,
+      longitude: values.longitude ? values.longitude.toString() : "",
+      gender: values.gender || "",
       files: fileSelected,
-      destination: values.destination,
-      description: values.description,
-      dateDepart: values.dateDepart,
-      dateArrive: values.dateArrive,
+      destination: values.destination || "",
+      description: values.description || "",
+      dateDepart: values.dateDepart || "",
+      dateArrive: values.dateArrive || "",
       contactInfo: {
-        website: values?.website,
-        phone: values.phone.toString(),
-        facebook: values?.facebook,
-        email: values?.email,
+        website: values.website || "",
+        phone: values.phone ? values.phone.toString() : "",
+        facebook: values.facebook || "",
+        email: values.email || "",
       },
-      ageRange: values.ageRange,
+      ageRange: values.ageRange || "",
     };
     try {
       const response = await addTravel({

@@ -182,7 +182,7 @@ export const MobileAppbar = ({ links, isLogin,ProfileData }) => {
                     align={"center"}
                   >
                     <Icon as={FaMapLocationDot} />
-                    <Text> رحلاتي</Text>
+                    <Text> فعالياتي</Text>
                   </HStack>
                 </Link>
                 <Link

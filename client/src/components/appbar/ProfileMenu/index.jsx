@@ -20,7 +20,7 @@ import { IoTicketSharp } from "react-icons/io5";
 import { FaMapLocationDot } from "react-icons/fa6";
 import { Link as RouterLink } from "react-router-dom";
 
-export const ProfileMenu = ({ProfileData}) => {
+export const ProfileMenu = ({ ProfileData }) => {
   const navigate = useNavigate();
   const handleLogout = () => {
     Cookies.remove("accessToken");
@@ -53,7 +53,7 @@ export const ProfileMenu = ({ProfileData}) => {
             </HStack>
           </MenuItem>
           <MenuItem
-          as={RouterLink}
+            as={RouterLink}
             to={"/my_trips"}
             _hover={{
               backgroundColor: useColorModeValue("#eeeeee", "#0b0b0b"),
@@ -63,11 +63,11 @@ export const ProfileMenu = ({ProfileData}) => {
             {" "}
             <HStack spacing={3}>
               <Icon as={FaMapLocationDot} />
-              <Text> رحلاتي</Text>
+              <Text> فعالياتي</Text>
             </HStack>
           </MenuItem>
           <MenuItem
-          as={RouterLink}
+            as={RouterLink}
             to={"/my_reservations"}
             _hover={{
               backgroundColor: useColorModeValue("#eeeeee", "#0b0b0b"),

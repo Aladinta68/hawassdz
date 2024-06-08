@@ -50,7 +50,7 @@ export const MyTrips = () => {
         {!data?.getTravelsByUser?.travels && !loading && (
           <Alert status="warning">
             <AlertIcon />
-            لا يوجد لديك اي رحلات حاليا{" "}
+            لا يوجد لديك اي رحلات او فعاليات حاليا{" "}
           </Alert>
         )}
       </VStack>

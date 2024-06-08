@@ -54,7 +54,6 @@ export const StepTwo = ({ formikProps }) => {
           name="dateDepart"
           label="تاريخ الاقلاع"
           formikProps={formikProps}
-          isRequired={true}
         />
       </GridItem>
       <GridItem w="100%">
@@ -63,7 +62,6 @@ export const StepTwo = ({ formikProps }) => {
           name="dateArrive"
           label=" تاريخ العودة"
           formikProps={formikProps}
-          isRequired={true}
         />
       </GridItem>
       <GridItem w="100%">
@@ -73,7 +71,6 @@ export const StepTwo = ({ formikProps }) => {
           name="longitude"
           label=" طول المسار"
           formikProps={formikProps}
-          isRequired={true}
         />
       </GridItem>
       <GridItem w="100%">
@@ -83,7 +80,6 @@ export const StepTwo = ({ formikProps }) => {
           name="numberPerson"
           label="عدد الاشخاص"
           formikProps={formikProps}
-          isRequired={true}
           InputRightElementChildren={<Icon as={MdGroups} color="gray.500" />}
         />
       </GridItem>
