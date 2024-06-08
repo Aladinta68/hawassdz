@@ -80,7 +80,7 @@ export const AddTripPage = () => {
           perPage: 4,
           sortBy: "name",
           sortDirection: "asc",
-          isActive: false,
+          status: "active",
         },
         notifyOnNetworkStatusChange: true,
       },

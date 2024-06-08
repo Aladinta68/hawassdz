@@ -47,10 +47,10 @@ export const getMany = async ({
   perPage,
   sortBy,
   sortDirection,
-  isActive,
+  status,
 }) => {
   const offset = (page - 1) * perPage;
-  const where = isActive !== undefined ? { isActive } : {};
+  const where = status !== undefined ? { status } : {};
 
   const travels = await prisma.travel.findMany({
     where,

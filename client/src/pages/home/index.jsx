@@ -58,7 +58,7 @@ const Home = () => {
       perPage: 8,
       sortBy: "name",
       sortDirection: "asc",
-      isActive: false,
+      status: "active",
 
     },
   });

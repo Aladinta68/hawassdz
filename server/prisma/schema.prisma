@@ -128,7 +128,7 @@ model Travel {
   overallRating  Float?
   mapLocation    MapLocation?
   contactInfo    ContactInfo?
-  isActive       Boolean      @default(false)
+  status         String       @default("pending")
   user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId         String
   createdAt      DateTime     @default(now())

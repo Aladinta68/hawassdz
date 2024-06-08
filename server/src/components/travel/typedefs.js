@@ -23,7 +23,7 @@ export const travelTypeDefs = gql`
     mapLocation: MapLocation
     contactInfo: ContactInfo
     user: User
-    isActive: Boolean
+    status: String
     createdAt: String
     updatedAt: String
   }
